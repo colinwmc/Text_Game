@@ -1,0 +1,70 @@
+.menu-background img {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+.menu-wrapper {
+    background-color: black;
+}
+
+.menu-background{
+    background-color: black;
+}
+
+.menu-options{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    
+}
+
+.subtitle{
+    color: gold;
+    font-size: 72px;
+    font-family: vivaldi;
+    padding-top: 6.5%;
+}
+.PC-array{
+    display: flex;
+    margin-top: 24px;
+    height:50%;
+}
+.PC {
+    margin-right: 48px;
+    height:100%;
+    width: 30%;
+}
+.PC-portrait{
+    border: 10px solid gold;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    height: 100%;
+}
+
+.PC-portrait img {
+    /* height: 360px; */
+    height: 100%;
+    /* width: 240px; */
+    width: 100%
+}
+
+.PC-name {
+    color: gold;
+    font-size: 60px;
+    font-family: vivaldi;
+    text-align: center;
+    background-color:black;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom: 10px solid gold;
+    border-left: 10px solid gold;
+    border-right: 10px solid gold;
+}

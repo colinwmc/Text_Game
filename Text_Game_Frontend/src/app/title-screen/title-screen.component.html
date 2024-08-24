@@ -1,1 +1,20 @@
-<p>title-screen works!</p>
+<div class="menu-wrapper">
+    <audio src="../../assets/Music/Fairy Lands FANTASY MUSIC in a Magical Forest Fantasy Ambience.mp3" autoplay></audio>
+    <div class="menu-background">
+        <img *ngIf="index===0" (click)="menuAdvance()" src="../../assets/Final Picks/Locations/title_final.jpg" alt="">
+        <img *ngIf="index===1" src="../../assets/Final Picks/Locations/menu_final.jpeg" alt="">
+    </div>
+    <div *ngIf="index===1" class="menu-options">
+        <div class="subtitle">Select Your Character</div>
+        <div class="PC-array">
+        <div *ngFor="let PC of PCs" class="PC">
+            <div class="PC-portrait">
+                <img *ngIf="PC.pcid===1" src="../../assets/Final Picks/Characters/pollen.png" alt="">
+                <img *ngIf="PC.pcid===2" src="../../assets/Final Picks/Characters/dizbert.png" alt="">
+                <img *ngIf="PC.pcid===3" src="../../assets/Final Picks/Characters/tomja.png" alt="">
+            </div>
+            <div class="PC-name">{{PC.name}}</div>
+        </div>
+    </div>
+    </div>
+</div>

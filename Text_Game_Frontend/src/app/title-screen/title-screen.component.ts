@@ -10,10 +10,20 @@ export class TitleScreenComponent implements OnInit {
 
   constructor(private sharedService: SharedService) { }
 
+  public index = 0;
+  public PCs: any;
+
   ngOnInit(): void {
-   this.sharedService.getPCList().subscribe(data => {
-    console.log(data)
-   })
+     this.sharedService.getPCList().subscribe(data => {
+      this.PCs = data;
+     })
+  }
+  
+  menuAdvance() {
+    this.index++
+  }
+  menuBack() {
+    this.index--
   }
 
 }
