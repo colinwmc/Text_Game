@@ -12,10 +12,10 @@ export class SharedService {
       'Content-Type': 'application.json',
     }),
   };
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getPCList(): Observable <any[]> {
-    return this.http.get <any[]> (this.APIUrl + '/PC', this.httpOptions);
+  getPCList(): Observable<any[]> {
+    return this.http.get<any[]>(this.APIUrl + '/PC', this.httpOptions);
   }
 
 }

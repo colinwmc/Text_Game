@@ -8,11 +8,13 @@ import { TitleScreenComponent } from './title-screen/title-screen.component';
 import { HttpClientModule } from "@angular/common/http";
 import { SharedService } from "./shared.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { PCProfileComponent } from './pc-profile/pc-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TitleScreenComponent
+    TitleScreenComponent,
+    PCProfileComponent
   ],
   imports: [
     BrowserModule,

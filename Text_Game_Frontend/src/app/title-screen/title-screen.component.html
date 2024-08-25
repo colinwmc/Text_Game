@@ -1,20 +1,27 @@
 <div class="menu-wrapper">
-    <audio src="../../assets/Music/Fairy Lands FANTASY MUSIC in a Magical Forest Fantasy Ambience.mp3" autoplay></audio>
+    <!-- <audio src="../../assets/Music/Fairy Lands FANTASY MUSIC in a Magical Forest Fantasy Ambience.mp3" autoplay></audio> -->
     <div class="menu-background">
         <img *ngIf="index===0" (click)="menuAdvance()" src="../../assets/Final Picks/Locations/title_final.jpg" alt="">
-        <img *ngIf="index===1" src="../../assets/Final Picks/Locations/menu_final.jpeg" alt="">
+        <img *ngIf="index===1 || index===2" src="../../assets/Final Picks/Locations/menu_final.jpeg" alt="">
     </div>
     <div *ngIf="index===1" class="menu-options">
         <div class="subtitle">Select Your Character</div>
         <div class="PC-array">
-        <div *ngFor="let PC of PCs" class="PC">
-            <div class="PC-portrait">
-                <img *ngIf="PC.pcid===1" src="../../assets/Final Picks/Characters/pollen.png" alt="">
-                <img *ngIf="PC.pcid===2" src="../../assets/Final Picks/Characters/dizbert.png" alt="">
-                <img *ngIf="PC.pcid===3" src="../../assets/Final Picks/Characters/tomja.png" alt="">
+            <div *ngFor="let PC of PCs" class="PC" (click)="selectPC(PC)">
+                <div class="PC-portrait">
+                    <img *ngIf="PC.pcid===1" src="../../assets/Final Picks/Characters/pollen.png" alt="">
+                    <img *ngIf="PC.pcid===2" src="../../assets/Final Picks/Characters/dizbert.png" alt="">
+                    <img *ngIf="PC.pcid===3" src="../../assets/Final Picks/Characters/tomja.png" alt="">
+                </div>
+                <div class="PC-name">{{PC.name}}</div>
             </div>
-            <div class="PC-name">{{PC.name}}</div>
         </div>
     </div>
+    <div *ngIf="index === 2" class="PC-profile">
+        <app-pc-profile [PC]="selectedPC"></app-pc-profile>
+        <div class="button-box">
+            <button class="menu-back-button" (click)="menuBack()">Back</button>
+            <button class="menu-start-button">Adventure Forth</button>
+        </div>
     </div>
 </div>

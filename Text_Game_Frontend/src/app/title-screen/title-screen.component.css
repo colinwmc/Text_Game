@@ -3,15 +3,17 @@
     height: 100%;
     position: fixed;
 }
+
 .menu-wrapper {
     background-color: black;
 }
 
-.menu-background{
+.menu-background {
     background-color: black;
 }
 
-.menu-options{
+.menu-options,
+.PC-profile {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -19,26 +21,34 @@
     flex-direction: column;
     align-items: center;
     /* justify-content: center; */
-    
+
 }
 
-.subtitle{
+app-pc-profile {
+    width: 100%;
+    height: 85%;
+}
+
+.subtitle {
     color: gold;
     font-size: 72px;
     font-family: vivaldi;
     padding-top: 6.5%;
 }
-.PC-array{
+
+.PC-array {
     display: flex;
     margin-top: 24px;
-    height:50%;
+    height: 50%;
 }
+
 .PC {
     margin-right: 48px;
-    height:100%;
+    height: 100%;
     width: 30%;
 }
-.PC-portrait{
+
+.PC-portrait {
     border: 10px solid gold;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -59,7 +69,7 @@
     font-size: 60px;
     font-family: vivaldi;
     text-align: center;
-    background-color:black;
+    background-color: black;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
     border-bottom-right-radius: 5px;
@@ -67,4 +77,32 @@
     border-bottom: 10px solid gold;
     border-left: 10px solid gold;
     border-right: 10px solid gold;
+}
+
+.button-box {
+    display: flex;
+    width: 60%;
+    height: 15%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menu-back-button,
+.menu-start-button {
+    background-color: black;
+    color: gold;
+    border: 5px solid gold;
+    border-radius: 5px;
+    font-family: vivaldi;
+    font-size: 60px;
+    height: 70%;
+
+}
+
+.menu-back-button {
+    width: 45%;
+}
+
+.menu-start-button {
+    width: 45%;
 }

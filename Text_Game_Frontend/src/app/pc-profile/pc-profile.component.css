@@ -1,0 +1,23 @@
+.top-margin {
+    height: 5%;
+}
+
+.profile-box {
+    border: 5px solid gold;
+    width: 60%;
+    height: 95%;
+    margin-left: 20%;
+    background-color: black;
+}
+
+.portrait {
+    height: 45%;
+    width: 30%;
+    margin: 16px;
+    border: 5px solid gold;
+}
+
+.portrait img {
+    height: 100%;
+    width: 100%;
+}

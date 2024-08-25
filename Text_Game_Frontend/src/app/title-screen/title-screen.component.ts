@@ -12,18 +12,25 @@ export class TitleScreenComponent implements OnInit {
 
   public index = 0;
   public PCs: any;
+  public selectedPC: any;
 
   ngOnInit(): void {
      this.sharedService.getPCList().subscribe(data => {
       this.PCs = data;
      })
   }
-  
+
   menuAdvance() {
     this.index++
   }
   menuBack() {
     this.index--
+    this.selectedPC = null;
+  }
+
+  selectPC(PC: any){
+    this.selectedPC = PC;
+    this.index = 2;
   }
 
 }
