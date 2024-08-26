@@ -1,8 +1,45 @@
 <div class="top-margin"></div>
 <div class="profile-box">
-    <div class="portrait">
-        <img *ngIf="PC.pcid === 1" src="../../assets/Final Picks/Characters/pollen.png" alt="">
-        <img *ngIf="PC.pcid===2" src="../../assets/Final Picks/Characters/dizbert.png" alt="">
-        <img *ngIf="PC.pcid===3" src="../../assets/Final Picks/Characters/tomja.png" alt="">
+    <div class="profile-top">
+        <div class="portrait">
+            <img *ngIf="PC.pcid === 1" src="../../assets/Final Picks/Characters/pollen.png" alt="">
+            <img *ngIf="PC.pcid===2" src="../../assets/Final Picks/Characters/dizbert.png" alt="">
+            <img *ngIf="PC.pcid===3" src="../../assets/Final Picks/Characters/tomja.png" alt="">
+        </div>
+        <div class="top-right">
+            <div class="top-row-1">
+                <div class="info-cell">
+                    <div class="info-title">Species</div>
+                    <div class="info">{{PC.species}}</div>
+                </div>
+                <div class="info-cell">
+                    <div class="info-title">Gender</div>
+                    <div class="info">{{PC.gender}}</div>
+                </div>
+                <div class="info-cell">
+                    <div class="info-title">Age</div>
+                    <div class="info">{{PC.age}}</div>
+                </div>
+                <div class="info-cell">
+                    <div class="info-title">Class</div>
+                    <div class="info">{{PC.class}}</div>
+                </div>
+            </div>
+            <div class="long-cell-margin"></div>
+            <div class="long-info-cell">
+                <div class="long-info-title">Abilities</div>
+                <div class="long-info">{{PC.abilities}}</div>
+            </div>
+            <div class="long-cell-margin"></div>
+            <div class="long-info-cell">
+                <div class="long-info-title">Weaknesses</div>
+                <div class="long-info">{{PC.weaknesses}}</div>
+            </div>
+            <div class="long-cell-margin"></div>
+            <div class="long-info-cell">
+                <div class="long-info-title">Languages</div>
+                <div class="long-info">{{PC.languages}}</div>
+            </div>
+        </div>
     </div>
 </div>

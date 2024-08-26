@@ -4,20 +4,114 @@
 
 .profile-box {
     border: 5px solid gold;
+    border-radius: 10px;
     width: 60%;
     height: 95%;
     margin-left: 20%;
-    background-color: black;
+    background-color: transparent;
 }
 
 .portrait {
-    height: 45%;
-    width: 30%;
+    /* height: 45%;
+    width: 30%; */
     margin: 16px;
     border: 5px solid gold;
+    border-radius: 10px;
 }
 
 .portrait img {
     height: 100%;
     width: 100%;
+}
+
+.profile-top {
+    display: flex;
+    height: 50%;
+    width: 100%;
+}
+
+.top-right {
+    /* border: 2px solid gold; */
+    width: 75%;
+    margin-top: 16px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+}
+
+.top-row-1 {
+    display: flex;
+    justify-content: space-between;
+    height: 26%;
+}
+
+.info-cell {
+    width: 24%;
+    height: 90%;
+    border: 2px solid gold;
+    border-radius: 20px;
+}
+
+.info-title,
+.info {
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.info-title {
+    background-color: #253e54;
+    color: gold;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.info {
+    background-color: grey;
+    color: black;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top: 2px solid gold;
+    border-bottom: 2px solid gold;
+}
+
+.long-info-cell {
+    height: 20%;
+    width: 100%;
+    border: 2px solid gold;
+    border-radius: 20px;
+    display: flex;
+    /* margin-bottom: 16px; */
+}
+
+.long-info-title {
+    height: 100%;
+    width: 17%;
+    background-color: #253e54;
+    color: gold;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.long-info {
+    width: 83%;
+    height: 100%;
+    background-color: grey;
+    color: black;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    text-align: center;
+}
+
+.long-cell-margin {
+    height: 3%;
 }
