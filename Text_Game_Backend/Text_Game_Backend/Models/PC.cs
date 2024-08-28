@@ -23,8 +23,9 @@ namespace Text_Game_Backend.Models
         public int ArmorClass { get; set; }
         public int HP { get; set; }
         public string CharacterDescription { get; set; }
-        [JsonIgnore]
+        
         public ICollection<Spell> Spells { get; set; }
+      
         public ICollection<Item> Items { get; set; }
 
 

@@ -1,0 +1,86 @@
+CREATE TABLE Spells (
+SpellID int NOT NULL,
+SpellName nvarchar(max) NOT NULL,
+SpellType nvarchar(max) NOT NULL,
+RollModifier nvarchar(max) NOT NULL,
+SpellDescription nvarchar(max) NOT NULL,
+SpellEffect nvarchar(max) NOT NULL,
+EffectQuantity int NOT NULL,
+PCID int NOT NULL,
+PRIMARY KEY (SpellID),
+CONSTRAINT FK_SpellOwner FOREIGN KEY (PCID) REFERENCES PCs(PCID)
+);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (1,'Healing Mist', 'Automatic', 'Wisdom', 'Heals one creature of mild to moderate wounds.', 'Heal', 7, 1);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (2,'Illusion', 'Saving Throw', 'Wisdom', 'Creates a visual and auditory illusion that can distract, fascinate, or terrify a creature. Can be resisted by a successful wisdom saving throw.', 'CC', 0, 1);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (3,'Hex', 'Attack Roll', 'Wisdom', 'Ranged spell attack. Causes 1 target to either A.) Be transformed into a frog B.) Horribly liquify into a gross puddle or C.) Become slightly more purple', 'CC', 0, 1);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (4,'Ice Blast', 'Attack Roll', 'Intelligence', 'Ranged spell attack. Fires shards of ice at a single target.', 'Damage', 7, 2);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (5,'Green Thumb', 'Automatic', 'Intelligence', 'Causes one plant to magically grow or whither.', 'CC', 0, 2);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (6,'Stinking Cloud', 'Saving Throw', 'Intelligence', 'Produces a cloud of foul smelling air around the caster. Can incapacitate or even damage nearby creatures. (Look dawg, she swears it’s a spell, I don’t know what to tell you.) ', 'CC', 0, 2);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (7,'Dwarven Fire Bomb', 'Saving Throw', 'Intelligence', 'Ranged attack. Explodes and fills the surrounding area with fire. Can be dodged by a dexterity saving throw.', 'Damage', 10, 3);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (8,'Mending', 'Automatic', 'Intelligence', 'Can return one damaged object to working order.', 'CC', 0, 3);
+
+INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
+VALUES (9,'Big Ol’ Hammer', 'Attack Roll', 'Strength', 'Melee Attack. Sometimes the best way to solve a problem is with a big ol’ hammer.', 'Damage', 7, 3);
+
+CREATE TABLE Items (
+ItemID int NOT NULL,
+ItemName nvarchar(max) NOT NULL,
+ImageID int NOT NULL,
+ItemDescription nvarchar(max) NOT NULL,
+ItemQuantity nvarchar(max) NOT NULL,
+PCID int NOT NULL,
+PRIMARY KEY (ItemID),
+CONSTRAINT FK_ItemOwner FOREIGN KEY (PCID) REFERENCES PCs(PCID)
+);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (1, 'Adult Female Raccoon', 1, 'Her name’s Priscilla', 1, 1);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (2, 'Pouch of pretty looking rocks', 2, 'You gotta pick up a pretty looking rock', 1, 1);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (3, 'Wild Mushrooms', 3, 'Are they edible? poisonous? psychedelic? You don’t know', 3, 1);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (4, 'Wildberries', 4, 'In case Priscilla needs a little treat', 10, 1);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (5, 'Encyclopedia Arcanica', 5, 'The ultimate mystical reference', 1, 2);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (6, 'Golden Delicious Apple', 6, 'It''s golden, it''s delicious, it''s an apple', 1, 2);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (7, 'Potion of Enhanced Stinking Cloud', 7, 'Greatly enhances the power of the Stinking Cloud spell. May cause it to be cast involuntarily.', 1, 2);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (8, '45 Carat Diamond Ring', 8, 'Ooh, shiny', 1, 2);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (9, 'Big Ol’ Hammer', 9, 'Great for fixing, or breaking things', 1, 3);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (10, 'Dwarven Fire Bomb', 10, 'Blows up. Sets things on fire.', 3, 3);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (11, 'Flask of Hearty Dwarven Ale', 11, 'Adventuring is thirsty work', 1, 3);
+
+INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
+VALUES (12, 'Pouch of Various Screws and Lugnuts', 12, 'Never know when you''re gonna need em''', 1, 3);
