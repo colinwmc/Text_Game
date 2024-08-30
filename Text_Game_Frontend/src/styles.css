@@ -13,5 +13,6 @@ body, html {
     width: 100%;
     height: 100%;
     margin: 0 !important;
-    cursor: url("../../assets/Font/Middle-Ages--cursor--SweezyCursors.cur");
+    cursor: url("./assets/Font/cursor2.cur"), auto;
+    /* cursor: pointer; */
 }

@@ -2,12 +2,12 @@
     width: 100%;
     height: 100%;
     position: fixed;
-   
+    /* cursor: url("../../assets/Font/Middle-Ages--cursor--SweezyCursors.cur"), move; */
 }
 
 .menu-wrapper {
     background-color: black;
-    cursor: url("../../assets/Font/Middle-Ages--cursor--SweezyCursors.cur");
+    /* cursor: url("../../assets/Final Picks/Item and Spell Icons/bomb.png"); */
 }
 
 .menu-background {
@@ -87,6 +87,7 @@ app-pc-profile {
     height: 15%;
     justify-content: space-around;
     align-items: center;
+
 }
 
 .menu-back-button,
@@ -98,7 +99,7 @@ app-pc-profile {
     font-family: vivaldi;
     font-size: 3.75rem;
     height: 70%;
-
+    cursor: url("../../assets/Font/cursor2.cur"), auto;
 }
 
 .menu-back-button {
