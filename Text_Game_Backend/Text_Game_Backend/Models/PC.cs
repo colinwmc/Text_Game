@@ -23,6 +23,7 @@ namespace Text_Game_Backend.Models
         public int ArmorClass { get; set; }
         public int HP { get; set; }
         public string CharacterDescription { get; set; }
+        public string Image_URL { get; set; }
         
         public ICollection<Spell> Spells { get; set; }
       

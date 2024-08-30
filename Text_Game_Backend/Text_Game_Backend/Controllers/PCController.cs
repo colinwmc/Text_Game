@@ -71,6 +71,7 @@ namespace Text_Game_Backend.Controllers
                     ArmorClass = PC.ArmorClass,
                     HP = PC.HP,
                     CharacterDescription = PC.CharacterDescription,
+                    Image_URL = PC.Image_URL,
                     Spells = spells,
                     Items = items
 

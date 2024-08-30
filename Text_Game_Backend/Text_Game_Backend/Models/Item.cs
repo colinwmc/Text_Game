@@ -7,7 +7,7 @@ namespace Text_Game_Backend.Models
     {
         public int ItemID { get; set; }
         public string ItemName { get; set; }
-        public int ImageID { get; set; }
+        public string ImageID { get; set; }
         public string ItemDescription { get; set; }
         public int ItemQuantity { get; set; }
         public int PCID { get; set; }

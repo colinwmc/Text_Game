@@ -12,5 +12,6 @@
 body, html {
     width: 100%;
     height: 100%;
-    margin: 0 !important
+    margin: 0 !important;
+    cursor: url("../../assets/Font/Middle-Ages--cursor--SweezyCursors.cur");
 }

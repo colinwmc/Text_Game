@@ -38,12 +38,51 @@ VALUES (8,'Mending', 'Automatic', 'Intelligence', 'Can return one damaged object
 INSERT INTO Spells (SpellID, SpellName, SpellType, RollModifier, SpellDescription, SpellEffect, EffectQuantity, PCID)
 VALUES (9,'Big Ol’ Hammer', 'Attack Roll', 'Strength', 'Melee Attack. Sometimes the best way to solve a problem is with a big ol’ hammer.', 'Damage', 7, 3);
 
+ALTER TABLE Spells
+ADD Icon_URL nvarchar(max);
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/healing-mist.png'
+WHERE SpellID = 1;
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/illusion.png'
+WHERE SpellID = 2;
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/hex.png'
+WHERE SpellID = 3;
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/ice-blast.png'
+WHERE SpellID = 4;
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/green-thumb.png'
+WHERE SpellID = 5;
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/stinking-cloud.png'
+WHERE SpellID = 6;
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/bomb.png'
+WHERE SpellID = 7;
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/mend.png'
+WHERE SpellID = 8;
+
+UPDATE Spells
+SET Icon_URL = '../../assets/Final Picks/Item and Spell Icons/big-ol-hammer.png'
+WHERE SpellID = 9;
+
 CREATE TABLE Items (
 ItemID int NOT NULL,
 ItemName nvarchar(max) NOT NULL,
 ImageID int NOT NULL,
 ItemDescription nvarchar(max) NOT NULL,
-ItemQuantity nvarchar(max) NOT NULL,
+ItemQuantity int NOT NULL,
 PCID int NOT NULL,
 PRIMARY KEY (ItemID),
 CONSTRAINT FK_ItemOwner FOREIGN KEY (PCID) REFERENCES PCs(PCID)
@@ -53,7 +92,7 @@ INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCI
 VALUES (1, 'Adult Female Raccoon', 1, 'Her name’s Priscilla', 1, 1);
 
 INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
-VALUES (2, 'Pouch of pretty looking rocks', 2, 'You gotta pick up a pretty looking rock', 1, 1);
+VALUES (2, 'Bag of Pretty Rocks', 2, 'You gotta pick up a pretty looking rock', 1, 1);
 
 INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
 VALUES (3, 'Wild Mushrooms', 3, 'Are they edible? poisonous? psychedelic? You don’t know', 3, 1);
@@ -83,4 +122,55 @@ INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCI
 VALUES (11, 'Flask of Hearty Dwarven Ale', 11, 'Adventuring is thirsty work', 1, 3);
 
 INSERT INTO Items (ItemID, ItemName, ImageID, ItemDescription, ItemQuantity, PCID)
-VALUES (12, 'Pouch of Various Screws and Lugnuts', 12, 'Never know when you''re gonna need em''', 1, 3);
+VALUES (12, 'Pouch of Various Screws and Lugnuts', 12, 'Never know when you''re gonna need ''em', 1, 3);
+
+ALTER TABLE Items 
+ALTER COLUMN ImageID nvarchar(max);
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/priscilla.png'
+WHERE ItemID = 1;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/rock_bag.jpeg'
+WHERE ItemID = 2;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/mushrooms.png'
+WHERE ItemID = 3;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/berries.png'
+WHERE ItemID = 4;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/encyclopedia-arcanica.png'
+WHERE ItemID = 5;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/apple.png'
+WHERE ItemID = 6;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/potion-of-enhanced-stinking-cloud.png'
+WHERE ItemID = 7;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/ring.png'
+WHERE ItemID = 8;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/big-ol-hammer.png'
+WHERE ItemID = 9;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/bomb.png'
+WHERE ItemID = 10;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/dwarven-ale.jpg'
+WHERE ItemID = 11;
+
+UPDATE Items
+SET ImageID = '../../assets/Final Picks/Item and Spell Icons/nuts_and_bolts.jpeg'
+WHERE ItemID = 12;

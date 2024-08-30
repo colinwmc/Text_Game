@@ -1,86 +1,137 @@
 <div class="top-margin"></div>
-<div class="profile-box">
-    <div class="profile-top">
-        <div class="portrait">
-            <img *ngIf="PC.pcid === 1" src="../../assets/Final Picks/Characters/pollen.png" alt="">
-            <img *ngIf="PC.pcid===2" src="../../assets/Final Picks/Characters/dizbert.png" alt="">
-            <img *ngIf="PC.pcid===3" src="../../assets/Final Picks/Characters/tomja.png" alt="">
+<div class="double-profile-box">
+    <div class="profile-box">
+        <div class="profile-top">
+            <div class="portrait">
+                <img src={{PC.image_URL}} alt="">
+            </div>
+            <div class="top-right">
+                <div class="top-row-1">
+                    <div class="info-cell">
+                        <div class="info-title">Species</div>
+                        <div class="info">{{PC.species}}</div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="info-title">Gender</div>
+                        <div class="info">{{PC.gender}}</div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="info-title">Age</div>
+                        <div class="info">{{PC.age}}</div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="info-title">Class</div>
+                        <div class="info">{{PC.class}}</div>
+                    </div>
+                </div>
+                <div class="long-cell-margin"></div>
+                <div class="long-info-cell">
+                    <div class="long-info-title">Abilities</div>
+                    <div class="long-info">{{PC.abilities}}</div>
+                </div>
+                <div class="long-cell-margin"></div>
+                <div class="long-info-cell">
+                    <div class="long-info-title">Weaknesses</div>
+                    <div class="long-info">{{PC.weaknesses}}</div>
+                </div>
+                <div class="long-cell-margin"></div>
+                <div class="long-info-cell">
+                    <div class="long-info-title">Languages</div>
+                    <div class="long-info">{{PC.languages}}</div>
+                </div>
+            </div>
         </div>
-        <div class="top-right">
-            <div class="top-row-1">
-                <div class="info-cell">
-                    <div class="info-title">Species</div>
-                    <div class="info">{{PC.species}}</div>
+        <div class="profile-bottom">
+            <div class="stat-box">
+                <div class="stat-cell">
+                    <div class="stat-title top-left-cell">Charisma</div>
+                    <div class="stat top-right-cell">{{PC.charisma}}</div>
                 </div>
-                <div class="info-cell">
-                    <div class="info-title">Gender</div>
-                    <div class="info">{{PC.gender}}</div>
+                <div class="stat-cell">
+                    <div class="stat-title">Intelligence</div>
+                    <div class="stat">{{PC.intelligence}}</div>
                 </div>
-                <div class="info-cell">
-                    <div class="info-title">Age</div>
-                    <div class="info">{{PC.age}}</div>
+                <div class="stat-cell">
+                    <div class="stat-title">Wisdom</div>
+                    <div class="stat">{{PC.wisdom}}</div>
                 </div>
-                <div class="info-cell">
-                    <div class="info-title">Class</div>
-                    <div class="info">{{PC.class}}</div>
+                <div class="stat-cell">
+                    <div class="stat-title">Strength</div>
+                    <div class="stat">{{PC.strength}}</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-title">Dexterity</div>
+                    <div class="stat">{{PC.dexterity}}</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-title">Constitution</div>
+                    <div class="stat">{{PC.constitution}}</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-title">Hit Points</div>
+                    <div class="stat">{{PC.hp}}</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-title bottom-left-cell">Armor Class</div>
+                    <div class="stat bottom-right-cell">{{PC.armorClass}}</div>
                 </div>
             </div>
-            <div class="long-cell-margin"></div>
-            <div class="long-info-cell">
-                <div class="long-info-title">Abilities</div>
-                <div class="long-info">{{PC.abilities}}</div>
-            </div>
-            <div class="long-cell-margin"></div>
-            <div class="long-info-cell">
-                <div class="long-info-title">Weaknesses</div>
-                <div class="long-info">{{PC.weaknesses}}</div>
-            </div>
-            <div class="long-cell-margin"></div>
-            <div class="long-info-cell">
-                <div class="long-info-title">Languages</div>
-                <div class="long-info">{{PC.languages}}</div>
+            <div class="bottom-right">
+                <div class="description-box">
+                    <div class="description-title">Description</div>
+                    <div class="description">{{PC.characterDescription}}</div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="profile-bottom">
-        <div class="stat-box">
-            <div class="stat-cell">
-                <div class="stat-title top-left-cell">Charisma</div>
-                <div class="stat top-right-cell">{{PC.charisma}}</div>
-            </div>
-            <div class="stat-cell">
-                <div class="stat-title">Intelligence</div>
-                <div class="stat">{{PC.intelligence}}</div>
-            </div>
-            <div class="stat-cell">
-                <div class="stat-title">Wisdom</div>
-                <div class="stat">{{PC.wisdom}}</div>
-            </div>
-            <div class="stat-cell">
-                <div class="stat-title">Strength</div>
-                <div class="stat">{{PC.strength}}</div>
-            </div>
-            <div class="stat-cell">
-                <div class="stat-title">Dexterity</div>
-                <div class="stat">{{PC.dexterity}}</div>
-            </div>
-            <div class="stat-cell">
-                <div class="stat-title">Constitution</div>
-                <div class="stat">{{PC.constitution}}</div>
-            </div>
-            <div class="stat-cell">
-                <div class="stat-title">Hit Points</div>
-                <div class="stat">{{PC.hp}}</div>
-            </div>
-            <div class="stat-cell">
-                <div class="stat-title bottom-left-cell">Armor Class</div>
-                <div class="stat bottom-right-cell">{{PC.armorClass}}</div>
+    <div class="right-box">
+        <div class="spell-box">
+            <div class="spell-section-title">Spells</div>
+            <div class="spell-list">
+                <div class="spell" *ngFor="let Spell of PC.spells">
+                    <div class="spell-name">{{Spell.spellName}}</div>
+                    <div class="spell-info">
+                        <img class="spell-icon" src={{Spell.icon_URL}} alt="">
+                        <div class="spell-desc">{{Spell.spellDescription}}</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="bottom-right">
-            <div class="description-box">
-                <div class="description-title">Description</div>
-                <div class="description">{{PC.characterDescription}}</div>
+        <div class="item-box">
+            <div class="item-section-title">Inventory</div>
+            <div class="item-rows">
+            <div class="item-row">
+                <div class="item">
+                    <div class="item-name">{{PC.items[0].itemQuantity}}X {{PC.items[0].itemName}}</div>
+                    <div class="item-info">
+                        <img class= "item-icon" src={{PC.items[0].imageID}} alt="">
+                        <div class="item-desc">{{PC.items[0].itemDescription}}</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-name">{{PC.items[1].itemQuantity}}X {{PC.items[1].itemName}}</div>
+                    <div class="item-info">
+                        <img class= "item-icon" src={{PC.items[1].imageID}} alt="">
+                        <div class="item-desc">{{PC.items[1].itemDescription}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-row">
+                <div class="item">
+                    <div class="item-name">{{PC.items[2].itemQuantity}}X {{PC.items[2].itemName}}</div>
+                    <div class="item-info">
+                        <img class= "item-icon" src={{PC.items[2].imageID}} alt="">
+                        <div class="item-desc">{{PC.items[2].itemDescription}}</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-name">{{PC.items[3].itemQuantity}}X {{PC.items[3].itemName}}</div>
+                    <div class="item-info">
+                        <img class= "item-icon" src={{PC.items[3].imageID}} alt="">
+                        <div class="item-desc">{{PC.items[3].itemDescription}}</div>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>

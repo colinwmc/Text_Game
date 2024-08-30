@@ -9,9 +9,7 @@
         <div class="PC-array">
             <div *ngFor="let PC of PCs" class="PC" (click)="selectPC(PC)">
                 <div class="PC-portrait">
-                    <img *ngIf="PC.pcid===1" src="../../assets/Final Picks/Characters/pollen.png" alt="">
-                    <img *ngIf="PC.pcid===2" src="../../assets/Final Picks/Characters/dizbert.png" alt="">
-                    <img *ngIf="PC.pcid===3" src="../../assets/Final Picks/Characters/tomja.png" alt="">
+                    <img src={{PC.image_URL}} alt="">
                 </div>
                 <div class="PC-name">{{PC.name}}</div>
             </div>
