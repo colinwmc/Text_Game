@@ -118,7 +118,7 @@
             </div>
             <div class="item-row">
                 <div class="item">
-                    <div class="item-name">{{PC.items[2].itemQuantity}}X {{PC.items[2].itemName}}</div>
+                    <div class="item-name" [ngClass]="PC.items[2].itemID === 7 ? 'small-text' : ''">{{PC.items[2].itemQuantity}}X {{PC.items[2].itemName}}</div>
                     <div class="item-info">
                         <img class= "item-icon" src={{PC.items[2].imageID}} alt="">
                         <div class="item-desc">{{PC.items[2].itemDescription}}</div>

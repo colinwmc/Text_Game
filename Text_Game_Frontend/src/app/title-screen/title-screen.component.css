@@ -14,6 +14,10 @@
     background-color: black;
 }
 
+.menu-padding-top {
+    height: 6.5%;
+}
+
 .menu-options,
 .PC-profile {
     position: absolute;
@@ -35,7 +39,7 @@ app-pc-profile {
     color: gold;
     font-size: 4.5rem;
     font-family: vivaldi;
-    padding-top: 6.5%;
+    /* padding-top: 6.5%; */
 }
 
 .PC-array {
@@ -97,7 +101,7 @@ app-pc-profile {
     border: 5px solid gold;
     border-radius: 5px;
     font-family: vivaldi;
-    font-size: 3.75rem;
+    font-size: 3.92vw;
     height: 70%;
     cursor: url("../../assets/Font/cursor2.cur"), auto;
 }

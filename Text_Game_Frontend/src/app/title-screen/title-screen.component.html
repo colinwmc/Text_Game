@@ -5,6 +5,7 @@
         <img *ngIf="index===1 || index===2" src="../../assets/Final Picks/Locations/menu_final.jpeg" alt="">
     </div>
     <div *ngIf="index===1" class="menu-options">
+        <div class="menu-padding-top"></div>
         <div class="subtitle">Select Your Character</div>
         <div class="PC-array">
             <div *ngFor="let PC of PCs" class="PC" (click)="selectPC(PC)">

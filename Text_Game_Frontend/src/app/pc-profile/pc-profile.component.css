@@ -6,6 +6,7 @@
     display: flex;
     height: 100%;
     width: 100%;
+    font-size: 1.37vw;
 }
 
 .profile-box {
@@ -66,7 +67,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+   
 }
 
 .info-title {
@@ -104,7 +105,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    
 }
 
 .long-info {
@@ -117,7 +118,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    
     text-align: center;
 }
 
@@ -149,7 +150,7 @@
     border-right: 0px;
     background-color: #253e54;
     color: gold;
-    font-size: 1.5rem;
+    
     width: 75%;
     height: 100%;
     display: flex;
@@ -164,7 +165,7 @@
     width: 25%;
     height: 100%;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -205,7 +206,7 @@
     background-color: #253e54;
     color: gold;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -218,7 +219,7 @@
     width: calc(100% - 16px);
     height: 80%;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -241,7 +242,7 @@
     border-top-left-radius: 0px;
     background-color: transparent;
     font-family: corsiva;
-    font-size: 1.5rem;
+    
 
 }
 
@@ -260,7 +261,7 @@
     background-color: #253e54;
     color: gold;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -307,7 +308,7 @@
     background-color: #253e54;
     color: gold;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -319,7 +320,7 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -343,7 +344,7 @@
     background-color: #253e54;
     color: gold;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -381,7 +382,7 @@
     background-color: #253e54;
     color: gold;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -407,7 +408,7 @@
     height: 100%;
     width: 70%;
     text-align: center;
-    font-size: 1.5rem;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -415,4 +416,7 @@
     color: black;
     border-bottom-right-radius: 20px;
 
+}
+.small-text {
+    font-size: 1.1vw;;
 }
