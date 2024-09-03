@@ -31,6 +31,7 @@ export class TitleScreenComponent implements OnInit {
 
   selectPC(PC: any){
     this.selectedPC = PC;
+    this.sharedService.PC = PC;
     this.index = 2;
   }
 

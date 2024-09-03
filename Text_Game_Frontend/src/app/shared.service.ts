@@ -14,6 +14,8 @@ export class SharedService {
   };
   constructor(private http: HttpClient) { }
 
+  public PC: any;
+
   getPCList(): Observable<any[]> {
     return this.http.get<any[]>(this.APIUrl + '/PC', this.httpOptions);
   }

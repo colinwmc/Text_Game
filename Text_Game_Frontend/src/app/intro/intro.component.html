@@ -1,0 +1,17 @@
+<div class="intro-wrapper">
+     <audio src="../../assets/Sound Effects/ambience-night-field-cricket-01-7015.mp3" autoplay></audio>
+     <audio src="../../assets/Sound Effects/footsteps-on-gravel-61337.mp3" autoplay></audio>
+    <div class="intro-background">
+        <div *ngIf="index < 4" class="black-background"></div>
+        <img *ngIf="index >=4" class="picture-background" src="../../assets/Final Picks/Locations/tavern_exterior.jpeg" alt="">
+    </div>
+    <div class="text-display">
+    <div class="intro-text" *ngIf="index === 0">After 5 days travelling, you finally near your destination.</div>
+    <div class="intro-text" *ngIf="index === 1">You look down at the well worn paper in your hands, it reads:</div>
+    <div class="intro-text" *ngIf="index === 2">Missing Artifact.</div>
+    <div class="intro-text" *ngIf="index === 2">500 gold reward for its recovery.</div>
+    <div class="intro-text" *ngIf="index === 2">Contact Madame LeSoule at the Half Light Inn.</div>
+    <div class="intro-text" *ngIf="index === 3">At long last, you finally reach the tiny tavern at the edge of the forest.</div>
+    <div class="continue-button" [ngClass]="index >= 4 ? 'button-version' : ''" (click)="advance()">{{index < 4 ? 'Continue >' : 'Enter '}}</div>
+</div>
+</div>
