@@ -10,13 +10,15 @@ import { SharedService } from "./shared.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { PCProfileComponent } from './pc-profile/pc-profile.component';
 import { IntroComponent } from './intro/intro.component';
+import { TavernComponent } from './tavern/tavern.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TitleScreenComponent,
     PCProfileComponent,
-    IntroComponent
+    IntroComponent,
+    TavernComponent
   ],
   imports: [
     BrowserModule,

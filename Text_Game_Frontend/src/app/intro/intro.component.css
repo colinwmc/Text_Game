@@ -29,6 +29,7 @@
 
 .continue-button:hover {
     color: gold;
+    border-bottom: 2px solid gold;
 }
 
 .button-version {
@@ -39,4 +40,8 @@
     align-items: center;
     justify-content: center;
     width: 11.25rem;
+}
+
+.button-version:hover {
+    color: gold;
 }
