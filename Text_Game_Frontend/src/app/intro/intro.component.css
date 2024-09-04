@@ -7,8 +7,8 @@
 
 .text-display {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,6 +16,12 @@
     color: white;
     font-size: 4rem;
     font-family: corsiva;
+}
+
+.intro-text {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
 }
 
 .continue-button {
