@@ -22,13 +22,14 @@
 
 .overlay-left {
     height: calc(100% - 10px);
-    width:calc(10% - 10px);
+    width: calc(10% - 10px);
     border: 5px solid #253e54;
 }
 
 .PC-portrait {
-    height: 90%;
+    height: calc(90% - 5px);
     width: 100%;
+    border-bottom: 5px solid #253e54;
 }
 
 .health-bar {
@@ -42,7 +43,7 @@
 }
 
 .red-segment {
-    background-color: red;
+    background-color: green;
 }
 
 .black-segment {
@@ -50,7 +51,7 @@
 }
 
 .fourteen-wide {
-width: 7.14%;
+    width: 7.14%;
 }
 
 .sixteen-wide {
@@ -58,7 +59,7 @@ width: 7.14%;
 }
 
 .eighteen-wide {
-    width: 5.5%;
+    width: 5.55%;
 }
 
 .options-box {
@@ -71,7 +72,7 @@ width: 7.14%;
     color: white;
     font-family: corsiva;
     font-size: 1.5rem;
-    
+
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -85,7 +86,9 @@ width: 7.14%;
     width: 100%;
 }
 
-.options-list, .narration, .continue {
+.options-list,
+.narration,
+.continue {
     padding: 1rem;
 }
 
@@ -98,5 +101,3 @@ width: 7.14%;
 .selectable:hover {
     color: gold;
 }
-
-
