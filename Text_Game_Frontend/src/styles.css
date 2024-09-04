@@ -16,3 +16,15 @@ body, html {
     cursor: url("./assets/Font/cursor2.cur"), auto;
     /* cursor: pointer; */
 }
+
+.background {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+}
+
+app-ui-overlay {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+}

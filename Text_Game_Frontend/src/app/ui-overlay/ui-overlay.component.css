@@ -1,0 +1,102 @@
+.overlay-wrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
+.top-ui {
+    width: 100vw;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 5px solid blue; */
+}
+
+.bottom-ui {
+    width: 100vw;
+    height: 25vh;
+    /* border: 5px solid red; */
+    display: flex;
+    align-items: flex-end;
+}
+
+.overlay-left {
+    height: calc(100% - 10px);
+    width:calc(10% - 10px);
+    border: 5px solid #253e54;
+}
+
+.PC-portrait {
+    height: 90%;
+    width: 100%;
+}
+
+.health-bar {
+    height: 10%;
+    width: 100%;
+    display: flex;
+}
+
+.health-bar-segment {
+    height: 100%;
+}
+
+.red-segment {
+    background-color: red;
+}
+
+.black-segment {
+    background-color: black;
+}
+
+.fourteen-wide {
+width: 7.14%;
+}
+
+.sixteen-wide {
+    width: 6.25%;
+}
+
+.eighteen-wide {
+    width: 5.5%;
+}
+
+.options-box {
+    width: 80%;
+    height: calc(75% - 10px);
+    border: 5px solid #253e54;
+    border-left: 0px;
+    border-right: 0px;
+    background-color: black;
+    color: white;
+    font-family: corsiva;
+    font-size: 1.5rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
+.options-list, .narration, .continue {
+    padding: 1rem;
+}
+
+.backpack {
+    width: calc(10% - 10px);
+    height: calc(75% - 10px);
+    border: 5px solid #253e54;
+}
+
+.selectable:hover {
+    color: gold;
+}
+
+

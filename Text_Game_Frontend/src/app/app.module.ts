@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { PCProfileComponent } from './pc-profile/pc-profile.component';
 import { IntroComponent } from './intro/intro.component';
 import { TavernComponent } from './tavern/tavern.component';
+import { UiOverlayComponent } from './ui-overlay/ui-overlay.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TavernComponent } from './tavern/tavern.component';
     TitleScreenComponent,
     PCProfileComponent,
     IntroComponent,
-    TavernComponent
+    TavernComponent,
+    UiOverlayComponent,
   ],
   imports: [
     BrowserModule,

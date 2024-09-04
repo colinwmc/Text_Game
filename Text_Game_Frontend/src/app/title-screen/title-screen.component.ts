@@ -18,6 +18,10 @@ export class TitleScreenComponent implements OnInit {
   ngOnInit(): void {
      this.sharedService.getPCList().subscribe(data => {
       this.PCs = data;
+      for (let PC of this.PCs){
+        PC.currentHealth = PC.hp;
+        PC.hasShitPants = false;
+      }
      })
   }
 
