@@ -13,6 +13,7 @@ export class UiOverlayComponent implements OnInit {
   public currentDialogue:String[] = [];
   public currentNarration = 'You open the door to see a small, wooden room, half lit and half full. Provincial folk look up from their beer and potatoes to cast you suspicous looks. The bartender fixes you with an empty stare and reluctantly waves you over.';
   public hasContinue = true;
+  public backpackOpen = false;
   public index = 0;
   constructor(private sharedService: SharedService) { }
 
@@ -35,6 +36,10 @@ export class UiOverlayComponent implements OnInit {
     this.currentNarration = "";
     this.hasContinue = false;
     // this.ngAfterViewInit()
+  }
+
+  tapBackpack(){
+    this.backpackOpen = !this.backpackOpen;
   }
 
 //   @ViewChildren('newline') lines: QueryList<ElementRef> | undefined
