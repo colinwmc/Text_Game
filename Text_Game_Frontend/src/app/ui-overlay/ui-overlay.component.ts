@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { SharedService } from '../shared.service';
 
 @Component({
@@ -9,10 +9,11 @@ import { SharedService } from '../shared.service';
 export class UiOverlayComponent implements OnInit {
 
   public PC: any;
-  public currentOptions = ['The first option', 'The second option'];
-  public currentDialogue = '';
-  public currentNarration = '';
-  public hasContinue = false;
+  public currentOptions:String[] = [];
+  public currentDialogue:String[] = [];
+  public currentNarration = 'You open the door to see a small, wooden room, half lit and half full. Provincial folk look up from their beer and potatoes to cast you suspicous looks. The bartender fixes you with an empty stare and reluctantly waves you over.';
+  public hasContinue = true;
+  public index = 0;
   constructor(private sharedService: SharedService) { }
 
   ngOnInit(): void {
@@ -28,10 +29,21 @@ export class UiOverlayComponent implements OnInit {
   }
 
   proceed(){
-    this.currentOptions = [];
-    this.currentNarration = "You open the door to see a small, wooden room, half lit and half full. Provincial folk look up from their beer and potatoes to cast you suspicous looks. The bartender fixes you with an empty stare and reluctantly waves you over.";
-    this.hasContinue = true;
+    this.currentOptions = ['The first option', 'The second option'];
+    this.currentDialogue.unshift('Howdy, Stranger'+this.index);
+    this.index++;
+    this.currentNarration = "";
+    this.hasContinue = false;
+    // this.ngAfterViewInit()
   }
 
+//   @ViewChildren('newline') lines: QueryList<ElementRef> | undefined
+//   ngAfterViewInit()
+//   {
+//     this.lines?.changes.subscribe(list=>{
+//       setTimeout(()=>
+//         list.last.nativeElement.focus(), 0)
+//     })
+//   }
 
-}
+ }

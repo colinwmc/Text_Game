@@ -1,6 +1,9 @@
 .overlay-wrapper {
     width: 100vw;
     height: 100vh;
+    color: white;
+    font-family: corsiva;
+    font-size: 1.5rem;
 }
 
 .top-ui {
@@ -10,6 +13,53 @@
     justify-content: center;
     align-items: center;
     /* border: 5px solid blue; */
+}
+
+.dialogue-box {
+    height: 75%;
+    width: 50%;
+    display: flex;
+}
+
+.npc-portrait {
+    height: calc(100% - 20px);
+    width: calc(33% - 20px);
+    border: 10px solid #253e54;
+}
+.dialogue-display-box-box{
+background-color: black;
+border: 10px solid #253e54;
+border-left: 0px;
+width: calc(67% - 10px);
+  height: calc(100% - 20px);
+}
+.dialogue-display-box {
+    /* height: calc(100% - 52px); */
+    height: fit-content;
+    max-height: calc(100% - 32px);
+   
+    background-color: black;
+
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    /* align-items: flex-start; */
+    /* justify-content: center; */
+}
+.line {
+    padding-bottom: 1rem;
+}
+
+::-webkit-scrollbar {
+    width: 0.5rem;
+    overflow-y: scroll;
+    background: white;
+    box-shadow: inset 0 0 4px #707070;
+}
+
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
 }
 
 .bottom-ui {
@@ -69,9 +119,7 @@
     border-left: 0px;
     border-right: 0px;
     background-color: black;
-    color: white;
-    font-family: corsiva;
-    font-size: 1.5rem;
+
 
     display: flex;
     flex-direction: column;
@@ -88,8 +136,12 @@
 
 .options-list,
 .narration,
-.continue {
+.dialogue-display-box {
     padding: 1rem;
+}
+
+.continue {
+    padding-left: 1rem;
 }
 
 .backpack {

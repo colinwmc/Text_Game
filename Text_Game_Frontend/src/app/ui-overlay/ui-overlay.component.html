@@ -1,39 +1,81 @@
 <div class="overlay-wrapper">
     <div class="top-ui">
-        <div class="dialogue-box">
+        <div *ngIf="currentDialogue.length>0" class="dialogue-box">
+            <img class="NPC-Portrait" src="../../assets/Final Picks/Characters/bartender.png" alt="">
+            <div class="dialogue-display-box-box">
+                <div class="dialogue-display-box">
+                    <div class="line" *ngFor="let line of currentDialogue; index as i">{{line}}</div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="bottom-ui">
         <div class="overlay-left">
             <img class="PC-portrait" src={{PC.image_URL}} alt="">
             <div class="health-bar">
-                <div class="health-bar-segment" *ngIf="PC.hp >=1" [ngClass]="[PC.currentHealth >= 1 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=2" [ngClass]="[PC.currentHealth >= 2 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=3" [ngClass]="[PC.currentHealth >= 3 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=4" [ngClass]="[PC.currentHealth >= 4 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=5" [ngClass]="[PC.currentHealth >= 5 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=6" [ngClass]="[PC.currentHealth >= 6 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=7" [ngClass]="[PC.currentHealth >= 7 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=8" [ngClass]="[PC.currentHealth >= 8 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=9" [ngClass]="[PC.currentHealth >= 9 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=10" [ngClass]="[PC.currentHealth >= 10 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=11" [ngClass]="[PC.currentHealth >= 11 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=12" [ngClass]="[PC.currentHealth >= 12 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=13" [ngClass]="[PC.currentHealth >= 13 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=14" [ngClass]="[PC.currentHealth >= 14 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=15" [ngClass]="[PC.currentHealth >= 15 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=16" [ngClass]="[PC.currentHealth >= 16 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=17" [ngClass]="[PC.currentHealth >= 17 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
-                <div class="health-bar-segment" *ngIf="PC.hp >=18" [ngClass]="[PC.currentHealth >= 18 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']"></div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=1"
+                    [ngClass]="[PC.currentHealth >= 1 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=2"
+                    [ngClass]="[PC.currentHealth >= 2 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=3"
+                    [ngClass]="[PC.currentHealth >= 3 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=4"
+                    [ngClass]="[PC.currentHealth >= 4 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=5"
+                    [ngClass]="[PC.currentHealth >= 5 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=6"
+                    [ngClass]="[PC.currentHealth >= 6 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=7"
+                    [ngClass]="[PC.currentHealth >= 7 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=8"
+                    [ngClass]="[PC.currentHealth >= 8 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=9"
+                    [ngClass]="[PC.currentHealth >= 9 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=10"
+                    [ngClass]="[PC.currentHealth >= 10 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=11"
+                    [ngClass]="[PC.currentHealth >= 11 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=12"
+                    [ngClass]="[PC.currentHealth >= 12 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=13"
+                    [ngClass]="[PC.currentHealth >= 13 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=14"
+                    [ngClass]="[PC.currentHealth >= 14 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=15"
+                    [ngClass]="[PC.currentHealth >= 15 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=16"
+                    [ngClass]="[PC.currentHealth >= 16 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=17"
+                    [ngClass]="[PC.currentHealth >= 17 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
+                <div class="health-bar-segment" *ngIf="PC.hp >=18"
+                    [ngClass]="[PC.currentHealth >= 18 ? 'red-segment' : 'black-segment', PC.hp === 14 ? 'fourteen-wide' : PC.hp === 16 ? 'sixteen-wide' : 'eighteen-wide']">
+                </div>
             </div>
         </div>
         <div class="options-box">
             <div *ngIf="currentOptions.length > 0" class="options-list">
                 <div (click)="proceed()" class="option selectable" *ngFor="let option of currentOptions; index as i">
-                {{i+1}}). {{option}}</div>
+                    {{i+1}}). {{option}}</div>
             </div>
             <div class="narration" *ngIf="currentNarration.length > 0">{{currentNarration}}</div>
-            <div class="continue selectable" *ngIf="hasContinue">Continue ></div>
+            <div class="continue selectable" *ngIf="hasContinue" (click)="proceed()">Continue ></div>
         </div>
         <img src="../../assets/Final Picks/Item and Spell Icons/backpack.png" alt="" class="backpack">
     </div>
