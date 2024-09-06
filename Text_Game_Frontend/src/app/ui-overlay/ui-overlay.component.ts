@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, ElementRef, OnInit, QueryList, ViewChildren, Output, EventEmitter  } from '@angular/core';
 import { SharedService } from '../shared.service';
 
 @Component({
@@ -9,12 +9,14 @@ import { SharedService } from '../shared.service';
 export class UiOverlayComponent implements OnInit {
 
   public PC: any;
-  public currentOptions:String[] = [];
-  public currentDialogue:String[] = [];
-  public currentNarration = 'You open the door to see a small, wooden room, half lit and half full. Provincial folk look up from their beer and potatoes to cast you suspicous looks. The bartender fixes you with an empty stare and reluctantly waves you over.';
-  public hasContinue = true;
+  @Input() currentOptions:any[] = [];
+  @Input() currentDialogue:any[] = [];
+  @Input() currentNarration = '';
+  @Input() portraitID: string = '';
+  // @Input() hasContinue = false;
+  @Output() newSelection = new EventEmitter<string>();
   public backpackOpen = false;
-  public index = 0;
+
   constructor(private sharedService: SharedService) { }
 
   ngOnInit(): void {
@@ -29,13 +31,8 @@ export class UiOverlayComponent implements OnInit {
     }
   }
 
-  proceed(){
-    this.currentOptions = ['The first option', 'The second option'];
-    this.currentDialogue.unshift('Howdy, Stranger'+this.index);
-    this.index++;
-    this.currentNarration = "";
-    this.hasContinue = false;
-    // this.ngAfterViewInit()
+  selectOption(option:any){
+    this.newSelection.emit(option)
   }
 
   tapBackpack(){

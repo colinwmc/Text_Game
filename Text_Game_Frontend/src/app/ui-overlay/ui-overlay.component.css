@@ -42,10 +42,15 @@
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
+    font-size: 2rem;
 }
 
 .line {
     padding-bottom: 1rem;
+}
+
+.pc-text {
+    color: cornflowerblue;
 }
 
 ::-webkit-scrollbar {
@@ -130,9 +135,11 @@
     justify-content: space-around;
     height: 100%;
     width: 100%;
+    padding-bottom: 0;
+    padding-left: 1rem;
 }
 
-.options-list,
+
 .narration,
 .dialogue-display-box {
     padding: 1rem;

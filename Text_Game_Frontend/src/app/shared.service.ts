@@ -15,9 +15,33 @@ export class SharedService {
   constructor(private http: HttpClient) { }
 
   public PC: any;
+  
 
   getPCList(): Observable<any[]> {
     return this.http.get<any[]>(this.APIUrl + '/PC', this.httpOptions);
   }
 
+  skillCheck(modifier:string, dc:number, special:string) {
+    let diceRoll = new Audio();
+    diceRoll.src = "../assets/Sound Effects/rpg-dice-rolling-95182.mp3";
+    diceRoll.load();
+    diceRoll.play();
+
+    let roll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+    if(special === 'advantage'){
+      let secondRoll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+      if(secondRoll > roll){
+        roll = secondRoll;
+      }
+    } else if(special === 'disadvantage'){
+      let secondRoll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+      if(secondRoll < roll){
+        roll = secondRoll;
+      }
+    }
+    console.log(this.PC)
+    let modValue = Math.floor((this.PC[modifier]-10)/2);
+    return roll+modValue >= dc;
+   
+  }
 }
