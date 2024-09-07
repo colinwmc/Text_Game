@@ -39,7 +39,6 @@ export class SharedService {
         roll = secondRoll;
       }
     }
-    console.log(this.PC)
     let modValue = Math.floor((this.PC[modifier]-10)/2);
     return roll+modValue >= dc;
    

@@ -38,7 +38,7 @@ app-pc-profile {
 .subtitle {
     color: gold;
     font-size: 4.5rem;
-    font-family: vivaldi;
+    font-family: corsiva;
     /* padding-top: 6.5%; */
 }
 
@@ -73,7 +73,7 @@ app-pc-profile {
 .PC-name {
     color: gold;
     font-size: 3.75rem;
-    font-family: vivaldi;
+    font-family: corsiva;
     text-align: center;
     background-color: #253e54;
     border-top-right-radius: 0px;
@@ -100,7 +100,7 @@ app-pc-profile {
     color: gold;
     border: 5px solid gold;
     border-radius: 5px;
-    font-family: vivaldi;
+    font-family: corsiva;
     font-size: 3.92vw;
     height: 70%;
     cursor: url("../../assets/Font/cursor2.cur"), auto;
