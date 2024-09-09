@@ -8,7 +8,7 @@ import { SharedService } from '../shared.service';
 })
 export class UiOverlayComponent implements OnInit {
 
-  public PC: any;
+  @Input() PC: any;
   @Input() currentOptions:any[] = [];
   @Input() currentDialogue:any[] = [];
   @Input() currentNarration = '';
@@ -20,15 +20,6 @@ export class UiOverlayComponent implements OnInit {
   constructor(private sharedService: SharedService) { }
 
   ngOnInit(): void {
-    if(this.sharedService.PC){
-    this.PC = this.sharedService.PC;
-    } else {
-      this.sharedService.getPCList().subscribe(data => {
-        this.PC = data[0];
-        this.PC.currentHealth = this.PC.hp;
-        this.PC.hasShitPants = false;
-      })
-    }
   }
 
   selectOption(option:any){

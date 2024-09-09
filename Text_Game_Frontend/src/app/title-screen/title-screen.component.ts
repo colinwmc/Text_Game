@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../shared.service';
+import { item } from '../models';
 
 @Component({
   selector: 'app-title-screen',
@@ -21,6 +22,14 @@ export class TitleScreenComponent implements OnInit {
       for (let PC of this.PCs){
         PC.currentHealth = PC.hp;
         PC.hasShitPants = false;
+        let gold:item ={
+          itemID: 13,
+          itemDescription: 'Can be exchanged for goods and services.',
+          itemName: 'Gold',
+          itemQuantity: 10,
+          imageID: ''
+      }
+        PC.items.push(gold)
       }
      })
   }

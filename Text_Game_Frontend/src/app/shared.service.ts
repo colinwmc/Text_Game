@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
+import { item } from './models';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,48 @@ export class SharedService {
   constructor(private http: HttpClient) { }
 
   public PC: any;
-  
+  public itemsForSale: item[] = [{
+    itemID: 14,
+    itemDescription: 'A proper, frost pint.',
+    itemName: 'Pint of Beer',
+    itemQuantity: 1,
+    imageID: ''
+  },
+  {
+    itemID: 15,
+    itemDescription: 'Golden fried spuds.',
+    itemName: 'Fried Potatoes',
+    itemQuantity: 1,
+    imageID: ''
+  },
+  {
+    itemID: 16,
+    itemDescription: 'Restores 5 HP.',
+    itemName: 'Health Potion',
+    itemQuantity: 1,
+    imageID: ''
+  }];
+  public beer: item = {
+    itemID: 14,
+    itemDescription: 'A proper, frost pint.',
+    itemName: 'Pint of Beer',
+    itemQuantity: 1,
+    imageID: ''
+  };
+  public potatoes: item = {
+    itemID: 15,
+    itemDescription: 'Golden fried spuds.',
+    itemName: 'Fried Potatoes',
+    itemQuantity: 1,
+    imageID: ''
+  };
+  public healthPotion: item = {
+    itemID: 16,
+    itemDescription: 'Restores 5 HP.',
+    itemName: 'Health Potion',
+    itemQuantity: 1,
+    imageID: ''
+  };
 
   getPCList(): Observable<any[]> {
     return this.http.get<any[]>(this.APIUrl + '/PC', this.httpOptions);
@@ -42,5 +84,24 @@ export class SharedService {
     let modValue = Math.floor((this.PC[modifier]-10)/2);
     return roll+modValue >= dc;
    
+  }
+
+  buyItem(cost: number, itemID: number) {
+    let gold = this.PC.items.find((item: { itemID: number; }) => item.itemID === 13);
+    if (gold.itemQuantity >= cost) {
+      let moneyClink = new Audio();
+      moneyClink.src = "../assets/Sound Effects/coins-falling-013-36967.mp3";
+      moneyClink.load();
+      moneyClink.play();
+      gold.itemQuantity = gold.itemQuantity - cost;
+      if (this.PC.items.find((item: { itemID: number; }) => item.itemID === itemID)) {
+        this.PC.items.find((item: { itemID: number; }) => item.itemID === itemID).itemQuantity++;
+      } else {
+        this.PC.items.push(this.itemsForSale.find((itemForSale) => itemForSale.itemID === itemID))
+      }
+      return true;
+    } else {
+      return false;
+    }
   }
 }

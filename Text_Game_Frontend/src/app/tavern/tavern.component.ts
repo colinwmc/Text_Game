@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../shared.service';
+import { item } from '../models';
 
 @Component({
   selector: 'app-tavern',
@@ -15,6 +16,7 @@ export class TavernComponent implements OnInit {
   public portraitID: string = '';
   public number: number = 1;
   public smiledDisarmingly = false;
+  
   // public hasContinue = true;
 
   constructor(private sharedService: SharedService) { }
@@ -29,6 +31,15 @@ export class TavernComponent implements OnInit {
         this.PC = data[0];
         this.PC.currentHealth = this.PC.hp;
         this.PC.hasShitPants = false;
+        let gold: item = {
+          itemID: 13,
+          itemDescription: 'Can be exchanged for goods and services.',
+          itemName: 'Gold',
+          itemQuantity: 10,
+          imageID: ''
+        }
+        this.PC.items.push(gold);
+        console.log(this.PC);
         this.sharedService.PC = this.PC;
         this.currentNarration = "You open the door to reveal a small, wooden room; half lit, half full. Provincial figures look up from their beer and potatoes to cast you " + (this.PC.pcid === 1 ? "fearful looks. Each averting their eyes as soon as they see you." : "suspicious looks.") + "  The bartender fixes you with an empty stare, before reluctantly waving you over."
         this.currentOptions = [{ ID: 'TV0', text: 'Continue >' }];
@@ -40,6 +51,8 @@ export class TavernComponent implements OnInit {
 
   optionSelection(event: any) {
     let npcTag = 'Bartender: ';
+    let successfulPurchaseLine = '"Thank you, kindly."'
+    let unsuccessfulPurchaseLine = '"It does\'t look like you\'ve got the money for that, mate."'
     switch (event.ID) {
       case 'TV0':
         this.currentNarration = '';
@@ -49,7 +62,7 @@ export class TavernComponent implements OnInit {
           this.currentOptions = [
             { ID: 'TV1', text: '"Oh dear. Why would there be any trouble?"' },
             { ID: 'TV2', text: 'Say nothing but take the quest flyer and place it gently on the bar.' },
-            { ID: 'TV3', text: 'You mean no harm. Try to put the man at ease by smiling in a reassuring manner. (Charisma Check)' },
+            { ID: 'TV3', text: 'You mean no harm. Try to put the man at ease by smiling in a reassuring manner. (Charisma Check)' }
           ]
         } else {
           this.currentDialogue.unshift('Bartender: "Howdy Stranger," he says, flatly. "What can I do for you?"')
@@ -88,7 +101,7 @@ export class TavernComponent implements OnInit {
           this.currentOptions = [
             { ID: 'TV8', text: '"Thanks." You mutter sheepishly before turning for the door.' },
             { ID: 'TV8', text: 'Turn from the man wordlessly and walk through the mysterious door.' },
-          ]
+          ];
         }
         break;
       case 'TV3':
@@ -136,16 +149,44 @@ export class TavernComponent implements OnInit {
         break;
       case 'TV7':
         this.currentDialogue.unshift('"The creature is here to see me!" An unseen voice rings out sharply from the back. "And I\'d appreciate if they arrived in one piece." Everyone in the room shrinks back slightly, returning to their seats. "She\'s back through there." The bartender says, pointing down a small, dark hallway with a wooden door at the end. "Don\'t linger."');
-        this.currentOptions = [{ ID: 'TV8', text: 'Turn from the man and walk through the mysterious door.' }]
+        this.currentOptions = [{ ID: 'TV8', text: 'Turn from the man and walk toward the mysterious door.' }]
         break;
       case 'TV8':
         // reroute to next room
         break;
       case 'TV9':
         this.addPCDialogue(event.text);
+        this.currentDialogue.unshift(npcTag + '"If you\'ve got coin."')
+        this.currentOptions = [
+          { ID: 'TV11', text: 'Pint of Beer: Increases Charisma by 1 for 1 scene. 2 gold.', cost: 2 },
+          { ID: 'TV12', text: 'Fried Potatoes: Increases Constitution by 1 for 1 scene. 2 gold.', cost: 2 },
+          { ID: 'TV13', text: 'Health Potion: Restores 5 HP. 5 gold.', cost: 5 },
+        ];
+
+        if (this.PC.pcid === 1) {
+          this.currentOptions.push({ ID: 'TV14', text: '"That\'ll be all, thanks."' })
+        }
+
         break;
       case 'TV10':
         this.addPCDialogue(event.text);
+        break;
+      case 'TV11':
+        this.sharedService.buyItem(event.cost, 14) ? this.currentDialogue.unshift(npcTag+successfulPurchaseLine) : this.currentDialogue.unshift(npcTag+unsuccessfulPurchaseLine);
+        break;
+      case 'TV12':
+        this.sharedService.buyItem(event.cost, 15) ? this.currentDialogue.unshift(npcTag+successfulPurchaseLine) : this.currentDialogue.unshift(npcTag+unsuccessfulPurchaseLine);
+        break;
+      case 'TV13':
+        this.sharedService.buyItem(event.cost, 16) ? this.currentDialogue.unshift(npcTag+successfulPurchaseLine) : this.currentDialogue.unshift(npcTag+unsuccessfulPurchaseLine);
+        break;
+      case 'TV14':
+        this.addPCDialogue(event.text);
+        this.currentDialogue.unshift(npcTag + '"Understood."');
+        this.currentOptions = [
+          { ID: 'TV8', text: '"Thanks." You mutter sheepishly before turning for the door.' },
+          { ID: 'TV8', text: 'Turn from the man wordlessly and walk toward the mysterious door.' },
+        ];
         break;
       default:
         break;
@@ -155,6 +196,8 @@ export class TavernComponent implements OnInit {
   addPCDialogue(text: string) {
     this.currentDialogue.unshift(this.PC.name + ': ' + text);
   }
+
+
 
 
 
