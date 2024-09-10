@@ -30,6 +30,10 @@ export class UiOverlayComponent implements OnInit {
     this.backpackOpen = !this.backpackOpen;
   }
 
+  useItem(itemID:number){
+    this.sharedService.useItem(itemID)
+  }
+
 //   @ViewChildren('newline') lines: QueryList<ElementRef> | undefined
 //   ngAfterViewInit()
 //   {

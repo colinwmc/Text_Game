@@ -12,6 +12,7 @@ import { PCProfileComponent } from './pc-profile/pc-profile.component';
 import { IntroComponent } from './intro/intro.component';
 import { TavernComponent } from './tavern/tavern.component';
 import { UiOverlayComponent } from './ui-overlay/ui-overlay.component';
+import { FortuneTellersRoomComponent } from './fortune-tellers-room/fortune-tellers-room.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UiOverlayComponent } from './ui-overlay/ui-overlay.component';
     IntroComponent,
     TavernComponent,
     UiOverlayComponent,
+    FortuneTellersRoomComponent,
   ],
   imports: [
     BrowserModule,

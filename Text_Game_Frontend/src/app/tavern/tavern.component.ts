@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 import { SharedService } from '../shared.service';
 import { item } from '../models';
 
@@ -29,7 +30,7 @@ export class TavernComponent implements OnInit {
 
   // public hasContinue = true;
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService, private router: Router) { }
 
   ngOnInit(): void {
     if (this.sharedService.PC) {
@@ -49,7 +50,6 @@ export class TavernComponent implements OnInit {
           imageID: ''
         }
         this.PC.items.push(gold);
-        console.log(this.PC);
         this.sharedService.PC = this.PC;
         this.currentNarration = "You open the door to reveal a small, wooden room; half lit, half full. Provincial figures look up from their beer and potatoes to cast you " + (this.PC.pcid === 1 ? "fearful looks. Each averting their eyes as soon as they see you." : "suspicious looks.") + "  The bartender fixes you with an empty stare, before reluctantly waving you over."
         this.currentOptions = [{ ID: 'TV0', text: 'Continue >' }];
@@ -163,7 +163,7 @@ export class TavernComponent implements OnInit {
         this.currentOptions = [{ ID: 'TV8', text: 'Turn from the man and walk toward the mysterious door.' }]
         break;
       case 'TV8':
-        // reroute to next room
+        this.router.navigate(['/fortune']);
         break;
       case 'TV9':
         this.addPCDialogue(event.text);
@@ -293,7 +293,6 @@ export class TavernComponent implements OnInit {
         this.currentOptions.push({ ID: 'TV8', text: '"No, that\'ll be all." You say as you turn for the door.' });
         break;
       case 'TV20':
-        //what's so dangerous about the forest
         this.addPCDialogue(event.text);
         this.currentDialogue.unshift(npcTag + '"The forest belongs to the fae." He says sternly. "We don\'t enter the forest. We hope they don\'t leave it."');
         this.currentOptions = [
@@ -302,7 +301,6 @@ export class TavernComponent implements OnInit {
         ]
         break;
       case 'TV21':
-        //why won't i get that luxury?
         this.addPCDialogue(event.text);
         this.currentDialogue.unshift(npcTag + '"Beacuse if you\'re working with the Madame, you\'re dealing with the fae."');
         this.currentOptions = [
@@ -312,7 +310,6 @@ export class TavernComponent implements OnInit {
         ]
         break;
       case 'TV22':
-        //what can you tell me about the fae
         this.hasAskedAboutFae = true;
         this.addPCDialogue(event.text);
         this.currentDialogue.unshift(npcTag + '"They\'re foul, wretched creatures. Shapeshifters, liars, tricksters. Honest folk don\'t deal with the fae. Ever."');

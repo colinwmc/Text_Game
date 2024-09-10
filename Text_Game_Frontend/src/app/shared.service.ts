@@ -63,37 +63,37 @@ export class SharedService {
     return this.http.get<any[]>(this.APIUrl + '/PC', this.httpOptions);
   }
 
-  skillCheck(modifier:string, dc:number, special:string) {
+  skillCheck(modifier: string, dc: number, special: string) {
     let diceRoll = new Audio();
     diceRoll.src = "../assets/Sound Effects/rpg-dice-rolling-95182.mp3";
     diceRoll.load();
     diceRoll.play();
 
     let roll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
-    if(special === 'advantage'){
+    if (special === 'advantage') {
       let secondRoll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
-      if(secondRoll > roll){
+      if (secondRoll > roll) {
         roll = secondRoll;
       }
-    } else if(special === 'disadvantage'){
+    } else if (special === 'disadvantage') {
       let secondRoll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
-      if(secondRoll < roll){
+      if (secondRoll < roll) {
         roll = secondRoll;
       }
     }
-    let modValue = Math.floor((this.PC[modifier]-10)/2);
-    return roll+modValue >= dc;
-   
+    let modValue = Math.floor((this.PC[modifier] - 10) / 2);
+    return roll + modValue >= dc;
+
   }
 
   buyItem(cost: number, itemID: number) {
     let gold = this.PC.items.find((item: { itemID: number; }) => item.itemID === 13);
     if (gold.itemQuantity >= cost) {
-      if(cost !== 0){
-      let moneyClink = new Audio();
-      moneyClink.src = "../assets/Sound Effects/coins-falling-013-36967.mp3";
-      moneyClink.load();
-      moneyClink.play();
+      if (cost !== 0) {
+        let moneyClink = new Audio();
+        moneyClink.src = "../assets/Sound Effects/coins-falling-013-36967.mp3";
+        moneyClink.load();
+        moneyClink.play();
       }
       gold.itemQuantity = gold.itemQuantity - cost;
       if (this.PC.items.find((item: { itemID: number; }) => item.itemID === itemID)) {
@@ -104,6 +104,17 @@ export class SharedService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  useItem(itemID: number) {
+    switch (itemID) {
+      case 1:
+        let raccon = new Audio();
+        raccon.src = "../assets/Sound Effects/raccoon.mp4";
+        raccon.load();
+        raccon.play();
+        break;
     }
   }
 }

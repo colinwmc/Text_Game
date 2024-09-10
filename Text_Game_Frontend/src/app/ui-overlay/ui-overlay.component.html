@@ -84,7 +84,7 @@
                 class="backpack">
                 <div class="item-menu" *ngIf="backpackOpen">
                     <div class="inventory-title">Inventory</div>
-                    <div class="item-row selectable" *ngFor="let item of PC.items">
+                    <div class="item-row selectable" (click)="useItem(item.itemID)" *ngFor="let item of PC.items">
                         <!-- <img class= "backpack-item-icon" src={{item.imageID}} alt=""> -->
                         <div class="backpack-item-name">{{item.itemName}}</div>
                         <div class="backpack-item-quantity">X{{item.itemQuantity}}</div>
