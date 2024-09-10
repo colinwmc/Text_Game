@@ -89,10 +89,12 @@ export class SharedService {
   buyItem(cost: number, itemID: number) {
     let gold = this.PC.items.find((item: { itemID: number; }) => item.itemID === 13);
     if (gold.itemQuantity >= cost) {
+      if(cost !== 0){
       let moneyClink = new Audio();
       moneyClink.src = "../assets/Sound Effects/coins-falling-013-36967.mp3";
       moneyClink.load();
       moneyClink.play();
+      }
       gold.itemQuantity = gold.itemQuantity - cost;
       if (this.PC.items.find((item: { itemID: number; }) => item.itemID === itemID)) {
         this.PC.items.find((item: { itemID: number; }) => item.itemID === itemID).itemQuantity++;

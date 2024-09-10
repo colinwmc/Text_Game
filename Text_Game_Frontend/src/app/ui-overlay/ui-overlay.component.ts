@@ -15,7 +15,7 @@ export class UiOverlayComponent implements OnInit {
   @Input() portraitID: string = '';
   // @Input() hasContinue = false;
   @Output() newSelection = new EventEmitter<string>();
-  public backpackOpen = false;
+  @Input() backpackOpen = false;
 
   constructor(private sharedService: SharedService) { }
 
