@@ -71,7 +71,7 @@ export class TavernComponent implements OnInit {
           this.options = [
             { ID: 'TV1', text: '"Oh dear. Why would there be any trouble?"' },
             { ID: 'TV2', text: 'Say nothing but take the quest flyer and place it gently on the bar.' },
-            { ID: 'TV3', text: 'You mean no harm. Try to put the man at ease by smiling in a reassuring manner. (Charisma Check)' }
+            { ID: 'TV3', text: 'You mean no harm. Try to put the man at ease by smiling in a reassuring manner. (Charisma Persuasion Check)' }
           ]
         } else {
           this.dialogue.unshift('Bartender: "Howdy Stranger," he says, flatly. "What can I do for you?"')
@@ -179,7 +179,7 @@ export class TavernComponent implements OnInit {
           this.options.push({ ID: 'TV14', text: '"That\'ll be all, thanks."' })
         } else {
           if (!this.hasTriedCharm) {
-            this.options.push({ ID: 'TV27', text: '"No free samples for a charming traveler?" You ask, batting your eyelashes. (Charisma Check)' })
+            this.options.push({ ID: 'TV27', text: '"No free samples for a charming traveler?" You ask, batting your eyelashes. (Charisma Persuasion Check)' })
             this.options.push({ ID: 'TV19', text: '"That\'ll be all, thanks."' })
           } else {
             this.options.push({ ID: 'TV19', text: '"That\'ll be all, thanks."' })
@@ -270,7 +270,7 @@ export class TavernComponent implements OnInit {
           { ID: 'TV11', text: 'Pint of Beer: Increases Charisma by 1 for 1 scene. 2 gold.', cost: 2 },
           { ID: 'TV12', text: 'Fried Potatoes: Increases Constitution by 1 for 1 scene. 2 gold.', cost: 2 },
           { ID: 'TV13', text: 'Health Potion: Restores 5 HP. 5 gold.', cost: 5 },
-          { ID: 'TV27', text: '"No free samples for a charming traveler?" You ask, batting your eyelashes. (Charisma Check)' },
+          { ID: 'TV27', text: '"No free samples for a charming traveler?" You ask, batting your eyelashes. (Charisma Persuasion Check)' },
           { ID: 'TV19', text: '"That\'ll be all, thanks."' }
         ];
         break;

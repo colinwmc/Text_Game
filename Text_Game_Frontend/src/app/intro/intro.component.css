@@ -28,14 +28,14 @@
     background-color: black;
     color: white;
     
-    border-bottom: 2px solid white;
+    /* border-bottom: 2px solid white; */
     padding: 1rem;
     margin-top: 1rem;
 }
 
 .continue-button:hover {
     color: gold;
-    border-bottom: 2px solid gold;
+    /* border-bottom: 2px solid gold; */
 }
 
 .button-version {

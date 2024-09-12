@@ -82,6 +82,7 @@ export class SharedService {
       }
     }
     let modValue = Math.floor((this.PC[modifier] - 10) / 2);
+    console.log('Roll('+roll+') + Modifier('+modValue+') = '+(roll+modValue)+(roll+modValue>=dc ? ' > ' : ' < ')+dc);
     return roll + modValue >= dc;
 
   }
