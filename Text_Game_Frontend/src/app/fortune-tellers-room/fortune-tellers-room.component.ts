@@ -22,6 +22,7 @@ export class FortuneTellersRoomComponent implements OnInit {
   public hasIdentifiedEmblem = false;
   public hasAskedABoutOpening = false;
   public hasAskedAboutForest = false;
+  public encounters: string[] = [];
 
   constructor(private sharedService: SharedService, private router: Router) { }
 
@@ -230,16 +231,73 @@ export class FortuneTellersRoomComponent implements OnInit {
         break;
       case 19:
         this.addPCDialogue(event.text);
-        this.dialogue.unshift(npcTag + '"Often you won\'t, and you may never be sure, but there are things you can do that will help. Many fae, especially the weaker ones, are imperfect in their imitations. Always count their fingers and look at their eyes; and remember that if something seems too good to be true, it probably is."');
+        this.dialogue.unshift(npcTag + '"Often you won\'t, and you may never be sure, but there are things you can do that will help. Many fae, especially the weaker ones, are imperfect in their imitations. Count their fingers. Look into their eyes. Remember that if something seems too good to be true, it probably is."');
         this.options = [{ id: 20, text: '"Anything else you can tell me about the journey ahead?"' }];
         break;
       case 20:
         this.addPCDialogue(event.text);
+        let shuffle = new Audio();
+        shuffle.src = "../assets/Sound Effects/shuffling-cards-74757.mp3";
+        shuffle.load();
+        shuffle.play();
         this.dialogue.unshift(npcTag + '"Let\'s look to the cards," she says, shuffling the deck in her hands, "See if they can reveal any of the perils you may face."');
         this.options = [{ id: 21, text: 'Continue >' }];
         break;
       case 21:
         //shuffle the cards
+        this.shuffleCards();
+        if (this.encounters[0] === 'OF1') {
+          this.portraitID = '../../assets/Final Picks/Tarot Cards/Fool.jpg';
+          this.dialogue.unshift(npcTag + '"The Fool. A figure of innocence, naivete. An unserious individual hoping to be met with trust."');
+        } else {
+          this.portraitID = '../../assets/Final Picks/Tarot Cards/Lovers.jpg';
+          this.dialogue.unshift(npcTag + '"The Lovers. A card of romance and the heart. Perhaps a chance encounter with a being of passion?" She raises her eyebrows as she looks you in the eye.');
+        }
+        this.options = [{ id: 22, text: 'Continue >' }];
+        break;
+      case 22:
+        if (this.encounters[1] === 'MF1') {
+          this.portraitID = '../../assets/Final Picks/Tarot Cards/Tower.jpg';
+          this.dialogue.unshift(npcTag + '"The Tower. Chaos. Upheaval. A sudden shock forcefully delivered. Perhaps a time for . . . purging." She chuckles under her breath.');
+        } else {
+          this.portraitID = '../../assets/Final Picks/Tarot Cards/Pents06.jpg';
+          this.dialogue.unshift(npcTag + '"The Six of Pentacles. A sign of charity and support for the struggling. A chance to give to the less fortunate. But also be mindful of the scales. Is there balance in what you give and receive?"');
+        }
+        this.options = [{ id: 23, text: 'Continue >' }];
+        break;
+      case 23:
+        if (this.encounters[2] === 'DF1') {
+          this.portraitID = '../../assets/Final Picks/Tarot Cards/Swords08.jpg';
+          this.dialogue.unshift(npcTag + '"The Eight of Swords. A symbol of being trapped, helpless, lost.But how tightly are the ropes bound, and by whom? Do we sometimes allow ourselves to play the victim in our own minds?"');
+        } else {
+          this.portraitID = '../../assets/Final Picks/Tarot Cards/Cups07.jpg';
+          this.dialogue.unshift(npcTag + '"The Seven of Cups. A symbol of the endless possibilities of our imaginations. A card of wonder and awe, but also illusion. Will your heads be caught in the clouds.?"');
+        }
+        this.options = [
+          { id: 24, text: '"Uh . . . wut?"' },
+          { id: 24, text: '"Hmmm, yes I see." You say stroking your chin thoughfully.' },
+          { id: 24, text: '""I\'ll be honest with you ma\'am, I\'m not sure what to make of that." You say scratching your head.' }];
+        break;
+      case 24:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(npcTag + '"All of these things and more you will encounter in the night to come, though I can do no more to prepare you to face them." She says, solemnly as she collects the cards back into the deck.');
+        this.options = [
+          { id: 25, text: '"Well I suppose I\'ll be off then. Lots to do it sounds like."' },
+          { id: 25, text: '"Thank you madame. I will do my best not to let you down."' },
+          { id: 25, text: '"Welp, smell ya later then."' }
+        ];
+        break;
+      case 25:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(npcTag + '"Yes, farewell my dear. And good luck . . . I fear you may need it."');
+        this.options = [{ id: 26, text: 'Venture forth into the forest!' }];
+        break;
+      case 26:
+        if (this.encounters[0] === 'OF1') {
+          this.router.navigate(['/frog']);
+        } else {
+          this.router.navigate(['/seductress']);
+        }
         break;
       default:
         break;
@@ -248,5 +306,17 @@ export class FortuneTellersRoomComponent implements OnInit {
 
   addPCDialogue(text: string) {
     this.dialogue.unshift(this.PC.name + ': ' + text);
+  }
+
+  shuffleCards() {
+    let number1 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+    let number2 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+    let number3 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+    this.encounters = [
+      'OF' + number1,
+      'MF' + number2,
+      'DF' + number3
+    ];
+    this.sharedService.encounters = this.encounters;
   }
 }

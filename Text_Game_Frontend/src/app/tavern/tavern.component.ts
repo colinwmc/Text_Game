@@ -38,7 +38,7 @@ export class TavernComponent implements OnInit {
       this.options = [{ ID: 'TV0', text: 'Continue >' }];
     } else {
       this.sharedService.getPCList().subscribe(data => {
-        this.PC = data[1];
+        this.PC = data[0];
         this.PC.currentHealth = this.PC.hp;
         this.PC.hasShitPants = false;
         let gold: item = {
@@ -219,6 +219,17 @@ export class TavernComponent implements OnInit {
           { ID: 'TV8', text: '"Thanks." You mutter sheepishly before turning for the door.' },
           { ID: 'TV8', text: 'Turn from the man wordlessly and walk toward the mysterious door.' },
         ];
+        if (this.hasShopped) {
+          this.options.push({ ID: 'TV9', text: '"Can I see the menu again?"' });
+        } else {
+          this.options.push({ ID: 'TV9', text: '"Do you have anything to sell?"' });
+        }
+        if (!this.hasAskedAboutArea) {
+          this.options.push({ ID: 'TV10', text: '"What can you tell me about the area."' });
+        }
+        if (!this.hasAskedAboutMadame) {
+          this.options.push({ ID: 'TV24', text: '"And what can you tell me about the Madame?"' });
+        } 
         break;
       case 'TV15':
         this.addPCDialogue(event.text);

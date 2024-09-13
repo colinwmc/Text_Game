@@ -16,9 +16,10 @@ export class SharedService {
   constructor(private http: HttpClient) { }
 
   public PC: any;
+  public encounters: string[] = [];
   public itemsForSale: item[] = [{
     itemID: 14,
-    itemDescription: 'A proper, frost pint.',
+    itemDescription: 'A proper, frosty pint.',
     itemName: 'Pint of Beer',
     itemQuantity: 1,
     imageID: ''
@@ -37,27 +38,6 @@ export class SharedService {
     itemQuantity: 1,
     imageID: ''
   }];
-  public beer: item = {
-    itemID: 14,
-    itemDescription: 'A proper, frost pint.',
-    itemName: 'Pint of Beer',
-    itemQuantity: 1,
-    imageID: ''
-  };
-  public potatoes: item = {
-    itemID: 15,
-    itemDescription: 'Golden fried spuds.',
-    itemName: 'Fried Potatoes',
-    itemQuantity: 1,
-    imageID: ''
-  };
-  public healthPotion: item = {
-    itemID: 16,
-    itemDescription: 'Restores 5 HP.',
-    itemName: 'Health Potion',
-    itemQuantity: 1,
-    imageID: ''
-  };
 
   getPCList(): Observable<any[]> {
     return this.http.get<any[]>(this.APIUrl + '/PC', this.httpOptions);
@@ -82,7 +62,7 @@ export class SharedService {
       }
     }
     let modValue = Math.floor((this.PC[modifier] - 10) / 2);
-    console.log('Roll('+roll+') + Modifier('+modValue+') = '+(roll+modValue)+(roll+modValue>=dc ? ' > ' : ' < ')+dc);
+    console.log('Roll(' + roll + ') + Modifier(' + modValue + ') = ' + (roll + modValue) + (roll + modValue >= dc ? ' > ' : ' < ') + dc);
     return roll + modValue >= dc;
 
   }
