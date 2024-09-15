@@ -17,6 +17,7 @@ export class SharedService {
 
   public PC: any;
   public encounters: string[] = [];
+  public hurting = false;
   public itemsForSale: item[] = [{
     itemID: 14,
     itemDescription: 'A proper, frosty pint.',
@@ -89,13 +90,74 @@ export class SharedService {
   }
 
   useItem(itemID: number) {
-    switch (itemID) {
-      case 1:
-        let raccon = new Audio();
-        raccon.src = "../assets/Sound Effects/raccoon.mp4";
-        raccon.load();
-        raccon.play();
-        break;
+    if (this.PC.currentHealth > 0) {
+      switch (itemID) {
+        case 1:
+        case 4:
+          let raccon = new Audio();
+          raccon.src = "../assets/Sound Effects/raccoon.mp4";
+          raccon.load();
+          raccon.play();
+          if (itemID === 4) {
+            this.removeItem(itemID);
+          }
+          break;
+        case 7:
+        case 14:
+        case 16:
+          let drink = new Audio();
+          drink.src = "../assets/Sound Effects/glug-glug-glug-39140.mp3";
+          drink.load();
+          drink.play();
+          this.removeItem(itemID);
+          if (itemID === 7) {
+            this.PC.enhancedStink = true;
+          }
+          if (itemID === 14) {
+            this.PC.charisma++;
+            if (this.PC.charismaBoosted) {
+              this.PC.charismaBoosted++;
+            } else {
+              this.PC.charismaBoosted = 1;
+            }
+          }
+          if (itemID === 16) {
+            if ((this.PC.currentHealth + 5) < this.PC.hp) {
+              this.PC.currentHealth = this.PC.currentHealth + 5;
+            } else {
+              this.PC.currentHealth = this.PC.hp;
+            }
+          }
+          break;
+      }
     }
+  }
+
+  removeItem(itemID: any) {
+    let item = this.PC.items.find((i: { itemID: any; }) => i.itemID === itemID);
+    if (item.itemQuantity > 1) {
+      item.itemQuantity--;
+    } else {
+      let index = this.PC.items.findIndex((i: { itemID: any; }) => i.itemID === itemID);
+      this.PC.items.splice(index, 1);
+    }
+  }
+
+  takeDamage(amount: number) {
+    let damage = new Audio();
+    damage.src = "../assets/Sound Effects/retro-hurt-2-236675.mp3";
+    damage.load();
+    damage.play();
+    this.PC.currentHealth = this.PC.currentHealth - amount;
+    this.hurting = true;
+    setTimeout(() => {
+      this.hurting = false;
+    }, 250);
+    setTimeout(() => {
+      this.hurting = true;
+    }, 500);
+    setTimeout(() => {
+      this.hurting = false;
+    }, 750);
   }
 }

@@ -21,6 +21,12 @@
     display: flex;
 }
 
+.dead{
+    height: 75%;
+    width: 50%;
+    background-color: red;
+}
+
 .npc-portrait {
     height: calc(100% - 20px);
     width: calc(33% - 20px);
@@ -87,6 +93,13 @@
     height: calc(90% - 5px);
     width: 100%;
     border-bottom: 5px solid #253e54;
+}
+
+.hurting {
+    height: calc(90% - 5px);
+    width: 100%;
+    border-bottom: 5px solid #253e54;
+    background-color: red;
 }
 
 .health-bar {

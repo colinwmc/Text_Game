@@ -11,6 +11,8 @@ import { item } from '../models';
 export class TavernComponent implements OnInit {
 
   public PC: any;
+  public resetPC: any;
+  public resetItems: any;
   public narration: string = '';
   public dialogue: any[] = [];
   public options: any[] = [];
@@ -27,18 +29,18 @@ export class TavernComponent implements OnInit {
   public commentedOnTaters = false;
 
 
-  // public hasContinue = true;
-
   constructor(private sharedService: SharedService, private router: Router) { }
 
   ngOnInit(): void {
     if (this.sharedService.PC) {
       this.PC = this.sharedService.PC;
+      this.resetPC = JSON.parse(JSON.stringify(this.PC));
+      this.resetPC = Object.assign({}, this.PC);
       this.narration = "You open the door to reveal a small, wooden room; half lit, half full. Provincial figures look up from their beer and potatoes to cast you " + (this.PC.pcid === 1 ? "fearful looks. Each averting their eyes as soon as they see you." : "suspicious looks.") + "  The bartender fixes you with an empty stare, before reluctantly waving you over."
       this.options = [{ ID: 'TV0', text: 'Continue >' }];
     } else {
       this.sharedService.getPCList().subscribe(data => {
-        this.PC = data[0];
+        this.PC = data[1];
         this.PC.currentHealth = this.PC.hp;
         this.PC.hasShitPants = false;
         let gold: item = {
@@ -50,13 +52,32 @@ export class TavernComponent implements OnInit {
         }
         this.PC.items.push(gold);
         this.sharedService.PC = this.PC;
+        this.resetPC = JSON.parse(JSON.stringify(this.PC));
         this.narration = "You open the door to reveal a small, wooden room; half lit, half full. Provincial figures look up from their beer and potatoes to cast you " + (this.PC.pcid === 1 ? "fearful looks. Each averting their eyes as soon as they see you." : "suspicious looks.") + "  The bartender fixes you with an empty stare, before reluctantly waving you over."
         this.options = [{ ID: 'TV0', text: 'Continue >' }];
       })
     }
 
-
   }
+
+  resetEncounter() {
+    this.PC = this.resetPC;
+    this.sharedService.PC = this.resetPC;
+    this.dialogue = [];
+    this.narration = "You open the door to reveal a small, wooden room; half lit, half full. Provincial figures look up from their beer and potatoes to cast you " + (this.PC.pcid === 1 ? "fearful looks. Each averting their eyes as soon as they see you." : "suspicious looks.") + "  The bartender fixes you with an empty stare, before reluctantly waving you over."
+    this.options = [{ ID: 'TV0', text: 'Continue >' }];
+    this.smiledDisarmingly = false;
+    this.backpackOpen = false;
+    this.hasAskedAboutArea = false;
+    this.hasLearnedAboutMadame = false;
+    this.hasShopped = false;
+    this.hasAskedAboutMadame = false;
+    this.hasAskedAboutConcern = false;
+    this.hasAskedAboutFae = false;
+    this.hasTriedCharm = false;
+    this.commentedOnTaters = false;
+  }
+
 
   optionSelection(event: any) {
     let npcTag = 'Bartender: ';
@@ -102,9 +123,9 @@ export class TavernComponent implements OnInit {
         if (this.smiledDisarmingly) {
           this.dialogue.unshift(npcTag + '"Oh . . . I see." He eyes you uneasily. Clearly you weren\'t what he expected when the ads went up. "She\'s back through there." He points down a small, dark hallway with a wooden door at the end. "Did you need anything else?"');
           this.options = [
-            { ID: 'TV8', text: '"No, Thanks." You mutter sheepishly before turning for the door.' },
             { ID: 'TV9', text: '"Do you have anything to sell?"' },
             { ID: 'TV10', text: '"What can you tell me about the area."' },
+            { ID: 'TV8', text: '"No, Thanks." You mutter sheepishly before turning for the door.' },
           ]
         } else {
           this.dialogue.unshift(npcTag + '"Oh . . . I see." He eyes you uneasily. Clearly you weren\'t what he expected when the ads went up. "She\'s back through there." He points down a small, dark hallway with a wooden door at the end.');
@@ -115,7 +136,7 @@ export class TavernComponent implements OnInit {
         }
         break;
       case 'TV3':
-        if (this.sharedService.skillCheck('charisma', 15, 'none')) {
+        if (this.sharedService.skillCheck('charisma', 0, 'none')) {
           this.smiledDisarmingly = true;
           this.dialogue.unshift('(Success!) He chuckles uncomfortably. He\'s not sure what to make of you, but appears more confused than afraid. A mild improvement. "Can I . . . help you?"');
           this.options = [
@@ -198,6 +219,7 @@ export class TavernComponent implements OnInit {
         ];
         if (this.hasLearnedAboutMadame) {
           this.options.push({ ID: 'TV21', text: '"And why won\'t I get that luxury?"' });
+          this.options.push({ ID: 'TV24', text: '"And what can you tell me about the Madame?"' });
         }
         this.options.push({ ID: 'TV19', text: '"I see. Well that\'s all I need to know about that."' });
         break;
@@ -215,10 +237,7 @@ export class TavernComponent implements OnInit {
         this.hasShopped = true;
         this.addPCDialogue(event.text);
         this.dialogue.unshift(npcTag + '"Understood."');
-        this.options = [
-          { ID: 'TV8', text: '"Thanks." You mutter sheepishly before turning for the door.' },
-          { ID: 'TV8', text: 'Turn from the man wordlessly and walk toward the mysterious door.' },
-        ];
+        this.options = [];
         if (this.hasShopped) {
           this.options.push({ ID: 'TV9', text: '"Can I see the menu again?"' });
         } else {
@@ -229,7 +248,9 @@ export class TavernComponent implements OnInit {
         }
         if (!this.hasAskedAboutMadame) {
           this.options.push({ ID: 'TV24', text: '"And what can you tell me about the Madame?"' });
-        } 
+        }
+        this.options.push({ ID: 'TV8', text: '"Thanks." You mutter sheepishly before turning for the door.' });
+        this.options.push({ ID: 'TV8', text: 'Turn from the man wordlessly and walk toward the mysterious door.' });
         break;
       case 'TV15':
         this.addPCDialogue(event.text);
@@ -266,9 +287,9 @@ export class TavernComponent implements OnInit {
         }
         if (!this.hasAskedAboutMadame) {
           this.options.push({ ID: 'TV24', text: '"And what can you tell me about the Madame?"' });
-        } 
-        if(this.hasLearnedAboutMadame){
-        this.options.push({ ID: 'TV8', text: '"No, that\'ll be all." You say as you turn for the door.' });
+        }
+        if (this.hasLearnedAboutMadame) {
+          this.options.push({ ID: 'TV8', text: '"No, that\'ll be all." You say as you turn for the door.' });
         }
         break;
       case 'TV18':
@@ -302,8 +323,8 @@ export class TavernComponent implements OnInit {
         } else {
           this.options.push({ ID: 'TV9', text: '"Do you have anything to sell?"' });
         }
-        if(this.hasLearnedAboutMadame){
-        this.options.push({ ID: 'TV8', text: '"No, that\'ll be all." You say as you turn for the door.' });
+        if (this.hasLearnedAboutMadame) {
+          this.options.push({ ID: 'TV8', text: '"No, that\'ll be all." You say as you turn for the door.' });
         }
         break;
       case 'TV20':
@@ -327,9 +348,11 @@ export class TavernComponent implements OnInit {
         this.hasAskedAboutFae = true;
         this.addPCDialogue(event.text);
         this.dialogue.unshift(npcTag + '"They\'re foul, wretched creatures. Shapeshifters, liars, tricksters. Honest folk don\'t deal with the fae. Ever."');
-        this.options = [
-          { ID: 'TV19', text: '"I see. Well that\'s all I need to know about that."' }
-        ]
+        this.options = [];
+        if (!this.hasAskedAboutMadame && this.hasLearnedAboutMadame) {
+          this.options.push({ ID: 'TV24', text: '"And what can you tell me about the Madame?"' });
+        }
+        this.options.push({ ID: 'TV19', text: '"I see. Well that\'s all I need to know about that."' });
         break;
       case 'TV23':
         this.hasAskedAboutConcern = true;
@@ -353,9 +376,9 @@ export class TavernComponent implements OnInit {
         this.options = [
           { ID: 'TV26', text: '"And what do you think of her?"' }
         ];
-        if (!this.hasAskedAboutConcern) {
-          this.options.push({ ID: 'TV23', text: '"Do you think I have reason to be concerned?"' });
-        }
+        // if (!this.hasAskedAboutConcern) {
+        //   this.options.push({ ID: 'TV23', text: '"Do you think I have reason to be concerned?"' });
+        // }
         if (!this.hasAskedAboutFae) {
           this.options.push({ ID: 'TV22', text: '"What can you tell me about the fae?"' });
         }
@@ -365,9 +388,6 @@ export class TavernComponent implements OnInit {
         this.addPCDialogue(event.text);
         this.dialogue.unshift(npcTag + '"No."');
         this.options = [];
-        if (!this.hasAskedAboutConcern) {
-          this.options.push({ ID: 'TV23', text: '"Do you think I have reason to be concerned?"' });
-        }
         if (!this.hasAskedAboutMadame) {
           this.options.push({ ID: 'TV24', text: '"And what can you tell me about the Madame?"' });
         }
@@ -380,9 +400,9 @@ export class TavernComponent implements OnInit {
         this.addPCDialogue(event.text);
         this.dialogue.unshift(npcTag + '"She pays her rent on time. She keeps to herself. She\'s an intimidating woman who doesn\'t smile much and is scarier when she does. A lot of folks don\'t like that. As far as I\'m concerned she\'s fine."');
         this.options = [];
-        if (!this.hasAskedAboutConcern) {
-          this.options.push({ ID: 'TV23', text: '"Do you think I have reason to be concerned?"' });
-        }
+        // if (!this.hasAskedAboutConcern) {
+        //   this.options.push({ ID: 'TV23', text: '"Do you think I have reason to be concerned?"' });
+        // }
         if (!this.hasAskedAboutFae) {
           this.options.push({ ID: 'TV22', text: '"What can you tell me about the fae?"' });
         }
