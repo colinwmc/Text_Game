@@ -99,6 +99,10 @@ export class SharedService {
           raccon.load();
           raccon.play();
           if (itemID === 4) {
+            let eat = new Audio();
+            eat.src = "../assets/Sound Effects/eating.mp3";
+            eat.load();
+            eat.play();
             this.removeItem(itemID);
           }
           break;
@@ -112,6 +116,7 @@ export class SharedService {
           this.removeItem(itemID);
           if (itemID === 7) {
             this.PC.enhancedStink = true;
+            this.takeDamage(10);
           }
           if (itemID === 14) {
             this.PC.charisma++;
@@ -128,6 +133,19 @@ export class SharedService {
               this.PC.currentHealth = this.PC.hp;
             }
           }
+          break;
+        case 15:
+          let eat = new Audio();
+          eat.src = "../assets/Sound Effects/eating.mp3";
+          eat.load();
+          eat.play();
+          this.PC.constitution++;
+          if (this.PC.constitutionBoosted) {
+            this.PC.constitutionBoosted++;
+          } else {
+            this.PC.constitutionBoosted = 1;
+          }
+          this.removeItem(itemID);
           break;
       }
     }
@@ -159,5 +177,17 @@ export class SharedService {
     setTimeout(() => {
       this.hurting = false;
     }, 750);
+  }
+
+  deboostStats() {
+    if (this.PC.charismaBoosted) {
+      this.PC.charisma = this.PC.charisma - this.PC.charismaBoosted;
+      this.PC.charismaBoosted = null;
+    }
+
+    if (this.PC.constitutionBoosted) {
+      this.PC.constitution = this.PC.constitution - this.PC.constitutionBoosted;
+      this.PC.constitutionBoosted = null;
+    }
   }
 }

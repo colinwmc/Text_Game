@@ -10,6 +10,7 @@ import { item } from '../models';
 })
 export class FortuneTellersRoomComponent implements OnInit {
   public PC: any;
+  public resetPC: any;
   public narration: string = '';
   public dialogue: any[] = [];
   public options: any[] = [];
@@ -29,6 +30,8 @@ export class FortuneTellersRoomComponent implements OnInit {
   ngOnInit(): void {
     if (this.sharedService.PC) {
       this.PC = this.sharedService.PC;
+      this.sharedService.deboostStats();
+      this.resetPC = JSON.parse(JSON.stringify(this.PC));
       this.narration = "The feeling in the air changes immeadiately as you pass through the threshold of the back room. You see a small, dark room, lit only by candles. As the door swings shut, seemingly of its own accord, gone is the chatter of guests, and with it their uninviting glares. In its place, a single figure sits at the table in front of you, affixing you with a piercing gaze."
       this.options = [{ id: 0, text: 'Continue >' }];
     } else {
@@ -45,10 +48,27 @@ export class FortuneTellersRoomComponent implements OnInit {
         }
         this.PC.items.push(gold);
         this.sharedService.PC = this.PC;
+        this.resetPC = JSON.parse(JSON.stringify(this.PC));
         this.narration = "The feeling in the air changes immeadiately as you pass through the threshold of the back room. You see a small, dark room, lit only by candles. As the door swings shut, seemingly of its own accord, gone is the chatter of guests, and with it their uninviting glares. In its place, a single figure sits at the table in front of you, affixing you with a piercing gaze."
         this.options = [{ id: 0, text: 'Continue >' }];
       })
     }
+  }
+
+  resetEncounter(){
+    this.PC = JSON.parse(JSON.stringify(this.resetPC));
+    this.sharedService.PC = this.PC;
+    this.dialogue = [];
+    this.narration = "The feeling in the air changes immeadiately as you pass through the threshold of the back room. You see a small, dark room, lit only by candles. As the door swings shut, seemingly of its own accord, gone is the chatter of guests, and with it their uninviting glares. In its place, a single figure sits at the table in front of you, affixing you with a piercing gaze."
+    this.options = [{ id: 0, text: 'Continue >' }];
+    this.backpackOpen = false;
+    this.hasAskedAboutNature = false;
+    this.hasAskedAboutMisplacement = false;
+    this.hasCheckedEmblem = false;
+    this.hasIdentifiedEmblem = false;
+    this.hasAskedABoutOpening = false;
+    this.hasAskedAboutForest = false;
+    this.encounters= [];
   }
 
   optionSelection(event: any) {
@@ -140,7 +160,7 @@ export class FortuneTellersRoomComponent implements OnInit {
         break;
       case 8:
         this.hasCheckedEmblem = true;
-        if (this.sharedService.skillCheck('intelligence', 0, this.PC.pcid === 2 ? 'advantage' : 'none')) {
+        if (this.sharedService.skillCheck('intelligence', 14, this.PC.pcid === 2 ? 'advantage' : 'none')) {
           this.dialogue.unshift('(Success!) You\'ve seen this before. Something about the court of the Fae Queen.');
           this.hasIdentifiedEmblem = true;
           this.options = [

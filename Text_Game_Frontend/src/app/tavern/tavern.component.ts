@@ -12,7 +12,6 @@ export class TavernComponent implements OnInit {
 
   public PC: any;
   public resetPC: any;
-  public resetItems: any;
   public narration: string = '';
   public dialogue: any[] = [];
   public options: any[] = [];
@@ -34,8 +33,9 @@ export class TavernComponent implements OnInit {
   ngOnInit(): void {
     if (this.sharedService.PC) {
       this.PC = this.sharedService.PC;
+      this.sharedService.deboostStats();
       this.resetPC = JSON.parse(JSON.stringify(this.PC));
-      this.resetPC = Object.assign({}, this.PC);
+     // this.resetPC = Object.assign({}, this.PC);
       this.narration = "You open the door to reveal a small, wooden room; half lit, half full. Provincial figures look up from their beer and potatoes to cast you " + (this.PC.pcid === 1 ? "fearful looks. Each averting their eyes as soon as they see you." : "suspicious looks.") + "  The bartender fixes you with an empty stare, before reluctantly waving you over."
       this.options = [{ ID: 'TV0', text: 'Continue >' }];
     } else {
@@ -61,8 +61,8 @@ export class TavernComponent implements OnInit {
   }
 
   resetEncounter() {
-    this.PC = this.resetPC;
-    this.sharedService.PC = this.resetPC;
+    this.PC = JSON.parse(JSON.stringify(this.resetPC));
+    this.sharedService.PC = this.PC;
     this.dialogue = [];
     this.narration = "You open the door to reveal a small, wooden room; half lit, half full. Provincial figures look up from their beer and potatoes to cast you " + (this.PC.pcid === 1 ? "fearful looks. Each averting their eyes as soon as they see you." : "suspicious looks.") + "  The bartender fixes you with an empty stare, before reluctantly waving you over."
     this.options = [{ ID: 'TV0', text: 'Continue >' }];
