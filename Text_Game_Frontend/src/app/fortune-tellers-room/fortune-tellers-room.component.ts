@@ -291,7 +291,7 @@ export class FortuneTellersRoomComponent implements OnInit {
           this.dialogue.unshift(npcTag + '"The Eight of Swords. A symbol of being trapped, helpless, lost.But how tightly are the ropes bound, and by whom? Do we sometimes allow ourselves to play the victim in our own minds?"');
         } else {
           this.portraitID = '../../assets/Final Picks/Tarot Cards/Cups07.jpg';
-          this.dialogue.unshift(npcTag + '"The Seven of Cups. A symbol of the endless possibilities of our imaginations. A card of wonder and awe, but also illusion. Will your heads be caught in the clouds.?"');
+          this.dialogue.unshift(npcTag + '"The Seven of Cups. A symbol of the endless possibilities of our imaginations. A card of wonder and awe, but also illusion. Will your head be caught in the clouds.?"');
         }
         this.options = [
           { id: 24, text: '"Uh . . . wut?"' },
@@ -299,6 +299,7 @@ export class FortuneTellersRoomComponent implements OnInit {
           { id: 24, text: '""I\'ll be honest with you ma\'am, I\'m not sure what to make of that." You say scratching your head.' }];
         break;
       case 24:
+        this.portraitID = "../../assets/Final Picks/Characters/fortune_teller.png";
         this.addPCDialogue(event.text);
         this.dialogue.unshift(npcTag + '"All of these things and more you will encounter in the night to come, though I can do no more to prepare you to face them." She says, solemnly as she collects the cards back into the deck.');
         this.options = [
