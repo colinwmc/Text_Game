@@ -23,6 +23,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
   public knowsHesFae = false;
   public hasCheckedFruits = false;
   public knowsTheFruitIsWeird = false;
+  public hasIntroducedHimself = false;
 
   constructor(private sharedService: SharedService, private router: Router) { }
 
@@ -93,6 +94,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
         break;
       case 3:
       case 4:
+        this.hasIntroducedHimself = true;
         this.addPCDialogue(event.text);
         let text = 'I\'m just your typical, run of the mill, honest, hardworking fella out here plying my wares." He gestures to the cart filled with fruit beside him. "Providing a service to the community of which I am apart, ya know?"';
         if (event.id === 4) {
@@ -120,9 +122,30 @@ export class FrogMerchantEncounterComponent implements OnInit {
           this.options.splice(this.options.length - 1);
         }
         break;
+      case 6:
+      case 7:
+      case 8:
+        this.addPCDialogue(event.text);
+        let beginning = '';
+        if (event.id === 6) {
+          beginning = '"Treacherous fiends!" the frog yelps, laughing uncontrollably. "Well whoever told you that? No, we don\'t have nothing like that around here. J'
+        } else if (event.id === 7) {
+          beginning = '"Well it\'s j'
+        } else {
+          beginning = '"Well we\'ve got plenty of that, but mostly it\'s j'
+        }
+        this.dialogue.unshift(this.npcTag + beginning + 'ust a quiet little neck of the woods filled with decent folks is all."');
+        this.options = [
+          { id: 3, text: '"Well that\'s certainly a relief. Is there anything I can do for you, sir?"' },
+          { id: 3, text: '"Hmmm" you say, scrathing your chin. "Perhaps I\'ve been misled. What are you doing out here anyways?"' }
+        ]
+        if (!this.hasCountedFingers) {
+          this.options.push({ id: 5, text: 'You eye the frog wearily, saying nothing. You remember the advice of the fortune teller and attempt to count his fingers. (Perception Check)' });
+        }
+        break;
       case 9:
         this.addPCDialogue(event.text);
-        this.dialogue.unshift('The frog looks at his hands, seemingly just as surprised by what he sees as you were. "Uhhhhh . . . no I don\'t." He mutters as a puff of smoke surrounds him.');
+        this.dialogue.unshift(this.npcTag + 'The frog looks at his hands, seemingly just as surprised by what he sees as you were. "Uhhhhh . . . no I don\'t." He mutters as a puff of smoke surrounds him.');
         setTimeout(() => {
           let magic = new Audio();
           magic.src = "../assets/Sound Effects/sound-effect-twinklesparkle-115095.mp3";
@@ -142,6 +165,15 @@ export class FrogMerchantEncounterComponent implements OnInit {
 
       case 10:
         this.knowsHesFae = false;
+        this.dialogue.unshift(this.npcTag + '"Oh that\'s no worry. Folks make mistakes, just as sure as I\'ve got four fingers on each hand."')
+        if (this.hasIntroducedHimself) {
+          this.options = [{ id: 12, text: '"Why don\'t you tell me a little about your business here?"' },]
+        } else {
+          this.options = [
+            { id: 3, text: '"Is there anything I can do for you, sir?"' },
+            { id: 3, text: '"What are you doing out here anyways?"' }
+          ];
+        }
         break;
       case 11:
         if (this.sharedService.skillCheck('wisdom', 10, 'none')) {
@@ -149,6 +181,14 @@ export class FrogMerchantEncounterComponent implements OnInit {
         } else {
           this.knowsHesFae = false;
           this.dialogue.unshift('(Failure!) Well, I guess I just imagined that? Must be a little jittery is all.')
+        }
+        if (this.hasIntroducedHimself) {
+          this.options = [{ id: 12, text: '"Why don\'t you tell me a little about your business here?"' },]
+        } else {
+          this.options = [
+            { id: 3, text: '"Is there anything I can do for you, sir?"' },
+            { id: 3, text: '"What are you doing out here anyways?"' }
+          ];
         }
         break;
       case 12:
@@ -226,6 +266,18 @@ export class FrogMerchantEncounterComponent implements OnInit {
           { id: 22, text: '"Oh, I really don\'t think I should."' }
         ]
         break;
+        case 21:
+          let fruit: item = {
+            itemID: 17,
+            itemDescription: 'A strange fruit you got from a frog.',
+            itemName: 'Winga-wing-wam',
+            itemQuantity: 1,
+            imageID: ''
+          }
+          this.PC.items.push(fruit);
+          this.addPCDialogue(event.text);
+          this.dialogue.unshift(this.npcTag+'"Oh, it\'s my absolute pleasure. In fact, why don\'t you eat it right now? I\'d love to see the look on your face when you bite into your first winga-wing-wam."')
+          break;
     }
   }
 

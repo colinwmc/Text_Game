@@ -184,7 +184,10 @@ width: 100%;
 }
 
 .item-menu {
-    height: fit-content;
+    height: calc(80vh - 5px);
+    display: flex;
+    flex-direction: column;
+    /* overflow: scroll; */
     width: calc(100% - 10px);
     border: 5px solid #253e54;
 }
