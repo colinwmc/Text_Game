@@ -266,18 +266,52 @@ export class FrogMerchantEncounterComponent implements OnInit {
           { id: 22, text: '"Oh, I really don\'t think I should."' }
         ]
         break;
-        case 21:
-          let fruit: item = {
-            itemID: 17,
-            itemDescription: 'A strange fruit you got from a frog.',
-            itemName: 'Winga-wing-wam',
-            itemQuantity: 1,
-            imageID: ''
-          }
-          this.PC.items.push(fruit);
-          this.addPCDialogue(event.text);
-          this.dialogue.unshift(this.npcTag+'"Oh, it\'s my absolute pleasure. In fact, why don\'t you eat it right now? I\'d love to see the look on your face when you bite into your first winga-wing-wam."')
-          break;
+      case 21:
+        let fruit: item = {
+          itemID: 17,
+          itemDescription: 'A strange fruit you got from a frog.',
+          itemName: 'Winga-wing-wam',
+          itemQuantity: 1,
+          imageID: ''
+        }
+        this.PC.items.push(fruit);
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(this.npcTag + '"Oh, it\'s my absolute pleasure. In fact, why don\'t you eat it right now? I\'d love to see the look on your face when you bite into your first winga-wing-wam."');
+        if (!this.knowsHesFae && !this.knowsTheFruitIsWeird) {
+          this.options = [{ id: 23, text: '"I literally can\'t think of a single reason why not." You take a large, enthusiastic bite out of the fruit.' }]
+        }
+        break;
+      case 23:
+        this.sharedService.removeItem(17);
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(this.npcTag + '"Ooh hoo hoo! They actually did it! They ate the poison!" The frog says, hopping giddily. "This is my lucky day!"');
+        this.sharedService.takeDamage(10);
+        this.options = [
+          { id: 24, text: '"Oh dear . . ."' },
+          { id: 25, text: 'Try your best to throw up, it\'s probably your only hope. (Constitution Saving Throw)' }
+        ];
+        break;
+      case 24:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(this.npcTag + '"Hee hee hee"');
+        this.sharedService.takeDamage(10);
+        break;
+      case 25:
+        if (this.sharedService.skillCheck('constitution', 15, 'none')) {
+          this.dialogue.unshift('(Success!) You vomit specatularly. It sprays out in front of you like a technicolored firehose. The frog is thoroughly covered.');
+          this.options = [
+            { id: 26, text: '"uuuuuugggghhhhh" you moan pathetically.' }
+          ]
+        } else {
+          this.dialogue.unshift('(Failure!) You can\'t bring yourself to do it. Despite it\'s wretched nature, the fruit is sweet and succulent as the last of it slides down your throat. "So delighted to have you in the forest!" The frog mocks you as your vision tunnels.');
+          this.options = [
+            { id: 27, text: '"uuuuuugggghhhhh" you moan pathetically.' }
+          ]
+        }
+        break;
+      case 27:
+        this.sharedService.takeDamage(10);
+        break;
     }
   }
 
