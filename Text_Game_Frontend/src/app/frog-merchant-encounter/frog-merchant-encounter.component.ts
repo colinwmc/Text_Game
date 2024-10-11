@@ -267,25 +267,55 @@ export class FrogMerchantEncounterComponent implements OnInit {
         ]
         break;
       case 21:
-        let fruit: item = {
+        let hasFruit = false;
+        for (let item of this.PC.items) {
+          if (item.itemID === 17) {
+            hasFruit = true;
+          }
+        }
+        if (!hasFruit) {
+          let fruit: item = {
+            itemID: 17,
+            itemDescription: 'A strange fruit you got from a frog.',
+            itemName: 'Winga-wing-wam',
+            itemQuantity: 1,
+            imageID: ''
+          }
+          this.PC.items.push(fruit);
+        }
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(this.npcTag + '"Oh, it\'s my absolute pleasure. In fact, why don\'t you eat it right now? I\'d love to see the look on your face when you bite into your first winga-wing-wam."');
+        if (!this.knowsHesFae && !this.knowsTheFruitIsWeird) {
+          this.options = [{ id: 23, text: '"I literally can\'t think of a single reason why not." You take a large, enthusiastic bite out of the fruit.' }]
+        } else {
+          this.options = [];
+        }
+        break;
+      case 22:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(this.npcTag + '"Oh of course you should! And I really must insist. You would insult my honor as your host in this fine forest!" The frog grabs your hand and pushes the fruit into it.');
+        let fruit1: item = {
           itemID: 17,
           itemDescription: 'A strange fruit you got from a frog.',
           itemName: 'Winga-wing-wam',
           itemQuantity: 1,
           imageID: ''
         }
-        this.PC.items.push(fruit);
-        this.addPCDialogue(event.text);
-        this.dialogue.unshift(this.npcTag + '"Oh, it\'s my absolute pleasure. In fact, why don\'t you eat it right now? I\'d love to see the look on your face when you bite into your first winga-wing-wam."');
-        if (!this.knowsHesFae && !this.knowsTheFruitIsWeird) {
-          this.options = [{ id: 23, text: '"I literally can\'t think of a single reason why not." You take a large, enthusiastic bite out of the fruit.' }]
-        }
+        this.PC.items.push(fruit1);
+        this.options = [
+          { id: 21, text: '"Well I do thank you for your hospitality, but I really must be going . . ."' },
+          { id: 29, text: '"I said I don\'t want it." You state firmly handing it back to the frog.' }
+        ]
         break;
       case 23:
-        this.sharedService.removeItem(17);
+      case 30:
         this.addPCDialogue(event.text);
+        if (event.id === 23) {
+          this.sharedService.useItem(17);
+        } else {
+          this.sharedService.takeDamage(5);
+        }
         this.dialogue.unshift(this.npcTag + '"Ooh hoo hoo! They actually did it! They ate the poison!" The frog says, hopping giddily. "This is my lucky day!"');
-        this.sharedService.takeDamage(10);
         this.options = [
           { id: 24, text: '"Oh dear . . ."' },
           { id: 25, text: 'Try your best to throw up, it\'s probably your only hope. (Constitution Saving Throw)' }
@@ -309,8 +339,49 @@ export class FrogMerchantEncounterComponent implements OnInit {
           ]
         }
         break;
+      case 26:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(this.npcTag + '"WHAT IN TARNATION!? You weren\'t supposed to do all that! You were just supposed to die. You completely ruined my joke! Wretched, no good mortals . . ." the frog mutters as he hops away.');
+        this.options = [
+          { id: 28, text: '"Well . . . lessons learned there, I suppose." Pick yourself up and continue deeper into the forest.' }
+        ]
+        break;
       case 27:
         this.sharedService.takeDamage(10);
+        break;
+      case 28:
+        if (this.sharedService.encounters[1] === 'MF1') {
+          this.router.navigate(['/moth']);
+        } else {
+          this.router.navigate(['/vamp']);
+        }
+        break;
+      case 29:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(this.npcTag + '"Oh you don\'t want it do you?" The frog states incredulously. "Well I certainly don\'t know what I or this forest, both of which have treated you with nothing less than glowing hospitality, have done to offend you so deeply that you would offer this disrespect to us. Would you really break my poor, froggy heart over this bit of fruit?"');
+        this.options = [
+          { id: 23, text: '"Oh dear, I didn\'t mean to offend you so. Here, I\'ll eat the fruit." Take a bit of the fruit.' },
+          { id: 30, text: '"Well  . . . I am unaware of your customs, and I wouldn\'t want to offend." Take a tiny bite of the fruit.' },
+          { id: 31, text: '"No, don\'t cry little frog. Look! I\'m eating the fruit." Pretend to eat the fruit while actually dropping it into you backpack behind you. (Performance Check)' },
+          { id: 32, text: '"Sure I would. I don\'t give a shit about you." Drop the fruit on the ground.' }
+        ]
+        break;
+      case 31:
+        this.addPCDialogue(event.text);
+        if (this.sharedService.skillCheck('charisma', 15, 'none')) {
+          this.dialogue.unshift(' (Success!) The frog stares at you expectantly with big, excited eyes.');
+          this.options = [
+            { id: 33, text: '"MMmmm. Delicious." You say rubbing your stomach. "Thank you so much Mr. Melvinfirth. See you around!"' },
+            { id: 33, text: '"Welp. That sure tasted like fruit, or whatever. Anyway, smell ya later, nerd."' }
+          ]
+        }
+        break;
+      case 33:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift(this.npcTag + 'The frog\'s jaw drops as he stares at you, utterly confused. He picks up another fruit and looks it over then looks back up at you with wide eyes.');
+        this.options = [
+          { id: 28, text: 'Stride confidently past the frog and deeper into the forest.' }
+        ]
         break;
     }
   }

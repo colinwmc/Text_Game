@@ -6,6 +6,8 @@ import { TavernComponent } from './tavern/tavern.component';
 import { FortuneTellersRoomComponent } from './fortune-tellers-room/fortune-tellers-room.component';
 import { FrogMerchantEncounterComponent } from './frog-merchant-encounter/frog-merchant-encounter.component';
 import { SeductressEncounterComponent } from './seductress-encounter/seductress-encounter.component';
+import { MothMonsterComponent } from './moth-monster/moth-monster.component';
+import { HungryVampireComponent } from './hungry-vampire/hungry-vampire.component';
 
 const routes: Routes = [
   { path: '', component: TitleScreenComponent },
@@ -14,7 +16,9 @@ const routes: Routes = [
   { path: 'tavern', component: TavernComponent },
   { path: 'fortune', component: FortuneTellersRoomComponent },
   { path: 'frog', component: FrogMerchantEncounterComponent },
-  { path: 'seductress', component: SeductressEncounterComponent }
+  { path: 'seductress', component: SeductressEncounterComponent },
+  { path: 'moth', component: MothMonsterComponent },
+  { path: 'vamp', component: HungryVampireComponent }
 ];
 
 @NgModule({

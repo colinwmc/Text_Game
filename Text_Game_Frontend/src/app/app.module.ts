@@ -15,6 +15,8 @@ import { UiOverlayComponent } from './ui-overlay/ui-overlay.component';
 import { FortuneTellersRoomComponent } from './fortune-tellers-room/fortune-tellers-room.component';
 import { FrogMerchantEncounterComponent } from './frog-merchant-encounter/frog-merchant-encounter.component';
 import { SeductressEncounterComponent } from './seductress-encounter/seductress-encounter.component';
+import { MothMonsterComponent } from './moth-monster/moth-monster.component';
+import { HungryVampireComponent } from './hungry-vampire/hungry-vampire.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { SeductressEncounterComponent } from './seductress-encounter/seductress-
     FortuneTellersRoomComponent,
     FrogMerchantEncounterComponent,
     SeductressEncounterComponent,
+    MothMonsterComponent,
+    HungryVampireComponent,
   ],
   imports: [
     BrowserModule,

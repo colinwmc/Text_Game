@@ -135,15 +135,21 @@ export class SharedService {
           }
           break;
         case 15:
+        case 17:
           let eat = new Audio();
           eat.src = "../assets/Sound Effects/eating.mp3";
           eat.load();
           eat.play();
-          this.PC.constitution++;
-          if (this.PC.constitutionBoosted) {
-            this.PC.constitutionBoosted++;
-          } else {
-            this.PC.constitutionBoosted = 1;
+          if (itemID === 15) {
+            this.PC.constitution++;
+            if (this.PC.constitutionBoosted) {
+              this.PC.constitutionBoosted++;
+            } else {
+              this.PC.constitutionBoosted = 1;
+            }
+          }
+          else if (itemID === 17) {
+            this.takeDamage(10);
           }
           this.removeItem(itemID);
           break;
