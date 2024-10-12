@@ -196,4 +196,34 @@ export class SharedService {
       this.PC.constitutionBoosted = null;
     }
   }
+
+  castSpell(id: number, dc: number) {
+    let diceRoll = new Audio();
+    diceRoll.src = "../assets/Sound Effects/rpg-dice-rolling-95182.mp3";
+    diceRoll.load();
+    diceRoll.play();
+    let roll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+    switch (id) {
+      case 1:
+        return 7;
+        break;
+      case 2:
+        let total = roll + dc;
+        return total < this.PC.wisdom + 10;
+        break;
+      case 3:
+        if (roll + this.PC.wisdom >= dc) {
+          let roll2 = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+          let outcome;
+          roll2 === 1 ? outcome = 'frog' : roll2 === 2 ? outcome = 'puddle' : outcome = 'purple';
+          return outcome;
+        } else {
+          return false;
+        }
+        break;
+        case 4:
+          return roll + this.PC.intelligence >= dc;
+          break;
+    }
+  }
 }

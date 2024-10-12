@@ -376,6 +376,13 @@ export class FrogMerchantEncounterComponent implements OnInit {
           ]
         }
         break;
+        case 32:
+          this.addPCDialogue(event.text);
+          this.dialogue.unshift('As you stride past the frog, his jaw dropped to the floor, you hear a noise from behind you. The creature has scooped the fruit from the floor and launched himself toward you on his powerful amphibian legs.');
+          this.options = [
+            { id: 34, text: 'Dodge the Frog! (Dexterity Saving Throw)'}
+          ]
+          break;
       case 33:
         this.addPCDialogue(event.text);
         this.dialogue.unshift(this.npcTag + 'The frog\'s jaw drops as he stares at you, utterly confused. He picks up another fruit and looks it over then looks back up at you with wide eyes.');
@@ -383,6 +390,27 @@ export class FrogMerchantEncounterComponent implements OnInit {
           { id: 28, text: 'Stride confidently past the frog and deeper into the forest.' }
         ]
         break;
+        case 34:
+          if(this.sharedService.skillCheck('dexterity', 12, 'none')){
+            this.dialogue.unshift('(Success!) You lunge out of the way and the fae plops to the ground behind you, momentrily vulnerable.');
+            this.options = [
+              {id: 35, text: 'Run for it! (Athletics Check)'}
+            ];
+            if(this.PC.pcid === 1){
+              this.options.push({id: 36, text: 'Cast an illusion to cover your escape. (Spell Cast)'});
+              this.options.push({id: 37, text: 'Hit that fae with a hex! (Spell Attack)'});
+            } else if(this.PC.pcid === 2){
+              this.options.push({id: 38, text: 'Blast that fae! (Spell Attack)'});
+              this.options.push({id: 39, text: 'Lay down a stinking cloud to cover your escape. (Spell Cast)'})
+            } else {
+              this.options.push({id: 40, text: 'Bring down the hammer on this fool. (Melee Attack)'});
+              this.options.push({id: 41, text: 'Throw a fire bomb. Blow him to smithereens! (Ranged Attack)'})
+            }
+          } else {
+            this.dialogue.unshift('(Failure!) The frog lands right on your shoulders. He takes the fruit and shoves it into your mouth.');
+            this.sharedService.takeDamage(10);
+          }
+          break;
     }
   }
 
