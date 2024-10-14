@@ -272,6 +272,7 @@ export class SharedService {
         bomb.src = '../assets/Sound Effects/bomb.mp3';
         bomb.load();
         bomb.play();
+        this.removeItem(10);
         let total = roll + dc;
         return total < Math.floor((this.PC.strength - 10) / 2) + 10;
       case 9:

@@ -63,6 +63,12 @@ export class FrogMerchantEncounterComponent implements OnInit {
     this.narration = "You exit the tavern and stand at the precipice of the forest, the tree line beginning abruptly before you, an almost too clear path opened in front of you. You wonder what dangers await you, and what welcome the forest will grant you."
     this.options = [{ id: 0, text: 'Continue >' }];
     this.backpackOpen = false;
+    this.hasCountedFingers = false;
+    this.knowsHesFae = false;
+    this.hasCheckedFruits = false;
+    this.knowsTheFruitIsWeird = false;
+    this.hasIntroducedHimself = false;
+    this.hasFixedFingers = false;
 
   }
 
@@ -81,7 +87,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
           { id: 2, text: '"Well howdy yourself, sir. I must say, you\'re a much friendlier face than I was expecting."' },
           { id: 3, text: '"Uh . . . hi there. Can I help you with something?" You ask, keeping up your guard.' },
           { id: 4, text: '"Dear . . . what sort of foul creature are you?"' },
-          { id: 5, text: 'You eye the frog wearily, saying nothing. You remember the advice of the fortune teller and attempt to count his fingers. (Perception Check)' }
+          { id: 5, text: 'You eye the frog wearily, saying nothing. You remember the advice of the fortune teller and attempt to count his fingers. (Wisdom Perception Check)' }
         ];
         break;
       case 2:
@@ -106,7 +112,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
         this.dialogue.unshift(text);
         this.options = [
           { id: 12, text: '"I see. Why don\'t you tell me a little about your business here?"' },
-          { id: 13, text: 'Cast your eyes over the fruit cart. See what the frog has for sale. (Invesigation Check)' }
+          { id: 13, text: 'Cast your eyes over the fruit cart. See what the frog has for sale. (Intelligence Invesigation Check)' }
         ];
         if (!this.hasCountedFingers) {
           this.options.push({ id: 5, text: 'You eye the frog wearily, saying nothing. You remember the advice of the fortune teller and attempt to count his fingers. (Perception Check)' });
@@ -141,7 +147,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
           { id: 3, text: '"Hmmm" you say, scrathing your chin. "Perhaps I\'ve been misled. What are you doing out here anyways?"' }
         ]
         if (!this.hasCountedFingers) {
-          this.options.push({ id: 5, text: 'You eye the frog wearily, saying nothing. You remember the advice of the fortune teller and attempt to count his fingers. (Perception Check)' });
+          this.options.push({ id: 5, text: 'You eye the frog wearily, saying nothing. You remember the advice of the fortune teller and attempt to count his fingers. (Wisdom Perception Check)' });
         }
         break;
       case 9:
@@ -239,14 +245,14 @@ export class FrogMerchantEncounterComponent implements OnInit {
           { id: 17, text: '"And what sort of fruits are these?"' }
         ];
         if (!this.hasCheckedFruits) {
-          this.options.unshift({ id: 18, text: 'Cast your eyes over the fruit cart. See what the frog has for sale. (Invesigation Check)' });
+          this.options.unshift({ id: 18, text: 'Cast your eyes over the fruit cart. See what the frog has for sale. (Intelligence Invesigation Check)' });
         }
         break;
       case 17:
         this.addPCDialogue(event.text);
         this.dialogue.unshift(this.npcTag + '"Oh, I\'ve got all the best ones. Snozzlecherries. Doodleberries. Winga-wing-wams."');
         this.options = [
-          { id: 19, text: 'Rack your brain to see if you\'ve ever heard of such fruits. (Nature Check)' },
+          { id: 19, text: 'Rack your brain to see if you\'ve ever heard of such fruits. (Wisdom Nature Check)' },
           { id: 20, text: '"I\'ve never heard of any of those, must be rare."' }
         ]
         break;
@@ -365,7 +371,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
         this.options = [
           { id: 23, text: '"Oh dear, I didn\'t mean to offend you so. Here, I\'ll eat the fruit." Take a bit of the fruit.' },
           { id: 30, text: '"Well  . . . I am unaware of your customs, and I wouldn\'t want to offend." Take a tiny bite of the fruit.' },
-          { id: 31, text: '"No, don\'t cry little frog. Look! I\'m eating the fruit." Pretend to eat the fruit while actually dropping it into your backpack behind you. (Performance Check)' },
+          { id: 31, text: '"No, don\'t cry little frog. Look! I\'m eating the fruit." Pretend to eat the fruit while actually dropping it into your backpack behind you. (Charisma Performance Check)' },
           { id: 32, text: '"Sure I would. I don\'t give a shit about you." Drop the fruit on the ground.' }
         ]
         break;
@@ -379,9 +385,10 @@ export class FrogMerchantEncounterComponent implements OnInit {
           ]
         } else {
           this.dialogue.unshift('(Failure!) The fruit misses the opening to your bag and thunks to the ground between your feet.');
+          this.sharedService.removeItem(17);
           this.dialogue.unshift(this.npcTag+'"Uh . . . it looks like you dropped it there."');
           this.options = [
-            { id: 35, text: 'Run for it! (Athletics Check)' }
+            { id: 35, text: 'Run for it! (Strength Athletics Check)' }
           ];
           if (this.PC.pcid === 1) {
             this.options.push({ id: 36, text: 'Cast an illusion to cover your escape. (Spell Cast)' });
@@ -396,6 +403,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
         }
         break;
       case 32:
+        this.sharedService.removeItem(17);
         this.addPCDialogue(event.text);
         this.dialogue.unshift('As you stride past the frog, his jaw dropped to the floor, you hear a noise from behind you. The creature has scooped the fruit from the floor and launched himself toward you on his powerful amphibian legs.');
         this.options = [
@@ -413,7 +421,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
         if (this.sharedService.skillCheck('dexterity', 12, 'none')) {
           this.dialogue.unshift('(Success!) You lunge out of the way and the fae plops to the ground behind you, momentrily vulnerable.');
           this.options = [
-            { id: 35, text: 'Run for it! (Athletics Check)' }
+            { id: 35, text: 'Run for it! (Strength Athletics Check)' }
           ];
           if (this.PC.pcid === 1) {
             this.options.push({ id: 36, text: 'Cast an illusion to cover your escape. (Spell Cast)' });
