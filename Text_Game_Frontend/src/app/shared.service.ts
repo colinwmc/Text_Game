@@ -197,7 +197,7 @@ export class SharedService {
     }
   }
 
-  castSpell(id: number, dc: number) {
+  castSpell(id: number, dc: number): boolean | number | string | undefined {
     let diceRoll = new Audio();
     diceRoll.src = "../assets/Sound Effects/rpg-dice-rolling-95182.mp3";
     diceRoll.load();
@@ -205,14 +205,23 @@ export class SharedService {
     let roll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
     switch (id) {
       case 1:
+        let heal = new Audio();
+        heal.src = '../assets/Sound Effects/heal.mp3';
+        heal.load();
+        heal.play();
         return 7;
-        break;
       case 2:
-        let total = roll + dc;
-        return total < this.PC.wisdom + 10;
-        break;
+        let illusion = new Audio();
+        illusion.src = '../assets/Sound Effects/illusion.mp3';
+        illusion.load();
+        illusion.play();
+        return (roll + dc) < Math.floor((this.PC.wisdom - 10) / 2) + 10;
       case 3:
-        if (roll + this.PC.wisdom >= dc) {
+        let hex = new Audio();
+        hex.src = '../assets/Sound Effects/hex.mp3';
+        hex.load();
+        hex.play();
+        if (roll + Math.floor((this.PC.wisdom - 10) / 2) >= dc) {
           let roll2 = Math.floor(Math.random() * (3 - 1 + 1) + 1);
           let outcome;
           roll2 === 1 ? outcome = 'frog' : roll2 === 2 ? outcome = 'puddle' : outcome = 'purple';
@@ -220,10 +229,59 @@ export class SharedService {
         } else {
           return false;
         }
-        break;
-        case 4:
-          return roll + this.PC.intelligence >= dc;
-          break;
+      case 4:
+        let ice = new Audio();
+        ice.src = '../assets/Sound Effects/ice-blast.mp3';
+        ice.load();
+        ice.play();
+        return roll + Math.floor((this.PC.intelligence - 10) / 2) >= dc;
+      case 5:
+        let green = new Audio();
+        green.src = '../assets/Sound Effects/green-thumb.mp3';
+        green.load();
+        green.play();
+        return true;
+      case 6:
+        let cloud = new Audio();
+        cloud.src = this.PC.enhancedStink ? '../assets/Sound Effects/fart.mp3' : '../assets/Sound Effects/enhanced-fart.mp3';
+        cloud.load();
+        cloud.play();
+        if (this.PC.enhancedStink) {
+          return true;
+        } else {
+          let total = roll + dc;
+          return total < Math.floor((this.PC.constitution - 10) / 2) + 10;
+        }
+      case 7:
+        let swing = new Audio();
+        swing.src = '../assets/Sound Effects/hammer-swing.mp3';
+        swing.load();
+        swing.play();
+
+        if (roll + Math.floor((this.PC.constitution - 10) / 2) >= dc) {
+          let hit = new Audio();
+          hit.src = '../assets/Sound Effects/hammer-hit.mp3';
+          hit.load();
+          hit.play();
+          return true;
+        } else {
+          return false;
+        }
+      case 8:
+        let bomb = new Audio();
+        bomb.src = '../assets/Sound Effects/bomb.mp3';
+        bomb.load();
+        bomb.play();
+        let total = roll + dc;
+        return total < Math.floor((this.PC.strength - 10) / 2) + 10;
+      case 9:
+        let mend = new Audio();
+        mend.src = '../assets/Sound Effects/mend.mp3';
+        mend.load();
+        mend.play();
+        return true;
+      default:
+        return false;
     }
   }
 }
