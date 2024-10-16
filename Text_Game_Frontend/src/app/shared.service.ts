@@ -116,7 +116,6 @@ export class SharedService {
           this.removeItem(itemID);
           if (itemID === 7) {
             this.PC.enhancedStink = true;
-            this.takeDamage(10);
           }
           if (itemID === 14) {
             this.PC.charisma++;
@@ -197,12 +196,7 @@ export class SharedService {
     }
   }
 
-  castSpell(id: number, dc: number): boolean | number | string | undefined {
-    let diceRoll = new Audio();
-    diceRoll.src = "../assets/Sound Effects/rpg-dice-rolling-95182.mp3";
-    diceRoll.load();
-    diceRoll.play();
-    let roll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+  castAttackSpell(id: number, dc: number, special: string): boolean | number | string | undefined {
     switch (id) {
       case 1:
         let heal = new Audio();
@@ -210,18 +204,13 @@ export class SharedService {
         heal.load();
         heal.play();
         return 7;
-      case 2:
-        let illusion = new Audio();
-        illusion.src = '../assets/Sound Effects/illusion.mp3';
-        illusion.load();
-        illusion.play();
-        return (roll + dc) < Math.floor((this.PC.wisdom - 10) / 2) + 10;
+
       case 3:
         let hex = new Audio();
         hex.src = '../assets/Sound Effects/hex.mp3';
         hex.load();
         hex.play();
-        if (roll + Math.floor((this.PC.wisdom - 10) / 2) >= dc) {
+        if (this.skillCheck('wisdom', dc, special)) {
           let roll2 = Math.floor(Math.random() * (3 - 1 + 1) + 1);
           let outcome;
           roll2 === 1 ? outcome = 'frog' : roll2 === 2 ? outcome = 'puddle' : outcome = 'purple';
@@ -234,31 +223,21 @@ export class SharedService {
         ice.src = '../assets/Sound Effects/ice-blast.mp3';
         ice.load();
         ice.play();
-        return roll + Math.floor((this.PC.intelligence - 10) / 2) >= dc;
+        return this.skillCheck('intelligence', dc, special);
       case 5:
         let green = new Audio();
         green.src = '../assets/Sound Effects/green-thumb.mp3';
         green.load();
         green.play();
         return true;
-      case 6:
-        let cloud = new Audio();
-        cloud.src = this.PC.enhancedStink ? '../assets/Sound Effects/fart.mp3' : '../assets/Sound Effects/enhanced-fart.mp3';
-        cloud.load();
-        cloud.play();
-        if (this.PC.enhancedStink) {
-          return true;
-        } else {
-          let total = roll + dc;
-          return total < Math.floor((this.PC.constitution - 10) / 2) + 10;
-        }
+
       case 7:
         let swing = new Audio();
         swing.src = '../assets/Sound Effects/hammer-swing.mp3';
         swing.load();
         swing.play();
 
-        if (roll + Math.floor((this.PC.constitution - 10) / 2) >= dc) {
+        if (this.skillCheck('strength', dc, special)) {
           let hit = new Audio();
           hit.src = '../assets/Sound Effects/hammer-hit.mp3';
           hit.load();
@@ -267,20 +246,64 @@ export class SharedService {
         } else {
           return false;
         }
-      case 8:
-        let bomb = new Audio();
-        bomb.src = '../assets/Sound Effects/bomb.mp3';
-        bomb.load();
-        bomb.play();
-        this.removeItem(10);
-        let total = roll + dc;
-        return total < Math.floor((this.PC.strength - 10) / 2) + 10;
+
       case 9:
         let mend = new Audio();
         mend.src = '../assets/Sound Effects/mend.mp3';
         mend.load();
         mend.play();
         return true;
+      default:
+        return false;
+    }
+  }
+
+  castSaveSpell(id: number, modifier: number, special: string) {
+    let diceRoll = new Audio();
+    diceRoll.src = "../assets/Sound Effects/rpg-dice-rolling-95182.mp3";
+    diceRoll.load();
+    diceRoll.play();
+
+    let roll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+    if (special === 'advantage') {
+      let secondRoll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+      if (secondRoll > roll) {
+        roll = secondRoll;
+      }
+    } else if (special === 'disadvantage') {
+      let secondRoll = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+      if (secondRoll < roll) {
+        roll = secondRoll;
+      }
+    }
+    switch (id) {
+      case 2:
+        let illusion = new Audio();
+        illusion.src = '../assets/Sound Effects/illusion.mp3';
+        illusion.load();
+        illusion.play();
+        return (roll + modifier) < Math.floor((this.PC.wisdom - 10) / 2) + 10;
+
+      case 6:
+        let cloud = new Audio();
+        cloud.src = !this.PC.enhancedStink ? '../assets/Sound Effects/fart.mp3' : '../assets/Sound Effects/enhanced-fart.mp3';
+        cloud.load();
+        cloud.play();
+        if (this.PC.enhancedStink) {
+          return true;
+        } else {
+          let total = roll + modifier;
+          return total < Math.floor((this.PC.constitution - 10) / 2) + 10;
+        }
+
+      case 8:
+        let bomb = new Audio();
+        bomb.src = '../assets/Sound Effects/bomb.mp3';
+        bomb.load();
+        bomb.play();
+        this.removeItem(10);
+        let total = roll + modifier;
+        return total < Math.floor((this.PC.strength - 10) / 2) + 10;
       default:
         return false;
     }

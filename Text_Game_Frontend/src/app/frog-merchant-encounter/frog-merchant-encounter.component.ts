@@ -252,7 +252,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
         this.addPCDialogue(event.text);
         this.dialogue.unshift(this.npcTag + '"Oh, I\'ve got all the best ones. Snozzlecherries. Doodleberries. Winga-wing-wams."');
         this.options = [
-          { id: 19, text: 'Rack your brain to see if you\'ve ever heard of such fruits. (Wisdom Nature Check)' },
+          { id: 19, text: 'Rack your brain to see if you\'ve ever heard of such fruits. (Intelligence Nature Check)' },
           { id: 20, text: '"I\'ve never heard of any of those, must be rare."' }
         ]
         break;
@@ -275,7 +275,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
         ]
         break;
       case 21:
-        case 42:
+      case 42:
         let hasFruit = false;
         for (let item of this.PC.items) {
           if (item.itemID === 17) {
@@ -293,11 +293,15 @@ export class FrogMerchantEncounterComponent implements OnInit {
           this.PC.items.push(fruit);
         }
         this.addPCDialogue(event.text);
-        this.dialogue.unshift(this.npcTag + (event.id === 21 ? '"Oh, it\'s my absolute pleasure. ' : '"Oh, nonsense. ')+ 'In fact, why don\'t you eat it right now? I\'d love to see the look on your face when you bite into your first winga-wing-wam."');
+        this.dialogue.unshift(this.npcTag + (event.id === 21 ? '"Oh, it\'s my absolute pleasure. ' : '"Oh, nonsense. ') + 'In fact, why don\'t you eat it right now? I\'d love to see the look on your face when you bite into your first winga-wing-wam."');
         if (!this.knowsHesFae && !this.knowsTheFruitIsWeird) {
           this.options = [{ id: 23, text: '"I literally can\'t think of a single reason why not." You take a large, enthusiastic bite out of the fruit.' }]
         } else {
-          this.options = [];
+          this.options = [
+            { id: 43, text: '"You know, I absolutely would . . . but I can\'t really eat fruit. It gives me crazy bad farts." (Charisma Deception Check)' },
+            { id: 44, text: '"As mush as I appreciate your gracious hospitality, I actually can\'t eat this fruit. I\'m a devout Selunite. We can\'t eat after midnight." (Intelligence Religion Check)' },
+            { id: 45, text: '"Well I\'ll eat it if you eat it with me. You do have one everyday afterall, right?" (Charisma Persuasion Check)' }
+          ];
         }
         break;
       case 22:
@@ -318,13 +322,15 @@ export class FrogMerchantEncounterComponent implements OnInit {
         break;
       case 23:
       case 30:
+      case 54:
         this.addPCDialogue(event.text);
         if (event.id === 23) {
           this.sharedService.useItem(17);
         } else {
           this.sharedService.takeDamage(5);
         }
-        this.dialogue.unshift(this.npcTag + '"Ooh hoo hoo! They actually did it! They ate the poison!" The frog says, hopping giddily. "This is my lucky day!"');
+        let first = event.id === 54 ? 'The frog\'s fruit dissapears in a puff of smoke just before it touches his lips. Yours does not. ' : '';
+        this.dialogue.unshift(this.npcTag + first + '"Ooh hoo hoo! They actually did it! They ate the poison!" The frog says, hopping giddily. "This is my lucky day!"');
         this.options = [
           { id: 24, text: '"Oh dear . . ."' },
           { id: 25, text: 'Try your best to throw up, it\'s probably your only hope. (Constitution Saving Throw)' }
@@ -376,29 +382,32 @@ export class FrogMerchantEncounterComponent implements OnInit {
         ]
         break;
       case 31:
+      case 53:
+      case 55:
         this.addPCDialogue(event.text);
-        if (this.sharedService.skillCheck('charisma', 15, 'none')) {
-          this.dialogue.unshift(' (Success!) The frog stares at you expectantly with big, excited eyes.');
+        if (this.sharedService.skillCheck('charisma', 15, event.id === 53 ? 'disadvantage' : event.id === 31 ? 'none' : 'advantage')) {
+          if (event.id === 55) {
+            this.dialogue.unshift('(Success!) The frog causes his fruit to dissappear as soon as it reaches his lips, but misses your trick entirely.')
+          } else {
+            this.dialogue.unshift('(Success!) The frog stares at you expectantly with big, excited eyes.');
+          }
           this.options = [
-            { id: 33, text: '"MMmmm. Delicious." You say rubbing your stomach. "Thank you so much Mr. Melvinfirth. See you around!"' },
+            { id: 33, text: '"Mmmmm. Delicious." You say rubbing your stomach. "Thank you so much Mr. Melvinfirth. See you around!"' },
             { id: 33, text: '"Welp. That sure tasted like fruit, or whatever. Anyway, smell ya later, nerd."' }
           ]
         } else {
           this.dialogue.unshift('(Failure!) The fruit misses the opening to your bag and thunks to the ground between your feet.');
           this.sharedService.removeItem(17);
-          this.dialogue.unshift(this.npcTag+'"Uh . . . it looks like you dropped it there."');
+          this.dialogue.unshift(this.npcTag + '"Uh . . . it looks like you dropped it there."');
           this.options = [
-            { id: 35, text: 'Run for it! (Strength Athletics Check)' }
+            { id: 52, text: 'Run for it! (Strength Athletics Check)' }
           ];
           if (this.PC.pcid === 1) {
-            this.options.push({ id: 36, text: 'Cast an illusion to cover your escape. (Spell Cast)' });
-            this.options.push({ id: 37, text: 'Hit that fae with a hex! (Spell Attack)' });
+            this.options.push({ id: 37, text: 'Hit that fae with a hex! (Spell Attack: Hex)' });
           } else if (this.PC.pcid === 2) {
-            this.options.push({ id: 38, text: 'Blast that fae! (Spell Attack)' });
-            this.options.push({ id: 39, text: 'Lay down a stinking cloud to cover your escape. (Spell Cast)' })
+            this.options.push({ id: 38, text: 'Blast that fae! (Spell Attack: Ice Blast)' });
           } else {
-            this.options.push({ id: 40, text: 'Bring down the hammer on this fool. (Melee Attack)' });
-            this.options.push({ id: 41, text: 'Throw a fire bomb. Blow him to smithereens! (Ranged Attack)' })
+            this.options.push({ id: 40, text: 'Bring down the hammer on this fool. (Melee Attack: Hammer)' });
           }
         }
         break;
@@ -443,8 +452,13 @@ export class FrogMerchantEncounterComponent implements OnInit {
         }
         break;
       case 35:
-        if (this.sharedService.skillCheck('strength', 10, 'none')) {
-          this.dialogue.unshift('(Success!) You flee from the frustrated fae. You look back over your shoulder to see him  still sat on the ground, shaking a fist at you.');
+      case 52:
+        if (this.sharedService.skillCheck('strength', 10, event.id === 35 ? 'advantage' : 'disadvantage')) {
+          if (event.id === 35) {
+            this.dialogue.unshift('(Success!) You flee from the frustrated fae. You look back over your shoulder to see him  still sat on the ground, shaking a fist at you.');
+          } else {
+            this.dialogue.unshift('(Success!) He pursues as quick as he can, but eventually he stumbles to the ground. He shakes a fist at you dramatically as you make your escape.')
+          }
           this.options = [{ id: 28, text: 'Continue deeper into the forest.' }];
         } else {
           this.dialogue.unshift('(Failure!) The frog scoops up a fruit and jumps after you on his, powerful amphibian legs, landing right on your shoulders. He takes the fruit and shoves it into your mouth.');
@@ -455,11 +469,166 @@ export class FrogMerchantEncounterComponent implements OnInit {
           ];
         }
         break;
+      case 36:
+        //illusion
+        break;
+      case 37:
+      case 46:
+      case 49:
+        //hex
+        break;
+      case 38:
+      case 47:
+      case 50:
+        //ice blast
+        if (this.sharedService.castAttackSpell(4, 10, event.id === 38 ? 'advantage' : event.id === 47 ? 'none' : 'disadvantage')) {
+          this.dialogue.unshift('(Hit!) A shard of ice flies from your finger tips and impales the frog straight through the chest. Sparkly, indigo blood pools on the ground around his dead body.');
+          this.frogDies();
+          this.options = [
+            { id: 28, text: '"Well, that takes care of that then." You saying striding deeper into the woods.' },
+            { id: 28, text: '"Rest in pepperonis, Melvin." You solemnly step over him and continue on your way.' },
+            { id: 56, text: 'Collect a bit of his sparkly, fae blood.' }
+          ]
+        } else {
+          this.dialogue.unshift('(Miss!) A shard of ice flies from your finger tips and soars just above his shoulder. He lunges as you, launching himself forward on his powerful, amphibean legs.');
+          this.options = [
+            { id: 34, text: 'Dodge the Frog! (Dexterity Saving Throw)' }
+          ]
+        }
+        break;
+      case 39:
+        //stinking cloud
+        if (this.sharedService.castSaveSpell(6, 0, 'none')) {
+          if (this.PC.enhancedStink) {
+            this.dialogue.unshift('(Success!) A massive noise echoes throughout the forest. The frog attempts to flee as the foul, green cloud surrounds him, but there\'s no hope. He breaths in the gas, collapses to the ground, and dies.');
+            this.frogDies();
+            this.options = [
+              {id: 28, text: '"Oh dear . . . what a way to go. . . Oh well." You say making your way further into the woods.'}
+            ]
+          }else {
+          this.dialogue.unshift('(Success!) The foul, green cloud surrounds the frog and he begins coughing uncontrollably.');
+          this.options = [
+            { id: 28, text: '"Smell ya later!" You shout over your shoulder as you flee deeper into the woods.'}
+          ]
+          }
+        } else {
+          this.dialogue.unshift('(Failure!) The frog breaths in the foul, green gas, steels himself, then launches himself at you again, shoving the fruit into your mouth.');
+          this.sharedService.takeDamage(10);
+          this.options = [
+            { id: 24, text: '"Oh dear . . ."' },
+            { id: 25, text: 'Try your best to throw up, it\'s probably your only hope. (Constitution Saving Throw)' }
+          ];
+        }
+      
+        break;
+      case 40:
+      case 48:
+      case 51:
+        //hammer
+        break;
+      case 41:
+        //fire bomb
+        break;
+      case 43:
+        this.addPCDialogue(event.text);
+        if (this.sharedService.skillCheck('charisma', 18, 'none')) {
+          this.dialogue.unshift(this.npcTag + '(Success!) "Oh . . . bad farts you say. Well I suppose I wouldn\'t want to be downwind from that." He says, dejectedly.');
+          this.options = [
+            { id: 28, text: 'Stride confidently past the frog and deeper into the forest.' },
+            { id: 28, text: '"Thanks again for you hospitality, I\'ll be sure to pass the fruit along to someone special."' },
+            { id: 28, text: '"Welp, smell ya later."' }
+          ]
+        } else {
+          setTimeout(() => {
+            let fart = new Audio();
+            fart.src = "../assets/Sound Effects/fart.mp3";
+            fart.load();
+            fart.play();
+          }, 1500);
+          this.dialogue.unshift(this.npcTag + '(Failure!) "Oh there\'s nothing wrong with farting among friends," he says, farting. "Take a bite, I\'m sure you\'ll agree it\'s worth it."');
+          this.options = [
+            { id: 35, text: 'Run for it! (Strength Athletics Check)' },
+            { id: 30, text: '"Uh . . . ok then." Take a tiny bite of the fruit.' },
+            { id: 31, text: 'Pretend to eat the fruit while actually dropping it into your backpack behind you. (Charisma Performance Check)' },
+          ];
+          if (this.PC.pcid === 1) {
+            this.options.push({ id: 46, text: 'Attack! (Spell Attack: Hex)' });
+          } else if (this.PC.pcid === 2) {
+            this.options.push({ id: 47, text: 'Attack! (Spell Attack: Ice Blast)' });
+          } else {
+            this.options.push({ id: 48, text: 'Attack!. (Melee Attack: Hammer)' });
+          }
+        }
+        break;
+      case 44:
+        this.addPCDialogue(event.text);
+        if (this.sharedService.skillCheck('intelligence', 12, 'none')) {
+          this.dialogue.unshift(this.npcTag + '(Success!) "Oh, well, I spose you would\'t want to get caught chowing down in front of your lady the moon." He says, despondantly looking up at the full moon between the trees. "Make sure you eat it first thing in the morning though!"');
+          this.options = [
+            { id: 28, text: '"Oh I sure will. You take care now."' },
+            { id: 28, text: '"Sure, whatever. Smell ya later."' }
+          ]
+        } else {
+          this.dialogue.unshift(this.npcTag + '(Failure!) "Selunites worship the moon. I figure they like to do just about everything at night." His eyes narrow as he looks you directly in the eye.');
+          this.options = [
+            { id: 52, text: 'Run for it! (Strength Athletics Check)' },
+            { id: 30, text: '"Uh . . . ok then." Take a tiny bite of the fruit.' },
+            { id: 53, text: 'Pretend to eat the fruit while actually dropping it into your backpack behind you. (Charisma Performance Check)' },
+          ];
+          if (this.PC.pcid === 1) {
+            this.options.push({ id: 49, text: 'Attack! (Spell Attack: Hex)' });
+          } else if (this.PC.pcid === 2) {
+            this.options.push({ id: 50, text: 'Attack! (Spell Attack: Ice Blast)' });
+          } else {
+            this.options.push({ id: 51, text: 'Attack!. (Melee Attack: Hammer)' });
+          }
+        }
+        break;
+      case 45:
+        this.addPCDialogue(event.text);
+        if (this.sharedService.skillCheck('charisma', 15, 'none')) {
+          this.dialogue.unshift(this.npcTag + '"Oh . . . uh, I guess that sounds reasonable." He says, picking up a fruit, fear in his eyes.');
+          this.options = [
+            { id: 54, text: '"Uh . . . ok then." Take a tiny bite of the fruit.' },
+            { id: 55, text: 'Pretend to eat the fruit while actually dropping it into your backpack behind you. (Charisma Performance Check)' },
+          ];
+        } else {
+          this.dialogue.unshift(this.npcTag + '(Failure!) "Oh, I couldn\'t possibly. Forest custom dictates the guest must always eat first."');
+          this.options = [
+            { id: 52, text: 'Run for it! (Strength Athletics Check)' },
+            { id: 30, text: '"Uh . . . ok then." Take a tiny bite of the fruit.' },
+            { id: 53, text: 'Pretend to eat the fruit while actually dropping it into your backpack behind you. (Charisma Performance Check)' },
+          ];
+          if (this.PC.pcid === 1) {
+            this.options.push({ id: 49, text: 'Attack! (Spell Attack: Hex)' });
+          } else if (this.PC.pcid === 2) {
+            this.options.push({ id: 50, text: 'Attack! (Spell Attack: Ice Blast)' });
+          } else {
+            this.options.push({ id: 51, text: 'Attack!. (Melee Attack: Hammer)' });
+          }
+        }
+        break;
+      case 56:
+        let blood: item = {
+          itemID: 18,
+          itemDescription: 'A small vial of sparkly, fae blood.',
+          itemName: 'Vial of Fae Blood',
+          itemQuantity: 1,
+          imageID: ''
+        }
+
+        this.PC.items.push(blood);
+        this.options.splice(this.options.length - 1);
+        break;
     }
   }
 
   addPCDialogue(text: string) {
     this.dialogue.unshift(this.PC.name + ': ' + text);
+  }
+
+  frogDies(){
+    this.portraitID = this.hasFixedFingers ? "../../assets/Final Picks/Characters/frog_merchant_4_dead.jpg" : "../../assets/Final Picks/Characters/frog_merchant_5_dead.jpg";
   }
 
 }
