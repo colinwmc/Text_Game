@@ -37,7 +37,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
       this.options = [{ id: 0, text: 'Continue >' }];
     } else {
       this.sharedService.getPCList().subscribe(data => {
-        this.PC = data[1];
+        this.PC = data[0];
         this.PC.currentHealth = this.PC.hp;
         this.PC.hasShitPants = false;
         let gold: item = {
@@ -471,11 +471,56 @@ export class FrogMerchantEncounterComponent implements OnInit {
         break;
       case 36:
         //illusion
+        if (this.sharedService.castSaveSpell(2, -2, 'none')) {
+          this.dialogue.unshift('(Success!) You create the image of a ghostly figure that springs out of the ground. The frog yelps and cowers on the ground.');
+          this.options = [
+            { id: 28, text: 'You cling Priscilla tight as you silently run deeper into the woods' },
+            { id: 28, text: '"Smell ya later!" You shout over your shoulder as you flee deeper into the woods.' }
+          ]
+        } else {
+          this.dialogue.unshift('(Failure!) The frog stares straight at you through the translucent figure, then launches himself at you again, shoving the fruit into your mouth.');
+          this.sharedService.takeDamage(10);
+          this.options = [
+            { id: 24, text: '"Oh dear . . ."' },
+            { id: 25, text: 'Try your best to throw up, it\'s probably your only hope. (Constitution Saving Throw)' }
+          ];
+        }
         break;
       case 37:
       case 46:
       case 49:
         //hex
+        let outcome = this.sharedService.castAttackSpell(3, 10, event.id === 37 ? 'advantage' : event.id === 46 ? 'none' : 'disadvantage')
+        if (outcome === 'frog') {
+          this.dialogue.unshift('(Hit!) A bolt of magic flies from your fingertips and hits him in the chest. His body is twisted and morphed into a frog! Well, a different frog. Not a talking fae frog in a hat, just a normal frog.');
+          this.portraitID = "../../assets/Final Picks/Characters/hex-frog.jpg";
+          this.options = [
+            { id: 28, text: '"Well, that takes care of that then." You saying striding deeper into the woods.' },
+            { id: 28, text: '"Uh . . . hopefully you don\'t mind being a different sort of frog, Melvin." You sidle past the frog, and continue onwards' }
+          ]
+        } else if (outcome === 'puddle') {
+          this.dialogue.unshift('(Hit!) A bolt of magic flies from your fingertips and hits him in the chest. The frog cries out as his body is slowly, horrifically disolved into a sparkly, indigo puddle.');
+          this.frogDies();
+          this.options = [
+            { id: 28, text: '"Oh . . . oh gods. I\'m so sorry." You saying stepping over the puddle, travelling deeper into the woods.' },
+            { id: 28, text: '"Rest in pepperonis, Melvin." You solemnly step over him and continue on your way.' },
+            { id: 56, text: 'Collect a bit of his sparkly, fae blood.' }
+          ]
+        } else if (outcome === 'purple') {
+          this.dialogue.unshift('(Hit!) A bolt of magic flies from your fingertips and hits him in the chest. The frog cries out in fear, waiting for his doom. A second later, he looks at his hands in shock. "You . . . you made me purple, you little shit!" He yells, launching himself at you, blind with rage, and shoves the fruit into your mouth.');
+          this.portraitID = this.hasFixedFingers ? "../../assets/Final Picks/Characters/frog_merchant_4_purple.jpg.png" : "../../assets/Final Picks/Characters/frog_merchant_5_purple.jpg.png";
+          this.sharedService.takeDamage(10);
+          this.options = [
+            { id: 24, text: '"Oh dear . . ."' },
+            { id: 25, text: 'Try your best to throw up, it\'s probably your only hope. (Constitution Saving Throw)' }
+          ];
+        }
+        else {
+          this.dialogue.unshift('(Miss!) A bolt of magic flies from your fingertips and soars just above his shoulder. He lunges as you, launching himself forward on his powerful, amphibean legs.');
+          this.options = [
+            { id: 34, text: 'Dodge the Frog! (Dexterity Saving Throw)' }
+          ]
+        }
         break;
       case 38:
       case 47:
@@ -503,13 +548,13 @@ export class FrogMerchantEncounterComponent implements OnInit {
             this.dialogue.unshift('(Success!) A massive noise echoes throughout the forest. The frog attempts to flee as the foul, green cloud surrounds him, but there\'s no hope. He breaths in the gas, collapses to the ground, and dies.');
             this.frogDies();
             this.options = [
-              {id: 28, text: '"Oh dear . . . what a way to go. . . Oh well." You say making your way further into the woods.'}
+              { id: 28, text: '"Oh dear . . . what a way to go. . . Oh well." You say making your way further into the woods.' }
             ]
-          }else {
-          this.dialogue.unshift('(Success!) The foul, green cloud surrounds the frog and he begins coughing uncontrollably.');
-          this.options = [
-            { id: 28, text: '"Smell ya later!" You shout over your shoulder as you flee deeper into the woods.'}
-          ]
+          } else {
+            this.dialogue.unshift('(Success!) The foul, green cloud surrounds the frog and he begins coughing uncontrollably.');
+            this.options = [
+              { id: 28, text: '"Smell ya later!" You shout over your shoulder as you flee deeper into the woods.' }
+            ]
           }
         } else {
           this.dialogue.unshift('(Failure!) The frog breaths in the foul, green gas, steels himself, then launches himself at you again, shoving the fruit into your mouth.');
@@ -519,15 +564,47 @@ export class FrogMerchantEncounterComponent implements OnInit {
             { id: 25, text: 'Try your best to throw up, it\'s probably your only hope. (Constitution Saving Throw)' }
           ];
         }
-      
+
         break;
       case 40:
       case 48:
       case 51:
         //hammer
+        if (this.sharedService.castAttackSpell(9, 10, event.id === 40 ? 'advantage' : event.id === 48 ? 'none' : 'disadvantage')) {
+          this.dialogue.unshift('(Hit!) Your hammer slams down on his head, splitting it like a grape. Sparkly, indigo blood pools on the ground around his dead body.');
+          this.frogDies();
+          this.options = [
+            { id: 28, text: '"Get wrecked." You saying striding deeper into the woods.' },
+            { id: 28, text: '"Sorry \'bout it bruh." You solemnly step over him and continue on your way.' },
+            { id: 56, text: 'Collect a bit of his sparkly, fae blood.' }
+          ]
+        } else {
+          this.dialogue.unshift('(Miss!) You swing with all your might, but he dodges back at the last second. He lunges as you, launching himself forward on his powerful, amphibean legs.');
+          this.options = [
+            { id: 34, text: 'Dodge the Frog! (Dexterity Saving Throw)' }
+          ]
+        }
         break;
       case 41:
         //fire bomb
+        if (this.sharedService.castSaveSpell(7, 4, 'none')) {
+
+          this.dialogue.unshift('(Hit!) The bomb detonates right at his feet. He lets out a tiny croak before he splatters. His sparkly, indigo blood covering every surface in sight.');
+          this.frogDies();
+          this.options = [
+            { id: 28, text: '"Get wrecked." You saying striding deeper into the woods.' },
+            { id: 28, text: '"Sorry \'bout it bruh." You solemnly step over him and continue on your way.' },
+            { id: 56, text: 'Collect a bit of his sparkly, fae blood.' }
+          ]
+
+        } else {
+          this.dialogue.unshift('(Miss!) The frog jumps dramatically out of the way, clings breifly to a nearby tree, then launches himself at you again, shoving the fruit into your mouth.');
+          this.sharedService.takeDamage(10);
+          this.options = [
+            { id: 24, text: '"Oh dear . . ."' },
+            { id: 25, text: 'Try your best to throw up, it\'s probably your only hope. (Constitution Saving Throw)' }
+          ];
+        }
         break;
       case 43:
         this.addPCDialogue(event.text);
@@ -627,7 +704,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
     this.dialogue.unshift(this.PC.name + ': ' + text);
   }
 
-  frogDies(){
+  frogDies() {
     this.portraitID = this.hasFixedFingers ? "../../assets/Final Picks/Characters/frog_merchant_4_dead.jpg" : "../../assets/Final Picks/Characters/frog_merchant_5_dead.jpg";
   }
 

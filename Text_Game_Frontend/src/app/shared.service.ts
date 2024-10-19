@@ -231,7 +231,7 @@ export class SharedService {
         green.play();
         return true;
 
-      case 7:
+      case 9:
         let swing = new Audio();
         swing.src = '../assets/Sound Effects/hammer-swing.mp3';
         swing.load();
@@ -247,7 +247,7 @@ export class SharedService {
           return false;
         }
 
-      case 9:
+      case 8:
         let mend = new Audio();
         mend.src = '../assets/Sound Effects/mend.mp3';
         mend.load();
@@ -296,7 +296,7 @@ export class SharedService {
           return total < Math.floor((this.PC.constitution - 10) / 2) + 10;
         }
 
-      case 8:
+      case 7:
         let bomb = new Audio();
         bomb.src = '../assets/Sound Effects/bomb.mp3';
         bomb.load();
