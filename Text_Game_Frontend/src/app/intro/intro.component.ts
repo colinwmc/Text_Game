@@ -15,7 +15,7 @@ export class IntroComponent implements OnInit {
     "After 5 days travelling, you finally near your destination.",
     "You look down at the well worn paper in your hands, it reads:",
     "Missing Artifact. 500 gold reward for its recovery. Contact Madame LeSoule at the Half Light Inn.",
-    "At long last, you finally reach the tiny tavern at the edge of the forest.",
+    "At long last, you reach the tiny tavern at the edge of the forest.",
     ""
   ]
 

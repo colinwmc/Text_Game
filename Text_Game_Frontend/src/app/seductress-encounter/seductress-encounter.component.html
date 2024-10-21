@@ -1,1 +1,4 @@
-<p>seductress-encounter works!</p>
+<img *ngIf="setting === 1" class="background" src="../../assets/Final Picks/Locations/outer_forest.jpeg" alt="">
+<img *ngIf="setting === 2" class="background" src="../../assets/Final Picks/Locations/forest_pool.jpeg" alt="">
+<audio src="../../assets/Music/seductress.mp3" autoplay loop></audio>
+<app-ui-overlay [PC]="PC" [currentNarration]="narration" [currentDialogue]="dialogue" [currentOptions]="options" [portraitID]="portraitID" [backpackOpen]="backpackOpen" (newSelection)="optionSelection($event)" (reset)="resetEncounter()"></app-ui-overlay>
