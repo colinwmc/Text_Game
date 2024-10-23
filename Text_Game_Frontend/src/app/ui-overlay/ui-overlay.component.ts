@@ -1,5 +1,6 @@
 import { Component, Input, ElementRef, OnInit, QueryList, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { SharedService } from '../shared.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-ui-overlay',
@@ -18,7 +19,7 @@ export class UiOverlayComponent implements OnInit {
   @Output() reset = new EventEmitter<string>();
   @Input() backpackOpen = false;
 
-  constructor(public sharedService: SharedService) { }
+  constructor(public sharedService: SharedService, public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +40,10 @@ export class UiOverlayComponent implements OnInit {
 
   restartScene(){
     this.reset.emit('reset');
+  }
+
+  returnToTitle(){
+    this.router.navigate(['/title']);
   }
 
   //   @ViewChildren('newline') lines: QueryList<ElementRef> | undefined

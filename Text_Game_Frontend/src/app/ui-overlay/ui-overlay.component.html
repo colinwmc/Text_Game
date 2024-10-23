@@ -9,10 +9,13 @@
             </div>
         </div>
         <div class="dead" *ngIf="this.PC.currentHealth<=0">
-            <div class="dead-title">You are Dead!</div>
+            <audio src="../../assets/Music/game over.mp3" autoplay loop></audio>
+            <!-- <div class="dead-title">You are Dead!</div> -->
+            <div class="dead-title">Another soul has been claimed by . . . </div>
+            <div class="dead-subtitle">The Forest of the Fae</div>
             <div class="death-options-box">
-                <button class="death-option" (click)="restartScene()">Restart Scene</button>
-                <button class="death-option">Return to Title Screen</button>
+                <button class="death-option margin-right" (click)="restartScene()">Restart Scene</button>
+                <button class="death-option" (click)="returnToTitle()" >Return to Title Screen</button>
             </div>
         </div>
     </div>
