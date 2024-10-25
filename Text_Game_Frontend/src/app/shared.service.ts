@@ -104,7 +104,6 @@ export class SharedService {
             eat.load();
             eat.play();
             this.removeItem(itemID);
-            this.takeDamage(20)
           }
           break;
         case 7:

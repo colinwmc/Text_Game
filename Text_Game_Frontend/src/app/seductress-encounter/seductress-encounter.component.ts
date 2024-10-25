@@ -24,6 +24,7 @@ export class SeductressEncounterComponent implements OnInit {
   public knowsShesFae = false;
   public isSatOnRock = false;
   public isSatClose = false;
+  public idSaved = 0;
 
   constructor(private sharedService: SharedService, private router: Router) { }
 
@@ -107,6 +108,24 @@ export class SeductressEncounterComponent implements OnInit {
       case 3:
         this.addPCDialogue(event.text);
         this.npcDialogue('"Oh, that sounds very serious indeed," she says, giggling. "But you\'re in luck. I know this forest like the back of my hand," she extends one hand out in front of herself and admires her finely manicured nails "And I\'m sure wherever you\'re trying to get, I can help."');
+        this.options = [
+          { id: 9, text: '"Well that\'s very generous of you. I\'ve been told to seek a temple near the center of the forest. Do you know of it?"' },
+          { id: 10, text: '"I don\'t know exactly where I\'m going, but I\'m sure I\'ll know it when I see it."' }
+        ];
+        if (this.knowsShesFae) {
+          this.options.push({ id: 11, text: 'It might be best not to let her know where I\m going. "I\'m . . . looking for someone. A human that might have gotten lost in the woods." (Charisma Deception Check)' })
+        }
+        break;
+      case 4:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Well aren\'t I lucky you\'ve passed through here?" She says, smiling. "Why don\'t you rest a while? I bet you\'ve been travelling for hours, days even."');
+        this.options = [
+          { id: 7, text: 'Stride up to her as cool as you can. Sit down right next to her, no space in between you.' },
+          { id: 8, text: 'Walk up to her, focusing mostly on not tripping. Sit next to her, but leave a little space.' }
+        ];
+        if (this.knowsShesFae) {
+          this.options.push({ id: 12, text: '"Oh I\'d better not. It\'s best to keep moving."' })
+        }
         break;
       case 5:
         this.sharedService.skillCheck('charisma', -10, 'none');
@@ -129,9 +148,115 @@ export class SeductressEncounterComponent implements OnInit {
         break;
       case 7:
       case 8:
-        this.isSatClose = event.id === 7;
-        let line = event.id === 7 ? 'She links her arm in yours as she speaks.' : 'She reaches a hand out and rests it on your knee.';
-        this.npcDialogue('"Now tell me to what I owe the pleasure of this chance encounter?" '+line)
+      case 14:
+      case 15:
+      case 16:
+      case 17:
+      case 18:
+      case 19:
+        if (event.id === 14 || event.id === 15 || event.id === 16 || event.id === 17) {
+          this.addPCDialogue(event.text);
+        }
+        this.isSatClose = (event.id === 7 || event.id === 14 || event.id === 16 || event.id === 18);
+        let line = event.id === 7 || event.id === 14 || event.id === 16 || event.id === 18 ? 'She links her arm in yours as she speaks.' : 'She reaches a hand out and rests it on your knee.';
+        let line2 = '';
+
+        if (event.id === 7 || event.id === 8) {
+          line2 = '"Now tell me to what I owe the pleasure of this chance encounter?" ';
+          this.options = [
+
+          ]
+        } else if (event.id === 14 || event.id === 15) {
+          line2 = '"Now tell me about this friend of yours." ';
+          this.options = [
+
+          ]
+        } else if (event.id === 16 || event.id === 17) {
+          line2 = '"Now why are you trying to get this temple, sweetie?" ';
+          this.options = [
+            // { id: ??, text: 'She seemed to have an interesting reaction to you mentioning the temple. Why is that? (Wisdom Insight Check)' }
+          ]
+        } else {
+          line2 = '"Now why don\'t you tell me about this quest of yours?" '
+          this.options = [
+
+          ]
+        }
+        this.npcDialogue(line2 + line)
+        break;
+      case 9:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Oh my." She raises a hand to her mouth. "Well of course I know it, but it\'s so very far. Come, rest a while and I\'ll tell you all about it." She pats the rock next to her.');
+        this.options = [
+          { id: 16, text: 'Oh . . . I suppose in this situation that would be very helpful. Sit down right next to her, no space in between you.' },
+          { id: 17, text: 'I certainly can\'t think of a reason I\'d say no to that. Sit next to her, but leave a little space.' }
+        ];
+        if (this.knowsShesFae) {
+          this.options.push({ id: 13, text: '"That sounds great. Maybe I could tell you about it from here?" You don\'t approach the rock.' });
+        }
+        break;
+      case 10:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Oh, a wanderer following their heart. How romantic" She purrs. "Why don\'t you take a moment to relax? You look ever so tired, and I\'d love to hear about this journey of yours." She pats the rock next to her.');
+        this.options = [
+          { id: 18, text: 'Stride up to her as cool as you can. Sit down right next to her, no space in between you.' },
+          { id: 19, text: 'Walk up to her, focusing mostly on not tripping. Sit next to her, but leave a little space.' }
+        ];
+        if (this.knowsShesFae) {
+          this.options.push({ id: 20, text: '"Oh I\'d better not. Can\'t stay long. Should keep moving."' },)
+        }
+        break;
+      case 11:
+        this.addPCDialogue(event.text);
+        if (this.sharedService.skillCheck('charisma', 13, 'none')) {
+          this.npcDialogue('(Success!) "Oh my. Why isn\'t that tragic? Come, tell me about this friend of yours. Perhaps I\'ve seen them." She says, patting the rock beside her.')
+          this.options = [
+            { id: 14, text: 'Stride up to her as cool as you can. Sit down right next to her, no space in between you.' },
+            { id: 15, text: 'Walk up to her, focusing mostly on not tripping. Sit next to her, but leave a little space.' }
+          ];
+          if (this.knowsShesFae) {
+            this.options.push({ id: 22, text: '"That sounds great. Maybe I could tell you about them from here?" You don\'t approach the rock.' }, { id: 21, text: '"Oh I\'d better not. Can\'t stay long. Should keep searching."' })
+          }
+        } else {
+          this.npcDialogue('(Failure!) "A human lost in the woods, you say?" She raises one freshly plucked eyebrow at you. "You know what?" her eyes light up as an idea occurs to her. "I saw a human pass through just recently, more than one, actually. Come, tell me about this friend of yours, and I\'ll tell you if I\'ve seen them." She says, patting the rock beside her.');
+          this.options = [
+            { id: 14, text: 'Oh . . . I suppose in this situation that would be very helpful. Sit down right next to her, no space in between you.' },
+            { id: 15, text: 'I certainly can\'t think of a reason I\'d say no to that. Sit next to her, but leave a little space.' }
+          ];
+          if (this.knowsShesFae) {
+            this.options.push({ id: 23, text: '"That sounds great. Maybe I could tell you about them from here?" You don\'t approach the rock.' })
+          }
+        }
+        break;
+      case 12:
+      //passing through won't sit
+      case 20:
+      //on a quest, know it when i see it won't sit
+      case 21:
+        //looking for human check passed should keep moving won't sit
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Oh surely you can spare but a moment, can\'t you? You look so weary."');
+        let id = event.id === 12 ? 7 : event.id === 20 ? 18 : 14;
+        this.idSaved = id;
+        this.options = [
+          { id: id, text: 'You suddenly, as if by magic, feel extremely tired. "I suppose you\'re right. I could use a quick break."' },
+          { id: 24, text: 'Attempt to shake off this sudden sleepiness. Don\'t sit on the rock. (Constitution Saving Throw)' }
+        ]
+        break;
+      case 13:
+      //tell me about temple won't sit
+      case 22:
+      //tell me about lost humans check passed won't sit
+      case 23:
+        //tell me about lost humans check failed won't sit
+        break;
+      case 24:
+        if (this.sharedService.skillCheck('constitution', 10, 'none')) {
+
+        } else {
+          this.dialogue.unshift('(Failure!) The sense of tiredness if overwhelming. The rock looks like the most comfortable place in the world');
+          this.options = [{id:this.idSaved, text: 'Walk toward the rock, sit down next to the woman.'}]
+        }
         break;
     }
   }
