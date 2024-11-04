@@ -67,6 +67,7 @@ export class SeductressEncounterComponent implements OnInit {
     this.knowsShesFae = false;
     this.isSatOnRock = false;
     this.isSatClose = false;
+    this.setting = 1;
   }
 
   addPCDialogue(text: string) {
@@ -164,22 +165,29 @@ export class SeductressEncounterComponent implements OnInit {
         if (event.id === 7 || event.id === 8) {
           line2 = '"Now tell me to what I owe the pleasure of this chance encounter?" ';
           this.options = [
-
+            { id: 28, text: '"Well I was just in the neighborhood when I came across this beautiful oasis, and this even more beautiful woman."' },
+            { id: 28, text: '"Oh you know me. Out on the town, dishin\' out the rizz."' }
           ]
         } else if (event.id === 14 || event.id === 15) {
           line2 = '"Now tell me about this friend of yours." ';
           this.options = [
-
+            { id: 35, text: '"Oh they\'re, you know, pretty ordinary."' },
+            { id: 35, text: '"They\'re . . . ummmm, tall and kind of green." (Charisma Decption Check)' },
+            { id: 38, text: '"They\'re fat and gross and ugly. You know, just like you."' }
           ]
         } else if (event.id === 16 || event.id === 17) {
           line2 = '"Now why are you trying to get this temple, sweetie?" ';
           this.options = [
-            // { id: ??, text: 'She seemed to have an interesting reaction to you mentioning the temple. Why is that? (Wisdom Insight Check)' }
+            { id: 25, text: 'She seemed to have an interesting reaction to you mentioning the temple. Why is that? (Wisdom Insight Check)' },
+            { id: 26, text: '"I\'m uhh . . . sightseeing." (Charisma Decpetion Check)' },
+            { id: 27, text: '"Well there\s this fortune teller who going to pay me big bucks to find her this fancy box there."' }
           ]
         } else {
           line2 = '"Now why don\'t you tell me about this quest of yours?" '
           this.options = [
-
+            { id: 35, text: '"It is a quest of the utmost importance. It may even save the world, honestly."' },
+            { id: 35, text: '"It\'s a journey of self discovery. A daliance with destiny. A mission from which I shall not return unchanged."' },
+            { id: 35, text: '"I\'m really just trying to get paid is all."' }
           ]
         }
         this.npcDialogue(line2 + line)
@@ -255,8 +263,105 @@ export class SeductressEncounterComponent implements OnInit {
 
         } else {
           this.dialogue.unshift('(Failure!) The sense of tiredness if overwhelming. The rock looks like the most comfortable place in the world');
-          this.options = [{id:this.idSaved, text: 'Walk toward the rock, sit down next to the woman.'}]
+          this.options = [{ id: this.idSaved, text: 'Walk toward the rock, sit down next to the woman.' }]
         }
+        break;
+      case 25:
+        if (this.sharedService.skillCheck('wisdom', 12, 'none')) {
+          this.dialogue.unshift('(Success!) She doesn\'t want you going to the temple. Is she protecting it? Is she . . . a FAE?!');
+          this.knowsShesFae = true;
+        } else {
+          this.dialogue.unshift('(Failure!) You\'re sure it was nothing. She seems so nice."');
+        }
+        this.options.splice(0, 1);
+        break;
+      case 26:
+        this.sharedService.skillCheck('charisma', 0, 'none');
+        this.npcDialogue('(Success??) "Sightseeing, eh?" She looks at you with a mysterious look. "Well if that\'s what you\'re looking for you don\'t want the temple. It\'s old, falling apart. There\'s nothing to see there. Don\'t you see any sights here that you\'d rather take in?" She leans in towards you as she speaks.');
+        this.options = [
+          { id: 28, text: '"Oh I see a couple of things." You say with a wry smile' },
+          { id: 29, text: '"I suppose the pool here is quite lovely."' },
+          { id: 30, text: '"I\'m actually really into old and crusty."' }
+        ]
+        break;
+      case 27:
+        break;
+      case 28:
+      case 29:
+      case 30:
+        if (event.id === 28) {
+          this.npcDialogue('"Kiss me." She says softly, yet firmly, slowly moving towards you.');
+        } else if (event.id === 29) {
+          this.npcDialogue('"Oh don\'t be coy sweetie," she says with a laugh. "Just kiss me." She says softly, yet firmly, slowly moving towards you.')
+        } else if (event.id === 30) {
+          this.npcDialogue('"Oh, just shut up and kiss me." She says slightly annoyed, slowly moving towards you.');
+        }
+        this.options = [
+          { id: 31, text: 'Close you eyes and lean in.' },
+          { id: 32, text: 'Lean in towards her, but don\'t close your eyes.' },
+        ];
+        if (this.knowsShesFae) {
+          this.options.push({ id: 33, text: '"I couldn\'t possibly." You say, backing away.' },
+            { id: 34, text: '"Eww gross no way!"' })
+        }
+        break;
+      case 31:
+        //close eyes and lean in
+        break;
+      case 32:
+        //lean in, don't close eyes
+        break;
+      case 33:
+        //couldn't possibly
+        break;
+      case 34:
+        //ewww
+        break;
+      case 35:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Oh I\'m sorry sweetie. I\'m sure that\'s very important, but I\'m so distracted thinking about something else."');
+        this.options = [
+          { id: 36, text: '"Well that\'s kind of rude . . . "' },
+          { id: 37, text: '"What are you thinking about?"' }
+        ]
+        break;
+      case 38:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Excuse me?!" Her face suddenly hardens.');
+        this.options = [
+          { id: 39, text: '"Haha . . . just kidding?" (Charisma Persuasion Check)' },
+          { id: 40, text: '"Yeah, actually that\'s why I walked over. I thought you were him."' }
+        ]
+        break;
+      case 39:
+        this.addPCDialogue(event.text);
+        if (this.sharedService.skillCheck('charisma', 20, 'none')) {
+          this.npcDialogue('(Success!) "Oh don\'t tease me like that, sweetie. Why don\'t you just shut those quick lips of yours and kiss me?"');
+          this.options = [
+            { id: 31, text: 'Close you eyes and lean in.' },
+            { id: 32, text: 'Lean in towards her, but don\'t close your eyes.' },
+          ];
+          if (this.knowsShesFae) {
+            this.options.push(
+              { id: 33, text: '"I couldn\'t possibly." You say, backing away.' },
+              { id: 34, text: '"Eww gross no way!"' })
+          }
+        } else {
+          let slap = new Audio();
+          slap.src = "../assets/Sound Effects/slap.mp3";
+          slap.load();
+          slap.play();
+          this.sharedService.takeDamage(5);
+          this.npcDialogue('"How dare you speak to me like that, you little wretch?!" She slaps you hard across the face.')
+        }
+        break;
+      case 40:
+        let slap = new Audio();
+        slap.src = "../assets/Sound Effects/slap.mp3";
+        slap.load();
+        slap.play();
+        this.sharedService.takeDamage(5);
+        this.npcDialogue('"How dare you speak to me like that, you little wretch?!" She slaps you hard across the face.')
         break;
     }
   }
