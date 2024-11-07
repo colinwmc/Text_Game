@@ -439,7 +439,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
             this.options.push({ id: 38, text: 'Blast that fae! (Spell Attack)' });
             this.options.push({ id: 39, text: 'Lay down a stinking cloud to cover your escape. (Spell Cast)' })
           } else {
-            this.options.push({ id: 40, text: 'Bring down the hammer on this fool. (Melee Attack)' });
+            this.options.push({ id: 40, text: 'Bring down the hammer on this fool. (Melee Attack: Hammer)' });
             this.options.push({ id: 41, text: 'Throw a fire bomb. Blow him to smithereens! (Ranged Attack)' })
           }
         } else {

@@ -132,8 +132,8 @@ export class SeductressEncounterComponent implements OnInit {
         this.sharedService.skillCheck('charisma', -10, 'none');
         this.npcDialogue('(Success!) "My lucky night indeed," she says, twirling a lock of her hair in her fingers. "Why don\'t you come over, take a seat?" She pats the rock just next to her.');
         this.options = [
-          { id: 7, text: 'Stride up to her as cool as you can. Sit down right next to her, no space in between you.' },
-          { id: 8, text: 'Walk up to her, focusing mostly on not tripping. Sit next to her, but leave a little space.' }
+          { id: 45, text: 'Stride up to her as cool as you can. Sit down right next to her, no space in between you.' },
+          { id: 46, text: 'Walk up to her, focusing mostly on not tripping. Sit next to her, but leave a little space.' }
         ]
         break;
       case 6:
@@ -158,21 +158,29 @@ export class SeductressEncounterComponent implements OnInit {
         if (event.id === 14 || event.id === 15 || event.id === 16 || event.id === 17) {
           this.addPCDialogue(event.text);
         }
-        this.isSatClose = (event.id === 7 || event.id === 14 || event.id === 16 || event.id === 18);
+        this.isSatClose = (event.id === 7 || event.id === 14 || event.id === 16 || event.id === 18 || event.id === 45);
         let line = event.id === 7 || event.id === 14 || event.id === 16 || event.id === 18 ? 'She links her arm in yours as she speaks.' : 'She reaches a hand out and rests it on your knee.';
         let line2 = '';
 
-        if (event.id === 7 || event.id === 8) {
+        if (event.id === 7 || event.id === 8 || event.id === 45 || event.id === 46) {
           line2 = '"Now tell me to what I owe the pleasure of this chance encounter?" ';
-          this.options = [
-            { id: 28, text: '"Well I was just in the neighborhood when I came across this beautiful oasis, and this even more beautiful woman."' },
-            { id: 28, text: '"Oh you know me. Out on the town, dishin\' out the rizz."' }
-          ]
+          if (event.id === 7 || event.id === 8) {
+            this.options = [
+              { id: 35, text: '"Oh I\'m just . . . out for a moonlit stroll."' },
+              { id: 35, text: '"I\'m travelling to meet my grandmother. Over the river and through the woods and all."' },
+              { id: 35, text: '"I\'m not sure that\'s any of your business, to be honest."' }
+            ]
+          } else {
+            this.options = [
+              { id: 28, text: '"Well I was just in the neighborhood when I came across this beautiful oasis, and this even more beautiful woman."' },
+              { id: 28, text: '"Oh you know me. Out on the town, dishin\' out the rizz."' }
+            ]
+          }
         } else if (event.id === 14 || event.id === 15) {
           line2 = '"Now tell me about this friend of yours." ';
           this.options = [
             { id: 35, text: '"Oh they\'re, you know, pretty ordinary."' },
-            { id: 35, text: '"They\'re . . . ummmm, tall and kind of green." (Charisma Decption Check)' },
+            { id: 35, text: '"They\'re . . . ummmm, tall and kind of green."' },
             { id: 38, text: '"They\'re fat and gross and ugly. You know, just like you."' }
           ]
         } else if (event.id === 16 || event.id === 17) {
@@ -237,30 +245,53 @@ export class SeductressEncounterComponent implements OnInit {
         }
         break;
       case 12:
-      //passing through won't sit
       case 20:
-      //on a quest, know it when i see it won't sit
       case 21:
-        //looking for human check passed should keep moving won't sit
+      case 13:
+      case 22:
+      case 23:
         this.addPCDialogue(event.text);
         this.npcDialogue('"Oh surely you can spare but a moment, can\'t you? You look so weary."');
-        let id = event.id === 12 ? 7 : event.id === 20 ? 18 : 14;
+        let id = 0;
+        switch (event.id) {
+          case 12:
+            id = 7;
+            break;
+          case 20:
+            id = 18;
+            break;
+          case 21:
+            id = 14;
+            break;
+          case 13:
+            id = 16;
+            break;
+          case 22:
+            id = 14;
+            break;
+          case 23:
+            id = 14;
+            break;
+        }
         this.idSaved = id;
         this.options = [
           { id: id, text: 'You suddenly, as if by magic, feel extremely tired. "I suppose you\'re right. I could use a quick break."' },
           { id: 24, text: 'Attempt to shake off this sudden sleepiness. Don\'t sit on the rock. (Constitution Saving Throw)' }
         ]
         break;
-      case 13:
-      //tell me about temple won't sit
-      case 22:
-      //tell me about lost humans check passed won't sit
-      case 23:
-        //tell me about lost humans check failed won't sit
-        break;
       case 24:
         if (this.sharedService.skillCheck('constitution', 10, 'none')) {
-
+          this.dialogue.unshift('(Success!) You manage to pull yourself together. That sudden tiredness, it must have been magical. She\'s trying to weaken you, lure you forward into her trap!');
+          this.options = [
+            { id: 47, text: 'Make a run for it! Don\'t say anything, just turn and run back into the woods! (Strength Athletics Check)' }
+          ];
+          if (this.PC.pcid === 1) {
+            this.options.push({ id: 42, text: 'You\'re in danger! Hit that fae with a hex! (Spell Attack: Hex)' });
+          } else if (this.PC.pcid === 2) {
+            this.options.push({ id: 43, text: 'Blast that fae! (Spell Attack: Ice Blast)' });
+          } else {
+            this.options.push({ id: 48, text: 'Throw a fire bomb. Blow him to smithereens! (Ranged Attack: Fire Bomb)' })
+          }
         } else {
           this.dialogue.unshift('(Failure!) The sense of tiredness if overwhelming. The rock looks like the most comfortable place in the world');
           this.options = [{ id: this.idSaved, text: 'Walk toward the rock, sit down next to the woman.' }]
@@ -289,12 +320,19 @@ export class SeductressEncounterComponent implements OnInit {
       case 28:
       case 29:
       case 30:
+      case 36:
+      case 37:
         if (event.id === 28) {
           this.npcDialogue('"Kiss me." She says softly, yet firmly, slowly moving towards you.');
         } else if (event.id === 29) {
           this.npcDialogue('"Oh don\'t be coy sweetie," she says with a laugh. "Just kiss me." She says softly, yet firmly, slowly moving towards you.')
         } else if (event.id === 30) {
           this.npcDialogue('"Oh, just shut up and kiss me." She says slightly annoyed, slowly moving towards you.');
+        } else if (event.id === 36) {
+          this.npcDialogue('"Oh, I know, sweetie," she says, leaning in towards you, "But it simply can\'t be helped."');
+        }
+        else if (event.id === 37) {
+          this.npcDialogue('"I just can\'t stop thinking about kissing you." She says softly, slowly moving towards you.');
         }
         this.options = [
           { id: 31, text: 'Close you eyes and lean in.' },
@@ -312,11 +350,23 @@ export class SeductressEncounterComponent implements OnInit {
         //lean in, don't close eyes
         break;
       case 33:
-        //couldn't possibly
+        this.addPCDialogue(event.text);
+        let location = this.isSatClose ? 'around your arm' : 'on your leg';
+        this.npcDialogue('"Oh I assure you, you could," she says as she tighens her grip ' + location + ' and continues to lean in toward your face.');
+        let check = this.PC.pcid === 3 ? '(Strength Saving Throw)' : '(Dexterity Saving Throw)';
+        this.options = [
+          { id: 32, text: '"Oh, well I suppose if you insist," you mutter leaning towards her.' },
+          { id: 41, text: '"NO!" You scream attempting to break free from her grasp. ' + check },
+        ];
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 42, text: 'She\'s coming right at you. Blast her with a hex! (Spell Attack: Hex)' })
+        } else if (this.PC.pcid === 2) {
+          this.options.push({ id: 43, text: 'She\'s coming right at you. Fend her off with a stinking cloud! (Spell Cast: Stinking Cloud)' })
+        } else {
+          this.options.push({ id: 44, text: 'She\'s coming right at you. Reach for your hammer and fend her off! (Melee Attack: Hammer)' })
+        }
         break;
-      case 34:
-        //ewww
-        break;
+
       case 35:
         this.addPCDialogue(event.text);
         this.npcDialogue('"Oh I\'m sorry sweetie. I\'m sure that\'s very important, but I\'m so distracted thinking about something else."');
@@ -325,13 +375,15 @@ export class SeductressEncounterComponent implements OnInit {
           { id: 37, text: '"What are you thinking about?"' }
         ]
         break;
+      case 34:
       case 38:
         this.addPCDialogue(event.text);
         this.npcDialogue('"Excuse me?!" Her face suddenly hardens.');
         this.options = [
           { id: 39, text: '"Haha . . . just kidding?" (Charisma Persuasion Check)' },
-          { id: 40, text: '"Yeah, actually that\'s why I walked over. I thought you were him."' }
-        ]
+
+        ];
+        event.id === 34 ? this.options.push({ id: 40, text: '"It\'s just that kissing you sounds gross and bad"' }) : this.options.push({ id: 40, text: '"Yeah, actually that\'s why I walked over. I thought you were him."' });
         break;
       case 39:
         this.addPCDialogue(event.text);
@@ -354,6 +406,7 @@ export class SeductressEncounterComponent implements OnInit {
           this.sharedService.takeDamage(5);
           this.npcDialogue('"How dare you speak to me like that, you little wretch?!" She slaps you hard across the face.')
         }
+        //options for after slap
         break;
       case 40:
         let slap = new Audio();
@@ -362,6 +415,25 @@ export class SeductressEncounterComponent implements OnInit {
         slap.play();
         this.sharedService.takeDamage(5);
         this.npcDialogue('"How dare you speak to me like that, you little wretch?!" She slaps you hard across the face.')
+        //options for after slap
+        break;
+      case 41:
+        //attempt to break away
+        break;
+      case 42:
+        //hex
+        break;
+      case 43:
+        //stinking cloud
+        break;
+      case 44:
+        //hammer
+        break;
+      case 47:
+        //run for it athletics check
+        break;
+      case 48:
+        //fire bomb
         break;
     }
   }
