@@ -433,14 +433,14 @@ export class FrogMerchantEncounterComponent implements OnInit {
             { id: 35, text: 'Run for it! (Strength Athletics Check)' }
           ];
           if (this.PC.pcid === 1) {
-            this.options.push({ id: 36, text: 'Cast an illusion to cover your escape. (Spell Cast)' });
-            this.options.push({ id: 37, text: 'Hit that fae with a hex! (Spell Attack)' });
+            this.options.push({ id: 36, text: 'Cast an illusion to cover your escape. (Spell Cast: Illusion)' });
+            this.options.push({ id: 37, text: 'Hit that fae with a hex! (Spell Attack: Hex)' });
           } else if (this.PC.pcid === 2) {
-            this.options.push({ id: 38, text: 'Blast that fae! (Spell Attack)' });
-            this.options.push({ id: 39, text: 'Lay down a stinking cloud to cover your escape. (Spell Cast)' })
+            this.options.push({ id: 38, text: 'Blast that fae! (Spell Attack: Ice Blast)' });
+            this.options.push({ id: 39, text: 'Lay down a stinking cloud to cover your escape. (Spell Cast: Stinking Cloud)' })
           } else {
             this.options.push({ id: 40, text: 'Bring down the hammer on this fool. (Melee Attack: Hammer)' });
-            this.options.push({ id: 41, text: 'Throw a fire bomb. Blow him to smithereens! (Ranged Attack)' })
+            this.options.push({ id: 41, text: 'Throw a fire bomb. Blow him to smithereens! (Ranged Attack: Fire Bomb)' })
           }
         } else {
           this.dialogue.unshift('(Failure!) The frog lands right on your shoulders. He takes the fruit and shoves it into your mouth.');

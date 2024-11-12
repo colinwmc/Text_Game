@@ -78,6 +78,10 @@ export class SeductressEncounterComponent implements OnInit {
     this.dialogue.unshift(this.npcTag + text);
   }
 
+  npcDies() {
+    this.portraitID = "../../assets/Final Picks/Characters/seductress_dead.jpg"
+  }
+
   optionSelection(event: any) {
 
     switch (event.id) {
@@ -155,6 +159,8 @@ export class SeductressEncounterComponent implements OnInit {
       case 17:
       case 18:
       case 19:
+      case 45:
+      case 46:
         if (event.id === 14 || event.id === 15 || event.id === 16 || event.id === 17) {
           this.addPCDialogue(event.text);
         }
@@ -188,7 +194,7 @@ export class SeductressEncounterComponent implements OnInit {
           this.options = [
             { id: 25, text: 'She seemed to have an interesting reaction to you mentioning the temple. Why is that? (Wisdom Insight Check)' },
             { id: 26, text: '"I\'m uhh . . . sightseeing." (Charisma Decpetion Check)' },
-            { id: 27, text: '"Well there\s this fortune teller who going to pay me big bucks to find her this fancy box there."' }
+            { id: 35, text: '"Well there\s this fortune teller who\'s going to pay me big bucks to find her this fancy box there."' }
           ]
         } else {
           line2 = '"Now why don\'t you tell me about this quest of yours?" '
@@ -290,7 +296,7 @@ export class SeductressEncounterComponent implements OnInit {
           } else if (this.PC.pcid === 2) {
             this.options.push({ id: 43, text: 'Blast that fae! (Spell Attack: Ice Blast)' });
           } else {
-            this.options.push({ id: 48, text: 'Throw a fire bomb. Blow him to smithereens! (Ranged Attack: Fire Bomb)' })
+            this.options.push({ id: 48, text: 'Throw a fire bomb. Blow her to smithereens! (Ranged Attack: Fire Bomb)' })
           }
         } else {
           this.dialogue.unshift('(Failure!) The sense of tiredness if overwhelming. The rock looks like the most comfortable place in the world');
@@ -322,6 +328,7 @@ export class SeductressEncounterComponent implements OnInit {
       case 30:
       case 36:
       case 37:
+        this.addPCDialogue(event.text)
         if (event.id === 28) {
           this.npcDialogue('"Kiss me." She says softly, yet firmly, slowly moving towards you.');
         } else if (event.id === 29) {
@@ -344,10 +351,34 @@ export class SeductressEncounterComponent implements OnInit {
         }
         break;
       case 31:
-        //close eyes and lean in
+        this.dialogue.unshift('Time seems to stand still for a moment. You body tingles with anticipation. You feel her hand lightly cup your face, and you wait for the touch of her lips. When it comes, it\'s not where you expect it. You feel her lips, and teeth, envelop your entire head. You open your eyes to see the back of her throat moving towards your face.');
+        this.sharedService.takeDamage(5);
+        let check3 = this.PC.pcid === 3 ? '(Strength Saving Throw)' : '(Dexterity Saving Throw)';
+        this.options = [
+          { id: 52, text: 'Try to wriggle out of her mouth before she swallows you whole! ' + check3 }
+        ];
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 53, text: 'She\'s eating you! Try to blast her with a hex! (Spell Attack: Hex)' })
+        } else if (this.PC.pcid === 2) {
+          this.options.push({ id: 54, text: 'She\'s eating you! Fend her off with a stinking cloud! (Spell Cast: Stinking Cloud)' })
+        } else {
+          this.options.push({ id: 55, text: 'She\'s eating you! Reach for your hammer try to strike her! (Melee Attack: Hammer)' })
+        }
         break;
       case 32:
-        //lean in, don't close eyes
+        this.dialogue.unshift('You see her face move towards you, soft and sweet. Her lips part. First slightly, then wider, wider, wider, her jaw unhinging until her mouth envelops your entire head.');
+        this.sharedService.takeDamage(5);
+        let check2 = this.PC.pcid === 3 ? '(Strength Saving Throw)' : '(Dexterity Saving Throw)';
+        this.options = [
+          { id: 52, text: 'Try to wriggle out of her mouth before she swallows you whole! ' + check2 }
+        ];
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 53, text: 'She\'s eating you! Try to blast her with a hex! (Spell Attack: Hex)' })
+        } else if (this.PC.pcid === 2) {
+          this.options.push({ id: 54, text: 'She\'s eating you! Fend her off with a stinking cloud! (Spell Cast: Stinking Cloud)' })
+        } else {
+          this.options.push({ id: 55, text: 'She\'s eating you! Reach for your hammer try to strike her! (Melee Attack: Hammer)' })
+        }
         break;
       case 33:
         this.addPCDialogue(event.text);
@@ -406,7 +437,17 @@ export class SeductressEncounterComponent implements OnInit {
           this.sharedService.takeDamage(5);
           this.npcDialogue('"How dare you speak to me like that, you little wretch?!" She slaps you hard across the face.')
         }
-        //options for after slap
+        this.options = [
+          {id: 49, text: '"Sorry, not sorry."'},
+          {id: 49, text: '"You\'re the one who\'s wretched, bitch!"'}
+        ];
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 42, text: 'Oh no she didn\'t! Hit that fae with a hex! (Spell Attack: Hex)' });
+        } else if (this.PC.pcid === 2) {
+          this.options.push({ id: 43, text: 'Oh no she didn\'t! Blast that fae! (Spell Attack: Ice Blast)' });
+        } else {
+          this.options.push({ id: 44, text: 'Oh no she didn\'t! It\'s hammer time! (Melee Attack: Hammer)' })
+        }
         break;
       case 40:
         let slap = new Audio();
@@ -415,13 +456,80 @@ export class SeductressEncounterComponent implements OnInit {
         slap.play();
         this.sharedService.takeDamage(5);
         this.npcDialogue('"How dare you speak to me like that, you little wretch?!" She slaps you hard across the face.')
-        //options for after slap
+        this.options = [
+          {id: 49, text: '"Sorry, not sorry."'},
+          {id: 49, text: '"You\'re the one who\'s wretched, bitch!"'}
+        ];
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 42, text: 'Oh no she didn\'t! Hit that fae with a hex! (Spell Attack: Hex)' });
+        } else if (this.PC.pcid === 2) {
+          this.options.push({ id: 43, text: 'Oh no she didn\'t! Blast that fae! (Spell Attack: Ice Blast)' });
+        } else {
+          this.options.push({ id: 44, text: 'Oh no she didn\'t! It\'s hammer time! (Melee Attack: Hammer)' })
+        }
         break;
       case 41:
-        //attempt to break away
+        let modifier = this.PC.pcid === 3 ? 'strength' : 'dexterity';
+        let bonus = this.isSatClose ? 'disadvantage' : 'none';
+        if (this.sharedService.skillCheck(modifier, 15, bonus)) {
+          this.dialogue.unshift('(Success!) You break free from her grip, tumbling off the rock and landing on your feet.');
+          this.options = [
+            { id: 47, text: 'Make a run for it! Don\'t say anything, just turn and run back into the woods! (Strength Athletics Check)' }
+          ];
+          if (this.PC.pcid === 1) {
+            this.options.push({ id: 42, text: 'You\'re in danger! Hit that fae with a hex! (Spell Attack: Hex)' });
+          } else if (this.PC.pcid === 2) {
+            this.options.push({ id: 43, text: 'Blast that fae! (Spell Attack: Ice Blast)' });
+          } else {
+            this.options.push({ id: 48, text: 'Throw a fire bomb. Blow her to smithereens! (Ranged Attack: Fire Bomb)' })
+          }
+        } else {
+          this.dialogue.unshift('(Failure!) Her grip on you is iron tight, you can\'t break free. She continues leaning toward you with incresing speed. Her lips part. First slightly, then wider, wider, wider, her jaw unhinging until her mouth envelops your entire head.');
+          this.sharedService.takeDamage(5);
+          let check = this.PC.pcid === 3 ? '(Strength Saving Throw)' : '(Dexterity Saving Throw)';
+          this.options = [
+            { id: 52, text: 'Try to wriggle out of her mouth before she swallows you whole! ' + check }
+          ];
+          if (this.PC.pcid === 1) {
+            this.options.push({ id: 53, text: 'She\'s eating you! Try to blast her with a hex! (Spell Attack: Hex)' })
+          } else if (this.PC.pcid === 2) {
+            this.options.push({ id: 54, text: 'She\'s eating you! Fend her off with a stinking cloud! (Spell Cast: Stinking Cloud)' })
+          } else {
+            this.options.push({ id: 55, text: 'She\'s eating you! Reach for your hammer try to strike her! (Melee Attack: Hammer)' })
+          }
+        }
+
         break;
       case 42:
-        //hex
+        let outcome = this.sharedService.castAttackSpell(3, 10, !this.isSatOnRock ? 'advantage' : !this.isSatClose ? 'none' : 'disadvantage')
+        if (outcome === 'frog') {
+          this.dialogue.unshift('(Hit!) A bolt of magic flies from your fingertips and hits her in the chest. Her body is twisted and morphed into a frog!.');
+          this.portraitID = "../../assets/Final Picks/Characters/hex-frog.jpg";
+          this.options = [
+            { id: 50, text: '"Well, at least you have a nice pond to live in here." You saying striding deeper into the woods.' },
+            { id: 50, text: '"Not so pretty now, are ya \'sweetie?\'" You continue on into the forest.' }
+          ]
+        } else if (outcome === 'puddle') {
+          this.dialogue.unshift('(Hit!) A bolt of magic flies from your fingertips and hits her in the chest. The woman cries out as her body is slowly, horrifically disolved into a sparkly, indigo puddle.');
+          this.npcDies();
+          this.options = [
+            { id: 50, text: '"Oh . . . oh gods. I\'m so sorry." You saying stepping over the puddle, travelling deeper into the woods.' },
+            { id: 50, text: '"Rest in pepperonis, ma\'am." You solemnly step over her and continue on your way.' },
+            { id: 51, text: 'Collect a bit of her sparkly, fae blood.' }
+          ]
+        } else if (outcome === 'purple') {
+          this.dialogue.unshift('(Hit!) A bolt of magic flies from your fingertips and hits her in the chest. The woman\'s eyes light up in terror. Feeling strange, she looks at herself in the reflection of the water. "I\'m  . . . PURPLE?! My flawless skin is PURPLE?!?!" She turns her face to you, untamed fury in her eyes.');
+          this.portraitID = "../../assets/Final Picks/Characters/seductress_purple.jpg"
+          this.options = [
+            { id: 49, text: '"Oh dear . . ."' }
+          ];
+        }
+        else {
+          this.dialogue.unshift('(Miss!) A bolt of magic flies from your fingertips and soars just above her shoulder. She turns her face to you, untamed fury in her eyes.');
+          this.options = [
+            { id: 49, text: '"Oh dear . . ."' }
+          ]
+        }
         break;
       case 43:
         //stinking cloud
@@ -430,10 +538,84 @@ export class SeductressEncounterComponent implements OnInit {
         //hammer
         break;
       case 47:
-        //run for it athletics check
+        if (this.sharedService.skillCheck('strength', 12, 'none')) {
+          this.dialogue.unshift('(Success!) You bolt out of there as fast as you can. You can hear the woman running after you, growling, but she seems to stop when you reach the treeline. She howls with anger as you make your escape.');
+          this.options = [{ id: 50, text: 'Continue deeper into the forest.' }]
+        } else {
+          this.dialogue.unshift('(Failure!)')
+          this.dialogue.unshift('(Failure!)  You try to run, but the woman leaps off the rock with startling speed and tackles you to the ground. Face to face with her, you see her lips part. First slightly, then wider, wider, wider, her jaw unhinging until her mouth envelops your entire head.');
+          this.sharedService.takeDamage(5);
+          let check = this.PC.pcid === 3 ? '(Strength Saving Throw)' : '(Dexterity Saving Throw)';
+          this.options = [
+            { id: 52, text: 'Try to wriggle out of her mouth before she swallows you whole! ' + check }
+          ];
+          if (this.PC.pcid === 1) {
+            this.options.push({ id: 53, text: 'She\'s eating you! Try to blast her with a hex! (Spell Attack: Hex)' })
+          } else if (this.PC.pcid === 2) {
+            this.options.push({ id: 54, text: 'She\'s eating you! Fend her off with a stinking cloud! (Spell Cast: Stinking Cloud)' })
+          } else {
+            this.options.push({ id: 55, text: 'She\'s eating you! Reach for your hammer try to strike her! (Melee Attack: Hammer)' })
+          }
+        }
         break;
       case 48:
         //fire bomb
+        break;
+      case 49:
+        this.dialogue.unshift('She lunges at you with incedible speed and ferocity. Her lips part. First slightly, then wider, wider, wider, her jaw unhinging until her mouth envelops your entire head.');
+        this.sharedService.takeDamage(5);
+        let check1 = this.PC.pcid === 3 ? '(Strength Saving Throw)' : '(Dexterity Saving Throw)';
+        this.options = [
+          { id: 52, text: 'Try to wriggle out of her mouth before she swallows you whole! ' + check1 }
+        ];
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 53, text: 'She\'s eating you! Try to blast her with a hex! (Spell Attack: Hex)' })
+        } else if (this.PC.pcid === 2) {
+          this.options.push({ id: 54, text: 'She\'s eating you! Fend her off with a stinking cloud! (Spell Cast: Stinking Cloud)' })
+        } else {
+          this.options.push({ id: 55, text: 'She\'s eating you! Reach for your hammer try to strike her! (Melee Attack: Hammer)' })
+        }
+        break;
+      case 50:
+        if (this.sharedService.encounters[1] === 'MF1') {
+          this.router.navigate(['/moth']);
+        } else {
+          this.router.navigate(['/vamp']);
+        }
+        break;
+      case 51:
+        let blood: item = {
+          itemID: 18,
+          itemDescription: 'A small vial of sparkly, fae blood.',
+          itemName: 'Vial of Fae Blood',
+          itemQuantity: 1,
+          imageID: ''
+        }
+
+        this.PC.items.push(blood);
+        this.options.splice(this.options.length - 1);
+        break;
+      case 52:
+        let mod = this.PC.pcid === 3 ? 'strength' : 'dexterity';
+        if (this.sharedService.skillCheck(mod, 15, 'none')) {
+          this.dialogue.unshift('(Success!) While grabbing at each of her jaws, you place your foot against her chest and kick your way out. She falls backwards off the rock and splashes into the water below.');
+          this.options = [{ id: 50, text: 'Run! Run for your life before she gets back up!' }]
+        } else {
+          this.dialogue.unshift('(Failure!) She holds you with superhuman strength. You feel her teeth bite into your head as it\'s wrenched from your body.');
+          this.options = [{ id: 56, text: '"AAAAAAAAHHHHHHH!!!!!!!"' }];
+        }
+        break;
+      case 53:
+        //hex while in mouth
+        break;
+      case 54:
+        //cloud while in mouth
+        break;
+      case 55:
+        //hammer while in mouth
+        break;
+      case 56:
+        this.sharedService.takeDamage(50);
         break;
     }
   }
