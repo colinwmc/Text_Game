@@ -1,1 +1,4 @@
-<p>moth-monster works!</p>
+<img *ngIf="setting === 1" class="background" src="../../assets/Final Picks/Locations/middle_forest.jpeg" alt="">
+<img *ngIf="setting === 2" class="background" src="../../assets/Final Picks/Characters/moth_monster.jpeg" alt="">
+
+<app-ui-overlay [PC]="PC" [currentNarration]="narration" [currentDialogue]="dialogue" [currentOptions]="options" [portraitID]="portraitID" [backpackOpen]="backpackOpen" (newSelection)="optionSelection($event)" (reset)="resetEncounter()"></app-ui-overlay>

@@ -17,6 +17,8 @@ import { FrogMerchantEncounterComponent } from './frog-merchant-encounter/frog-m
 import { SeductressEncounterComponent } from './seductress-encounter/seductress-encounter.component';
 import { MothMonsterComponent } from './moth-monster/moth-monster.component';
 import { HungryVampireComponent } from './hungry-vampire/hungry-vampire.component';
+import { IllusionistComponent } from './illusionist/illusionist.component';
+import { TravellerComponent } from './traveller/traveller.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { HungryVampireComponent } from './hungry-vampire/hungry-vampire.componen
     SeductressEncounterComponent,
     MothMonsterComponent,
     HungryVampireComponent,
+    IllusionistComponent,
+    TravellerComponent,
   ],
   imports: [
     BrowserModule,

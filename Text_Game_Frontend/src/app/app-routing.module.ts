@@ -8,6 +8,8 @@ import { FrogMerchantEncounterComponent } from './frog-merchant-encounter/frog-m
 import { SeductressEncounterComponent } from './seductress-encounter/seductress-encounter.component';
 import { MothMonsterComponent } from './moth-monster/moth-monster.component';
 import { HungryVampireComponent } from './hungry-vampire/hungry-vampire.component';
+import { TravellerComponent } from './traveller/traveller.component';
+import { IllusionistComponent } from './illusionist/illusionist.component';
 
 const routes: Routes = [
   { path: '', component: TitleScreenComponent },
@@ -18,7 +20,9 @@ const routes: Routes = [
   { path: 'frog', component: FrogMerchantEncounterComponent },
   { path: 'seductress', component: SeductressEncounterComponent },
   { path: 'moth', component: MothMonsterComponent },
-  { path: 'vamp', component: HungryVampireComponent }
+  { path: 'vamp', component: HungryVampireComponent },
+  { path: 'traveller', component: TravellerComponent},
+  { path: 'illusionist', component: IllusionistComponent}
 ];
 
 @NgModule({
