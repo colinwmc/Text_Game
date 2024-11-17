@@ -4,7 +4,7 @@
             <img class="NPC-Portrait" src={{portraitID}} alt="">
             <div class="dialogue-display-box-box">
                 <div class="dialogue-display-box">
-                    <div class="line" [ngClass]="line.includes(PC.name+':') ? 'pc-text':''" *ngFor="let line of currentDialogue; index as i">{{line}}</div>
+                    <div class="line" [ngClass]="line.includes(PC.name+':') ? 'pc-text': (line.includes('Quiet Lady:')||line.includes('Maribelle Lee:')) ? 'quiet' : ''" *ngFor="let line of currentDialogue; index as i">{{line}}</div>
                 </div>
             </div>
         </div>

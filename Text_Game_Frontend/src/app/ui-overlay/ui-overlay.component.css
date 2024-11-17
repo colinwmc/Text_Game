@@ -57,6 +57,10 @@
     color: cornflowerblue;
 }
 
+.quiet {
+    font-size: 1.5rem !important;
+}
+
 ::-webkit-scrollbar {
     width: 0.5rem;
     overflow-y: scroll;
