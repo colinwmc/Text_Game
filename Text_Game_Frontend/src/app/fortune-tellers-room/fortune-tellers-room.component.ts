@@ -332,7 +332,8 @@ export class FortuneTellersRoomComponent implements OnInit {
   shuffleCards() {
     let number1 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
     let number2 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
-    let number3 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+    // let number3 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+    let number3 = 2;
     this.encounters = [
       'OF' + number1,
       'MF' + number2,
