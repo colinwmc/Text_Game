@@ -164,9 +164,124 @@ export class HungryVampireComponent implements OnInit {
           this.dialogue.unshift('(Failure!) Seems fine, I guess?');
         }
         break;
-        case 12:
-          this.addPCDialogue(event.text);
-          this.npcDialogue('"Do you have any . . . b-blood?"')
+      case 12:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Do you have any . . . b-blood?"');
+        this.options = [
+          { id: 13, text: '"Do I have any WHAT?!?!"' },
+          { id: 13, text: '"I\'m sorry, you want what now?"' }
+        ];
+        if (this.PC.items.find((item: { itemID: number; }) => item.itemID === 18)) {
+          this.options.unshift({ id: 14, text: '"Actually yeah. Here, catch." You throw her the vial of fae blood you recently collected.' })
+        }
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 16, text: '"Uhh, no sorry, I don\'t" You say holding up your dry, boney hands.' })
+        } else {
+          this.options.push({ id: 15, text: '"Uhhh . . . nope. Sorry, don\'t have any of that." (Charisma Deception Check)' })
+        }
+        break;
+      case 13:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Blood. I just need a little. And you have so much."');
+        this.options = [
+          { id: 17, text: '"Ok, but you get how I like, need my blood?"' },
+          { id: 18, text: '"I mean  . . . maybe I could spare a little."' }
+        ];
+        break;
+      case 14:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Oh wow, really?" She catches the vial and looks at it with wild hunger in her eyes. "Oh . . ." she says, her facing dropping as she looks at it. "It\'s fae blood . . ."');
+        this.options = [
+          { id: 19, text: '"Yes. Is that a problem?"' },
+          { id: 19, text: '"Oh I\'m sorry. Is that not good enough for you?"' }
+        ];
+        break;
+      case 15:
+        this.sharedService.skillCheck('charisma', 100, 'none');
+        this.addPCDialogue(event.text);
+        this.npcDialogue('(Failure!) "Sure you do. I can . . . smell it." She mutters, licking her lips. "I just need a little. And you have so much."');
+        this.options = [
+          { id: 17, text: '"Ok, but you get how I like, need my blood?"' },
+          { id: 18, text: '"I mean  . . . maybe I could spare a little."' }
+        ];
+        break;
+      case 16:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Oh . . . right. I suppose you wouldn\'t, would you." She mutter dejectedly. "But what about that? Are you going to eat that?" She says pointing at the raccoon in your arms.');
+        this.options = [
+          { id: 20, text: '"EXCUSE YOU THAT\'S MY BEST FRIEND!!!" You shout with a degree of force and volume you rarely muster.' },
+          { id: 20, text: '"Lay one finger on Priscilla and I will end you, bitch." You say sternly, pointing one long, boney finger in her direction.' }
+        ]
+        break;
+      case 17:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Yes, but you have 1.2 gallons of blood, and I have none. Surely you wouldn\'t be so cruel as to keep it all for yourself as I wither away before you." She looks at you with big, round eyes as she speaks.');
+        this.options = [
+          { id: 18, text: '"I mean  . . . maybe I could spare a little."' },
+          { id: 21, text: '"Oh, I assure that I could. And I must insist that you step back." ' }
+        ]
+        break;
+      case 18:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Truly? Oh you are my savior." Her eyes swell with tears as she looks at you with undying gratitude. "I promise I\'ll only take a bit. It\'ll barely even hurt, I swear. She approaches you, her fangs lengthing in her small mouth."');
+        this.options = [
+          { id: 22, text: '"As long as you promise to be careful." You bare your neck to the approaching vampire.' }
+        ];
+        break;
+      case 19:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"No . . . no, it\'s ok. I was just wondering if you had anything . . . red."');
+        this.options = [
+          { id: 23, text: '"Oh we\'ve got a blood snob on our hands then? Well if if you don\'t like it, give it back."' }
+        ];
+        break;
+      case 20:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"I meant no disrespect, fair skelly," she shrinks back, truly surprised by your outburst. "But surely you must understand my situation. We undead must stick together, no?"');
+        this.options = [
+          { id: 24, text: '"You will harm this blessed creature over my dead body! Well . . . my deader body, I suppose." (Charisma Intimidation Check)' },
+          { id: 25, text: '"Yes . . . I am not insensitive to your plight, friend. Perhaps if you agree to leave us in peace, I could direct you to a nearby town filled with red blooded humans."' }
+        ];
+        break;
+      case 21:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"I\'m afraid I can\'t do that," she says stepping towards you. "I\'m sorry but I need this . . ."');
+        this.options = [
+          { id: 18, text: '"Ok . . . ok. I suppose I could spare a little if this is how badly you need it."' },
+          { id: 24, text: '"ONE MORE STEP FORWARD AND I WILL BLAST YOU OFF THE FACE OF THIS EARTH!" You shout dramitically at the small, crying woman. (Charisma Intimidation Check)' },
+          { id: 25, text: '"Ok, ok, look. Agree to leave me in peace and I\'ll direct you to a nearby town. It\'s full of red blooded humans. Largely unarmed, mostly sleeping at this hour. Surely less of a risk to you than me." (Charisma Persuasion Check)' }
+        ];
+        break;
+      case 22:
+        this.sharedService.takeDamage(2);
+        this.dialogue.unshift('You feel a sharp pinch as her fangs sink into your neck, but it dulls almost instantly as you feel a gentle chill emanate from the puncture sight. You can feel the blood drain from your neck, but it doesn\'t hurt. It feels strangely peaceful.');
+        this.options = [
+          { id: 26, text: '"Ok, that\'s enough."' },
+          { id: 27, text: 'Let her keep going. She clearly needs it and it actually feels . . . kind of nice.' }
+        ];
+        break;
+      case 23:
+        //blood snob/ don't want it
+        break;
+      case 24:
+        //threaten her
+        break;
+      case 25:
+        //tell her about the town
+        break;
+      case 26:
+        this.sharedService.takeDamage(3);
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift('You hear her mumble unintelligibly into your neck, and continues to drink with growing gusto.');
+        this.options = [
+          {id: 28, text: '"I SAID THAT\'S ENOUGH!" (Charisma Intimidation Check)'},
+          {id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)'}
+        ];
+        if(this.npcTag === 'Maribelle Lee: '){
+          this.options.unshift({id: 30, text: '"Maribelle, sweetie, I need you to stop now." You say gently, yet firmly. (Charisma Persuasion Check)'})
+        }
+        break;
+
     }
     if (event.id >= 3 && !this.hasChecked) {
       this.options.push({ id: 4, text: 'Look her over, head to toe. See if anything seems off. (Wisdom Perception Check)' });
