@@ -20,6 +20,7 @@ export class HungryVampireComponent implements OnInit {
   public npcTag = 'Quiet Lady: ';
   public hasChecked = false;
   public badSense = false;
+  public gaveFaeBlood = false;
 
   constructor(private sharedService: SharedService, private router: Router) { }
 
@@ -57,6 +58,10 @@ export class HungryVampireComponent implements OnInit {
     this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is incresingly blocked out by the canopy, the woods become darker and more ominous."
     this.options = [{ id: 0, text: 'Continue >' }];
     this.backpackOpen = false;
+    this.npcTag = 'Quiet Lady: ';
+    this.hasChecked = false;
+    this.badSense = false;
+    this.gaveFaeBlood = false;
   }
 
   addPCDialogue(text: string) {
@@ -172,7 +177,8 @@ export class HungryVampireComponent implements OnInit {
           { id: 13, text: '"I\'m sorry, you want what now?"' }
         ];
         if (this.PC.items.find((item: { itemID: number; }) => item.itemID === 18)) {
-          this.options.unshift({ id: 14, text: '"Actually yeah. Here, catch." You throw her the vial of fae blood you recently collected.' })
+          this.options.unshift({ id: 14, text: '"Actually yeah. Here, catch." You throw her the vial of fae blood you recently collected.' });
+          this.gaveFaeBlood = true;
         }
         if (this.PC.pcid === 1) {
           this.options.push({ id: 16, text: '"Uhh, no sorry, I don\'t" You say holding up your dry, boney hands.' })
@@ -218,7 +224,7 @@ export class HungryVampireComponent implements OnInit {
         this.npcDialogue('"Yes, but you have 1.2 gallons of blood, and I have none. Surely you wouldn\'t be so cruel as to keep it all for yourself as I wither away before you." She looks at you with big, round eyes as she speaks.');
         this.options = [
           { id: 18, text: '"I mean  . . . maybe I could spare a little."' },
-          { id: 21, text: '"Oh, I assure that I could. And I must insist that you step back." ' }
+          { id: 21, text: '"Oh, I assure that I could. And I must insist that you step back."' }
         ]
         break;
       case 18:
@@ -261,26 +267,89 @@ export class HungryVampireComponent implements OnInit {
         ];
         break;
       case 23:
-        //blood snob/ don't want it
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"NO! No, I want it," she yelps, uncharacteristically sharply, holding the vial tight to her chest. "But maybe you could give me something more?" She takes a slow, tentative step toward you.');
+        this.options = [
+          { id: 18, text: '"I mean  . . . maybe I could spare a little."' },
+          { id: 21, text: '"Oh, I assure that I couldn\'t. And I must insist that you step back."' },
+          { id: 30, text: '"You got blood already. Now be appreciative of that and move on, or we\'re going to have a problem." (Charisma Persuasion Check)' }
+        ]
         break;
       case 24:
-        //threaten her
+      case 30:
+        if (this.sharedService.skillCheck('charisma', 15, event.id === 30 ? 'advantage' : 'none')) {
+          if (event.id === 30) {
+            this.npcDialogue('(Success!) "Yes . . ." she mutters dejectedly. "Yes, I suppose you\'re right. Thank you for your generosity fair traveller. I shall leave thee in peace." She begins to trudge off sullenly into the night.');
+          } else {
+            this.dialogue.unshift('(Success!) Her eyes widen dramatically. After a moments deliberation, she scurries off into the woods with surprising speed, hissing slightly as she runs.');
+          }
+          let name = this.npcTag === 'Maribelle Lee: ' ? 'Maribelle' : 'ma\'am';
+          this.options = [
+            { id: 31, text: '"Glad we could come to an understanding "' + name + '." You say as you make your own way forward.' },
+            { id: 31, text: '"And don\'t you come back, you hear?" You state brazenly, keeping an eye on the woman as you proceed.' },
+            { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
+          ]
+        } else {
+          this.npcDialogue('(Failure!) She stands stock skill for an instant, wheels turning in her head. "Sorry . . ." she whispers as she lunges at you with super human speed. You feel the sharp puncture of her fangs latching onto your neck, and the warm splash of blood as it splatters across you.');
+          this.sharedService.takeDamage(5);
+          this.options = [
+            { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
+            { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
+          ];
+          //attack options here
+        }
         break;
       case 25:
-        //tell her about the town
+        if (this.PC.pcid === 1 || this.sharedService.skillCheck('charisma', 10, this.gaveFaeBlood ? 'advantage' : 'none')) {
+          this.npcDialogue('(Success!) "Red blooded humans you say?" she inquires, licking her lips. "Tell me the way and I will thank you kindly and take my leave."');
+          this.options = [
+            { id: 33, text: 'Tell her the way back to the Half Light Inn.' },
+            { id: 34, text: 'Point her in the wrong direction, weaving a tale of an imaginary town in a clearing toward the center of the forest. (Charisma Deception Check)' }
+          ];
+        } else {
+          this.npcDialogue('(Failure!) "I\'m sure I\'ll have plenty of time and energy to retrace your steps, once I feed from you." She lunges at you with super human speed. You feel the sharp puncture of her fangs latching onto your neck, and the warm splash of blood as it splatters across you.');
+          this.sharedService.takeDamage(5);
+          this.options = [
+            { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
+            { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
+          ];
+          //attack options here
+        }
         break;
       case 26:
         this.sharedService.takeDamage(3);
         this.addPCDialogue(event.text);
         this.dialogue.unshift('You hear her mumble unintelligibly into your neck, and continues to drink with growing gusto.');
         this.options = [
-          {id: 28, text: '"I SAID THAT\'S ENOUGH!" (Charisma Intimidation Check)'},
-          {id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)'}
+          { id: 28, text: '"I SAID THAT\'S ENOUGH!" (Charisma Intimidation Check)' },
+          { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
         ];
-        if(this.npcTag === 'Maribelle Lee: '){
-          this.options.unshift({id: 30, text: '"Maribelle, sweetie, I need you to stop now." You say gently, yet firmly. (Charisma Persuasion Check)'})
+        if (this.npcTag === 'Maribelle Lee: ') {
+          this.options.unshift({ id: 32, text: '"Maribelle, sweetie, I need you to stop now." You say gently, yet firmly. (Charisma Persuasion Check)' })
         }
         break;
+      case 27:
+        //let her keep going
+        break;
+      case 28:
+        //intimidation check after she starts drinking
+        break;
+      case 29:
+        //push her off while drinking
+        break;
+      case 31:
+        //proceed to next scene
+        break;
+      case 32:
+        //ask her kindly to stop
+        break;
+      case 33:
+        //tell her how to get to inn
+        break;
+      case 34:
+        //lie to her about inn
+        break;
+
 
     }
     if (event.id >= 3 && !this.hasChecked) {
