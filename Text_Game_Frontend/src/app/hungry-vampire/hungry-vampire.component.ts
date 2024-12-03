@@ -32,7 +32,7 @@ export class HungryVampireComponent implements OnInit {
 
     } else {
       this.sharedService.getPCList().subscribe(data => {
-        this.PC = data[0];
+        this.PC = data[2];
         this.PC.currentHealth = this.PC.hp;
         this.PC.hasShitPants = false;
         let gold: item = {
@@ -56,7 +56,7 @@ export class HungryVampireComponent implements OnInit {
         this.resetPC = JSON.parse(JSON.stringify(this.PC));
       })
     }
-    this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is incresingly blocked out by the canopy, the woods become darker and more ominous."
+    this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is increasingly blocked out by the canopy, the woods become darker and more ominous."
     this.options = [{ id: 0, text: 'Continue >' }];
   }
 
@@ -64,7 +64,7 @@ export class HungryVampireComponent implements OnInit {
     this.PC = JSON.parse(JSON.stringify(this.resetPC));
     this.sharedService.PC = this.PC;
     this.dialogue = [];
-    this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is incresingly blocked out by the canopy, the woods become darker and more ominous."
+    this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is increasingly blocked out by the canopy, the woods become darker and more ominous."
     this.options = [{ id: 0, text: 'Continue >' }];
     this.backpackOpen = false;
     this.npcTag = 'Quiet Lady: ';
@@ -82,7 +82,7 @@ export class HungryVampireComponent implements OnInit {
   }
 
   npcDies() {
-    this.portraitID = "../../assets/Final Picks/Characters/hungry_vampire_dead.jpg"
+    this.portraitID = "../../assets/Final Picks/Characters/hungry_vampire_dead.png"
   }
 
   optionSelection(event: any) {
@@ -316,7 +316,7 @@ export class HungryVampireComponent implements OnInit {
             { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
             { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
           ];
-          //attack options here
+          this.addAttackOptions(1);
 
         }
         break;
@@ -337,7 +337,7 @@ export class HungryVampireComponent implements OnInit {
             { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
             { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
           ];
-          //attack options here
+          this.addAttackOptions(1);
         }
         break;
       case 26:
@@ -363,13 +363,21 @@ export class HungryVampireComponent implements OnInit {
       case 28:
       case 32:
         if (this.sharedService.skillCheck('charisma', 12, event.id === 32 ? 'advantage' : 'none')) {
-          this.npcDialogue('(Success!) "Yes, of course," she mumbles. "Just needed a little bit is all. I\'ll be going then."');
-          let name = this.npcTag === 'Maribelle Lee: ' ? 'Maribelle' : 'ma\'am';
-          this.options = [
-            { id: 31, text: '"Yeah, glad I could help "' + name + '." You say as you make your way forward.' },
-            { id: 31, text: '"And don\'t you come back, you hear?" You state brazenly, keeping an eye on the woman as you proceed.' },
-            { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
-          ]
+          if (this.PC.pcid === 1) {
+            this.dialogue.unshift('(Success!) She suddenly looks at you with abject fear in her eyes. Her shambles off into the woods.');
+            this.options = [
+              { id: 31, text: '"And don\'t you come back, you hear?" You state brazenly, keeping an eye on the woman as you proceed.' },
+              { id: 31, text: '"Teach a bitch to mess with my raccoon," you mutter, getting to your feet.' }
+            ]
+          } else {
+            this.npcDialogue('(Success!) "Yes, of course," she mumbles. "Just needed a little bit is all. I\'ll be going then."');
+            let name = this.npcTag === 'Maribelle Lee: ' ? 'Maribelle' : 'ma\'am';
+            this.options = [
+              { id: 31, text: '"Yeah, glad I could help "' + name + '." You say as you make your way forward.' },
+              { id: 31, text: '"And don\'t you come back, you hear?" You state brazenly, keeping an eye on the woman as you proceed.' },
+              { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
+            ]
+          }
         } else {
           if (this.PC.pcid === 1) {
             this.dialogue.unshift('(Failure!) She hisses terrifyingly as her claws continue to rake across your body.')
@@ -377,7 +385,8 @@ export class HungryVampireComponent implements OnInit {
             this.dialogue.unshift('(Failure!) She hisses terrifyingly as her fangs sink deeper into your neck. You feel her hands, once delicately placed, tighten around your shoulders with an unimaginable strength.');
           }
           this.sharedService.takeDamage(5);
-          //attack options here
+          this.options = [];
+          this.addAttackOptions(2);
         }
         break;
       case 29:
@@ -406,7 +415,8 @@ export class HungryVampireComponent implements OnInit {
             this.dialogue.unshift('(Failure!) Her once delicate hands on your shoulder suddenly tighten, a surge of superhuman strength coursing through her from your blood. She hisses terrifyingly as her fangs sink deeper into your neck.');
           }
           this.sharedService.takeDamage(5);
-          //attack options here
+          this.options = [];
+          this.addAttackOptions(2);
         }
         break;
       case 31:
@@ -442,20 +452,161 @@ export class HungryVampireComponent implements OnInit {
             { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
             { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
           ];
-          //attack options heres
+          this.addAttackOptions(1);
         }
         break;
       case 35:
-        //snap out of sleepiness
+        if (this.sharedService.skillCheck('constitution', 15, 'none')) {
+          this.dialogue.unshift('(Success!) You will your body to spark to life. In one smooth motion, you grab her narrow shoulders and shove her off of you. She crumples to the ground at your feet like a rag doll. She looks up at you with fear in her eyes before bolting into the trees with superhuman speed.');
+          this.options = [
+            { id: 31, text: '"Sorry I couldn\'t help "' + name + '." You say as you make your way forward.' },
+            { id: 31, text: '"And don\'t you come back, you hear?" You state brazenly, eyeing the treeline for any sign of her.' },
+            { id: 31, text: '"Nasty little bitch . . ." You mumble, running your hands over your scratched skull. You continue wearily into the forest.' },
+            { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
+          ]
+        } else {
+          this.sharedService.takeDamage(this.PC.currentHealth - 1);
+          if (this.npcTag === 'Maribelle Lee: ') {
+            this.dialogue.unshift('(Failure!) You can\'t break yourself from this trance. You feel the life continue to drain from your body, as dreams of bliss swim in your head. Just before it all goes dark, you feel her teeth pull out of your neck. You sway lazily on your feet, a blurred vision of the pale woman swirling in front of you.');
+            this.options = [{ id: 37, text: 'Continue >' }];
+          } else {
+            this.dialogue.unshift('(Failure!) You can\'t break yourself from this trance. You feel the life continue to drain from your body, as dreams of bliss swim in your head.');
+            this.options = [{ id: 39, text: 'Continue >' }];
+          }
+        }
         break;
       case 36:
-        //let her go more
+        this.sharedService.takeDamage(this.PC.currentHealth - 1);
+        if (this.npcTag === 'Maribelle Lee: ') {
+          this.dialogue.unshift('You feel the life continue to drain from your body, as dreams of bliss swim in your head. Just before it all goes dark, you feel her teeth pull out of your neck. You sway lazily on your feet, a blurred vision of the pale woman swirling in front of you.');
+          this.options = [{ id: 37, text: 'Continue >' }];
+        } else {
+          this.dialogue.unshift('You feel the life continue to drain from your body, as dreams of bliss swim in your head.');
+          this.options = [{ id: 39, text: 'Continue >' }];
+        }
         break;
-
-
+      case 37:
+        this.npcDialogue('"Thank you for your gift, kind soul," she says, the sickly waiver gone from her voice. "And now that my magic has returned, allow me to return the favor." She reaches one hand forward and places it gently on your forehead.');
+        this.options = [{ id: 38, text: 'Continue' }];
+        break;
+      case 38:
+        this.PC.currentHealth = this.PC.hp;
+        let heal = new Audio();
+        heal.src = '../assets/Sound Effects/heal.mp3';
+        heal.load();
+        heal.play();
+        this.npcDialogue('"Goodbye, friend."');
+        this.options = [
+          { id: 31, text: '"Yeah, glad I could help, Maribelle." You say as you make your way forward.' },
+          { id: 31, text: '"Welp, smell ya later."' }
+        ]
+        break;
+      case 39:
+        this.sharedService.takeDamage(this.PC.hp);
+        break;
+      case 40:
+      case 43:
+        let outcome1 = this.sharedService.castAttackSpell(3, 12, 'none');
+        if (outcome1 === 'frog') {
+          this.dialogue.unshift('(Hit!) You press your hand against her head and release a point blank magical hex. Her body is twisted and morphed into a frog!');
+          this.portraitID = "../../assets/Final Picks/Characters/hex-frog.jpg";
+          this.options = [
+            { id: 31, text: '"Well, I hope you have a nicer time eating bugs than blood." You say, sadly marching on.' },
+            { id: 31, text: '"Welp, smell ya later," you say, striding onward.' }
+          ]
+        } else if (outcome1 === 'puddle') {
+          this.dialogue.unshift('(Hit!) You press your hand against her head and release a point blank magical hex. The woman cries out as her body is slowly, horrifically disolved into a red and white puddle.');
+          this.npcDies();
+          this.options = [
+            { id: 31, text: '"Oh . . . oh gods. I\'m so sorry." You saying stepping over the puddle, travelling deeper into the woods.' },
+            { id: 31, text: '"Rest in pepperonis, ma\'am." You solemnly step over her and continue on your way.' }
+          ]
+        } else if (outcome1 === 'purple') {
+          this.dialogue.unshift('(Hit!) You press your hand against her head and release a point blank magical hex. You notice the woman\'s skin turn purple, but it does nothing to deter her. She continues her assault.');
+          this.portraitID = "../../assets/Final Picks/Characters/hungry_vampire_purple.png";
+          if (event.id === 40) {
+            this.options = [
+              { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
+              { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
+            ];
+          } else {
+            this.options = [{ id: 39, text: 'AAAAAHHHHHH!!!' }]
+          }
+        } else {
+          this.dialogue.unshift('(Miss!) The beam of light fires from your hands and shoots past her head. She continues her attack all the more ferociously.');
+          if (event.id === 40) {
+            this.options = [
+              { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
+              { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
+            ];
+          } else {
+            this.options = [{ id: 39, text: 'AAAAAHHHHHH!!!' }]
+          }
+        }
+        break;
+      case 41:
+      //stink phase 1
+      case 44:
+        //stink phase 2
+        if (this.sharedService.castSaveSpell(6, 0, 'advantage')) {
+          if (this.PC.enhancedStink) {
+            this.dialogue.unshift('(Success!) A massive noise echoes throughout the forest. The woman falls backwards onto the ground. She whines pathetically as the gas fills her lungs, until she collapses into a lifeless heap.');
+            this.npcDies();
+            this.options = [
+              { id: 31, text: '"Oh dear . . . what a way to go. . . Oh well." You say making your way further into the woods.' }
+            ]
+          } else {
+            this.dialogue.unshift('(Success!) The foul, green cloud surrounds the woman as she begins coughing uncontrollably. Her teeth slide out of you as she crumples like a rag doll on the ground..');
+            this.options = [
+              { id: 31, text: '"Smell ya later!" You shout over your shoulder as you flee deeper into the woods.' }
+            ]
+          }
+        } else {
+          this.dialogue.unshift('(Failure!) The woman breaths in the foul, green gas without filnching. Her starving desperation driving her forward.');
+          if (event.id === 41) {
+            this.options = [
+              { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
+              { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
+            ];
+          } else {
+            this.options = [{ id: 39, text: '"AAAAAAAAHHHHHHH!!!!!!!"' }];
+          }
+        }
+        break;
+      case 42:
+      case 45:
+        if (this.sharedService.castAttackSpell(9, 10, 'none')) {
+          this.dialogue.unshift('(Hit!) Your hammer slams into her head, splitting it like a grape. Bright, crimson blood explodes outwards like a popped water balloon.');
+          this.npcDies();
+          this.options = [
+            { id: 31, text: '"Get wrecked." You saying striding deeper into the woods.' },
+            { id: 31, text: '"Sorry \'bout it bruh." You solemnly march off and continue on your way.' }
+          ]
+        } else {
+          this.dialogue.unshift('(Miss!) You swing with all your might, but can\'t connect with your target. You feel her teeth sink deeper into you as the life continues to drain from your body.');
+          if (event.id === 42) {
+            this.options = [
+              { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
+              { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
+            ];
+          } else {
+            this.options = [{ id: 39, text: '"AAAAAAAAHHHHHHH!!!!!!!"' }];
+          }
+        }
+        break;
     }
     if (event.id >= 3 && !this.hasChecked) {
       this.options.push({ id: 4, text: 'Look her over, head to toe. See if anything seems off. (Wisdom Perception Check)' });
+    }
+  }
+
+  addAttackOptions(phase: number) {
+    if (this.PC.pcid === 1) {
+      this.options.push({ id: phase === 1 ? 40 : 43, text: 'If that\'s the way she wants to handle this. Blast her with a hex! (Spell Attack: Hex)' })
+    } else if (this.PC.pcid === 2) {
+      this.options.push({ id: phase === 1 ? 41 : 44, text: 'Fend her off with a stinking cloud! (Spell Cast: Stinking Cloud)' })
+    } else {
+      this.options.push({ id: phase === 1 ? 42 : 45, text: 'Reach for your hammer try to strike her! (Melee Attack: Hammer)' })
     }
   }
 
