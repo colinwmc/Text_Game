@@ -32,7 +32,7 @@ export class HungryVampireComponent implements OnInit {
 
     } else {
       this.sharedService.getPCList().subscribe(data => {
-        this.PC = data[1];
+        this.PC = data[0];
         this.PC.currentHealth = this.PC.hp;
         this.PC.hasShitPants = false;
         let gold: item = {
@@ -43,6 +43,15 @@ export class HungryVampireComponent implements OnInit {
           imageID: ''
         }
         this.PC.items.push(gold);
+        let blood: item = {
+          itemID: 18,
+          itemDescription: 'A small vial of sparkly, fae blood.',
+          itemName: 'Vial of Fae Blood',
+          itemQuantity: 1,
+          imageID: ''
+        }
+
+        this.PC.items.push(blood);
         this.sharedService.PC = this.PC;
         this.resetPC = JSON.parse(JSON.stringify(this.PC));
       })
@@ -181,7 +190,7 @@ export class HungryVampireComponent implements OnInit {
           this.gaveFaeBlood = true;
         }
         if (this.PC.pcid === 1) {
-          this.options.push({ id: 16, text: '"Uhh, no sorry, I don\'t" You say holding up your dry, boney hands.' })
+          this.options.push({ id: 16, text: '"Uhh, no sorry, I don\'t," You say holding up your dry, boney hands.' })
         } else {
           this.options.push({ id: 15, text: '"Uhhh . . . nope. Sorry, don\'t have any of that." (Charisma Deception Check)' })
         }
@@ -193,6 +202,9 @@ export class HungryVampireComponent implements OnInit {
           { id: 17, text: '"Ok, but you get how I like, need my blood?"' },
           { id: 18, text: '"I mean  . . . maybe I could spare a little."' }
         ];
+        if (this.PC.pcid === 1) {
+          this.options = [{ id: 16, text: '"Uhh, no sorry, I don\'t," You say holding up your dry, boney hands.' }]
+        }
         break;
       case 14:
         this.addPCDialogue(event.text);
@@ -213,7 +225,7 @@ export class HungryVampireComponent implements OnInit {
         break;
       case 16:
         this.addPCDialogue(event.text);
-        this.npcDialogue('"Oh . . . right. I suppose you wouldn\'t, would you." She mutter dejectedly. "But what about that? Are you going to eat that?" She says pointing at the raccoon in your arms.');
+        this.npcDialogue('"Oh . . . right. I suppose you wouldn\'t, would you." She mutters dejectedly. "But what about that? Are you going to eat that?" She says pointing at the raccoon in your arms.');
         this.options = [
           { id: 20, text: '"EXCUSE YOU THAT\'S MY BEST FRIEND!!!" You shout with a degree of force and volume you rarely muster.' },
           { id: 20, text: '"Lay one finger on Priscilla and I will end you, bitch." You say sternly, pointing one long, boney finger in her direction.' }
@@ -270,10 +282,14 @@ export class HungryVampireComponent implements OnInit {
         this.addPCDialogue(event.text);
         this.npcDialogue('"NO! No, I want it," she yelps, uncharacteristically sharply, holding the vial tight to her chest. "But maybe you could give me something more?" She takes a slow, tentative step toward you.');
         this.options = [
-          { id: 18, text: '"I mean  . . . maybe I could spare a little."' },
           { id: 21, text: '"Oh, I assure that I couldn\'t. And I must insist that you step back."' },
           { id: 30, text: '"You got blood already. Now be appreciative of that and move on, or we\'re going to have a problem." (Charisma Persuasion Check)' }
-        ]
+        ];
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 16, text: '"Uhh, no sorry, I don\'t have anything else," You say holding up your dry, boney hands.' })
+        } else {
+          this.options.push({ id: 18, text: '"I mean  . . . maybe I could spare a little."' })
+        }
         break;
       case 24:
       case 30:
@@ -290,17 +306,25 @@ export class HungryVampireComponent implements OnInit {
             { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
           ]
         } else {
-          this.npcDialogue('(Failure!) She stands stock skill for an instant, wheels turning in her head. "Sorry . . ." she whispers as she lunges at you with super human speed. You feel the sharp puncture of her fangs latching onto your neck, and the warm splash of blood as it splatters across you.');
+          if (this.PC.pcid === 1) {
+            this.npcDialogue('(Failure!) "I suppose over your deader body it is," she whispers as she lunges at you with super human speed. You feel her sharp teeth and claws tear at your bones wildly.');
+          } else {
+            this.npcDialogue('(Failure!) She stands stock skill for an instant, wheels turning in her head. "Sorry . . ." she whispers as she lunges at you with super human speed. You feel the sharp puncture of her fangs latching onto your neck, and the warm splash of blood as it splatters across you.');
+          }
           this.sharedService.takeDamage(5);
           this.options = [
             { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
             { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
           ];
           //attack options here
+
         }
         break;
       case 25:
         if (this.PC.pcid === 1 || this.sharedService.skillCheck('charisma', 10, this.gaveFaeBlood ? 'advantage' : 'none')) {
+          if (this.PC.pcid === 1) {
+            this.sharedService.skillCheck('charisma', 12, 'none')
+          }
           this.npcDialogue('(Success!) "Red blooded humans you say?" she inquires, licking her lips. "Tell me the way and I will thank you kindly and take my leave."');
           this.options = [
             { id: 33, text: 'Tell her the way back to the Half Light Inn.' },
@@ -329,25 +353,103 @@ export class HungryVampireComponent implements OnInit {
         }
         break;
       case 27:
-        //let her keep going
+        this.dialogue.unshift('You feel more and more blood draining from your body. The sense of cool serenity spreading through your veins. Your eyes start to close as you begin to relax into sleep.');
+        this.sharedService.takeDamage(5);
+        this.options = [
+          { id: 35, text: 'Snap out of it! Shake from this malaise and shove her off of you! (Constitution Saving Throw)' },
+          { id: 36, text: 'Just a little bit more. I\'m sure she\'ll stop soon. She promised, right?' }
+        ]
         break;
       case 28:
-        //intimidation check after she starts drinking
+      case 32:
+        if (this.sharedService.skillCheck('charisma', 12, event.id === 32 ? 'advantage' : 'none')) {
+          this.npcDialogue('(Success!) "Yes, of course," she mumbles. "Just needed a little bit is all. I\'ll be going then."');
+          let name = this.npcTag === 'Maribelle Lee: ' ? 'Maribelle' : 'ma\'am';
+          this.options = [
+            { id: 31, text: '"Yeah, glad I could help "' + name + '." You say as you make your way forward.' },
+            { id: 31, text: '"And don\'t you come back, you hear?" You state brazenly, keeping an eye on the woman as you proceed.' },
+            { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
+          ]
+        } else {
+          if (this.PC.pcid === 1) {
+            this.dialogue.unshift('(Failure!) She hisses terrifyingly as her claws continue to rake across your body.')
+          } else {
+            this.dialogue.unshift('(Failure!) She hisses terrifyingly as her fangs sink deeper into your neck. You feel her hands, once delicately placed, tighten around your shoulders with an unimaginable strength.');
+          }
+          this.sharedService.takeDamage(5);
+          //attack options here
+        }
         break;
       case 29:
-        //push her off while drinking
+        if (this.sharedService.skillCheck('strength', 14, 'none')) {
+          if (this.PC.pcid === 1) {
+            this.dialogue.unshift('(Success!) You grab her by the shoulders and give her a sharp shove. She crumples to the ground at your feet like a rag doll. She looks up at you with fear in her eyes before bolting into the trees with superhuman speed.');
+            this.options = [
+              { id: 31, text: '"Sorry I couldn\'t help "' + name + '." You say as you make your way forward.' },
+              { id: 31, text: '"And don\'t you come back, you hear?" You state brazenly, eyeing the treeline for any sign of her.' },
+              { id: 31, text: '"Nasty little bitch . . ." You mumble, running your hands over your scratched skull. You continue wearily into the forest.' },
+              { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
+            ]
+          } else {
+            this.dialogue.unshift('(Success!) You grab her by the shoulders and give her a sharp shove. Her teeth slide smoothly out of you as she crumples to the ground at your feet like a rag doll. She looks up at you with fear in her eyes before bolting into the trees with superhuman speed.');
+            this.options = [
+              { id: 31, text: '"Yeah, glad I could help "' + name + '." You say as you make your way forward.' },
+              { id: 31, text: '"And don\'t you come back, you hear?" You state brazenly, eyeing the treeline for any sign of her.' },
+              { id: 31, text: '"Nasty little bitch . . ." You mumble, holding your hand to your neck to wipe away the blood. You continue wearily into the forest.' },
+              { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
+            ]
+          }
+        } else {
+          if (this.PC.pcid === 1) {
+            this.dialogue.unshift('(Failure!) She hisses terrifyingly as she continues to attack your fragile body.');
+          } else {
+            this.dialogue.unshift('(Failure!) Her once delicate hands on your shoulder suddenly tighten, a surge of superhuman strength coursing through her from your blood. She hisses terrifyingly as her fangs sink deeper into your neck.');
+          }
+          this.sharedService.takeDamage(5);
+          //attack options here
+        }
         break;
       case 31:
-        //proceed to next scene
-        break;
-      case 32:
-        //ask her kindly to stop
+        if (this.sharedService.encounters[2] === 'DF1') {
+          this.router.navigate(['/traveller']);
+        } else {
+          this.router.navigate(['/illusionist']);
+        }
         break;
       case 33:
-        //tell her how to get to inn
+        this.npcDialogue('"Thanks for your help, friend," she mumbles abashedly before dissapearing into the night.');
+        this.options = [
+          { id: 31, text: '"Yeah, glad I could help "' + name + '." You say as you make your way forward.' },
+          { id: 31, text: '"Welp . . . that\'s officially someone else\'s problem now." You trudge onward.' },
+          { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
+        ]
         break;
       case 34:
-        //lie to her about inn
+        if (this.sharedService.skillCheck('charisma', 13, this.npcTag === 'Maribelle Lee: ' ? 'advantage' : 'none')) {
+          this.npcDialogue('(Success!) "Thanks for your help, friend," she mumbles abashedly before dissapearing into the night.');
+          this.options = [
+            { id: 31, text: '"Yeah, glad I could help "' + name + '." You say as you make your way forward.' },
+            { id: 31, text: '"Smell ya later." You say, striding confidently forward.' }
+          ]
+        } else {
+          if (this.PC.pcid === 1) {
+            this.npcDialogue('(Failure!) She stares at you with wide eyes for a moment. " . . . liar . . ." she whispers softly as she lunges at you with super human speed. You feel her razer sharp teeth and claws tear into your bones.');
+          } else {
+            this.npcDialogue('(Failure!) She stares at you with wide eyes for a moment. " . . . liar . . ." she whispers softly as she lunges at you with super human speed. You feel the sharp puncture of her fangs latching onto your neck, and the warm splash of blood as it splatters across you.');
+          }
+          this.sharedService.takeDamage(5);
+          this.options = [
+            { id: 28, text: '"GET OFF OF ME OR I\'LL DESTORY YOU!" (Charisma Intimidation Check)' },
+            { id: 29, text: 'Grab her by the shoulders and attempt to shove her off of you. (Strength Athletics Check)' }
+          ];
+          //attack options heres
+        }
+        break;
+      case 35:
+        //snap out of sleepiness
+        break;
+      case 36:
+        //let her go more
         break;
 
 
