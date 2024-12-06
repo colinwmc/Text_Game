@@ -52,7 +52,7 @@ export class SeductressEncounterComponent implements OnInit {
         this.resetPC = JSON.parse(JSON.stringify(this.PC));
       })
     }
-    this.narration = "You exit the tavern and stand at the precipice of the forest, the tree line beginning abruptly before you, an almost too clear path opened in front of you. You wonder what dangers await you, and what welcome the forest will grant you."
+    this.narration = "You continue on your way, now fully immersed in the strange woods. You shake off your previous encounter, and brace yourself for the next surprise the forest might have in store."
     this.options = [{ id: 0, text: 'Continue >' }];
   }
 
@@ -60,7 +60,7 @@ export class SeductressEncounterComponent implements OnInit {
     this.PC = JSON.parse(JSON.stringify(this.resetPC));
     this.sharedService.PC = this.PC;
     this.dialogue = [];
-    this.narration = "You exit the tavern and stand at the precipice of the forest, the tree line beginning abruptly before you, an almost too clear path opened in front of you. You wonder what dangers await you, and what welcome the forest will grant you."
+    this.narration = "You continue on your way, now fully immersed in the strange woods. You shake off your previous encounter, and brace yourself for the next surprise the forest might have in store."
     this.options = [{ id: 0, text: 'Continue >' }];
     this.backpackOpen = false;
     this.hasCountedFingers = false;
@@ -86,7 +86,7 @@ export class SeductressEncounterComponent implements OnInit {
 
     switch (event.id) {
       case 0:
-        this.narration = "It feels like you\'ve barely entered the woods when you hear a voice singing nearby. It\'s the most beautiful sound you\'ve ever heard.";
+        this.narration = "Suddenly, you hear something. It\'s the sound of a voice singing nearby. It\'s the most beautiful sound you\'ve ever heard.";
         this.options = [
           { id: 1, text: '"I simply feel compelled to see what creature is making that beauftiful music." You say, walking towards its source.' },
           { id: 1, text: '"That seems like the sort of thing that lures people to their death, better not follow it." You say, following it.' }
@@ -336,7 +336,7 @@ export class SeductressEncounterComponent implements OnInit {
         } else if (event.id === 30) {
           this.npcDialogue('"Oh, just shut up and kiss me." She says slightly annoyed, slowly moving towards you.');
         } else if (event.id === 36) {
-          this.npcDialogue('"Oh, I know, sweetie," she says, leaning in towards you, "But it simply can\'t be helped."');
+          this.npcDialogue('"Oh, I know, sweetie," she says, leaning in towards you, "But it simply can\'t be helped. I just can\'t stop thinking about kissing you."');
         }
         else if (event.id === 37) {
           this.npcDialogue('"I just can\'t stop thinking about kissing you." She says softly, slowly moving towards you.');
@@ -617,11 +617,12 @@ export class SeductressEncounterComponent implements OnInit {
         }
         break;
       case 50:
-        if (this.sharedService.encounters[1] === 'MF1') {
-          this.router.navigate(['/moth']);
-        } else {
-          this.router.navigate(['/vamp']);
-        }
+        // if (this.sharedService.encounters[1] === 'MF1') {
+        //   this.router.navigate(['/moth']);
+        // } else {
+        //   this.router.navigate(['/vamp']);
+        // }
+        this.router.navigate(['/moth']);
         break;
       case 51:
         let blood: item = {

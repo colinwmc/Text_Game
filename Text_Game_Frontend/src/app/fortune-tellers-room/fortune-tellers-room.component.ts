@@ -55,7 +55,7 @@ export class FortuneTellersRoomComponent implements OnInit {
     }
   }
 
-  resetEncounter(){
+  resetEncounter() {
     this.PC = JSON.parse(JSON.stringify(this.resetPC));
     this.sharedService.PC = this.PC;
     this.dialogue = [];
@@ -68,7 +68,7 @@ export class FortuneTellersRoomComponent implements OnInit {
     this.hasIdentifiedEmblem = false;
     this.hasAskedABoutOpening = false;
     this.hasAskedAboutForest = false;
-    this.encounters= [];
+    this.encounters = [];
   }
 
   optionSelection(event: any) {
@@ -265,34 +265,38 @@ export class FortuneTellersRoomComponent implements OnInit {
         break;
       case 21:
         //shuffle the cards
-        this.shuffleCards();
-        if (this.encounters[0] === 'OF1') {
-          this.portraitID = '../../assets/Final Picks/Tarot Cards/Fool.jpg';
-          this.dialogue.unshift(npcTag + '"The Fool. A figure of innocence, naivete. An unserious individual hoping to be met with trust."');
-        } else {
-          this.portraitID = '../../assets/Final Picks/Tarot Cards/Lovers.jpg';
-          this.dialogue.unshift(npcTag + '"The Lovers. A card of romance and the heart. Perhaps a chance encounter with a being of passion?" She raises her eyebrows as she looks you in the eye.');
-        }
+        // this.shuffleCards();
+        // if (this.encounters[0] === 'OF1') {
+        this.portraitID = '../../assets/Final Picks/Tarot Cards/Fool.jpg';
+        this.dialogue.unshift(npcTag + '"The Fool. A figure of innocence, naivete. An unserious individual hoping to be met with trust."');
+        // } else {
+        //   this.portraitID = '../../assets/Final Picks/Tarot Cards/Lovers.jpg';
+        //   this.dialogue.unshift(npcTag + '"The Lovers. A card of romance and the heart. Perhaps a chance encounter with a being of passion?" She raises her eyebrows as she looks you in the eye.');
+        // }
         this.options = [{ id: 22, text: 'Continue >' }];
         break;
       case 22:
-        if (this.encounters[1] === 'MF1') {
-          this.portraitID = '../../assets/Final Picks/Tarot Cards/Tower.jpg';
-          this.dialogue.unshift(npcTag + '"The Tower. Chaos. Upheaval. A sudden shock forcefully delivered. Perhaps a time for . . . purging." She chuckles under her breath.');
-        } else {
-          this.portraitID = '../../assets/Final Picks/Tarot Cards/Pents06.jpg';
-          this.dialogue.unshift(npcTag + '"The Six of Pentacles. A sign of charity and support for the struggling. A chance to give to the less fortunate. But also be mindful of the scales. Is there balance in what you give and receive?"');
-        }
+        // if (this.encounters[1] === 'MF1') {
+        //   this.portraitID = '../../assets/Final Picks/Tarot Cards/Tower.jpg';
+        //   this.dialogue.unshift(npcTag + '"The Tower. Chaos. Upheaval. A sudden shock forcefully delivered. Perhaps a time for . . . purging." She chuckles under her breath.');
+        // } else {
+        //   this.portraitID = '../../assets/Final Picks/Tarot Cards/Pents06.jpg';
+        //   this.dialogue.unshift(npcTag + '"The Six of Pentacles. A sign of charity and support for the struggling. A chance to give to the less fortunate. But also be mindful of the scales. Is there balance in what you give and receive?"');
+        // }
+        this.portraitID = '../../assets/Final Picks/Tarot Cards/Lovers.jpg';
+        this.dialogue.unshift(npcTag + '"The Lovers. A card of romance and the heart. Perhaps a chance encounter with a being of passion?" She raises her eyebrows as she looks you in the eye.');
         this.options = [{ id: 23, text: 'Continue >' }];
         break;
       case 23:
-        if (this.encounters[2] === 'DF1') {
-          this.portraitID = '../../assets/Final Picks/Tarot Cards/Swords08.jpg';
-          this.dialogue.unshift(npcTag + '"The Eight of Swords. A symbol of being trapped, helpless, lost.But how tightly are the ropes bound, and by whom? Do we sometimes allow ourselves to play the victim in our own minds?"');
-        } else {
-          this.portraitID = '../../assets/Final Picks/Tarot Cards/Cups07.jpg';
-          this.dialogue.unshift(npcTag + '"The Seven of Cups. A symbol of the endless possibilities of our imaginations. A card of wonder and awe, but also illusion. Will your head be caught in the clouds.?"');
-        }
+        // if (this.encounters[2] === 'DF1') {
+        //   this.portraitID = '../../assets/Final Picks/Tarot Cards/Swords08.jpg';
+        //   this.dialogue.unshift(npcTag + '"The Eight of Swords. A symbol of being trapped, helpless, lost.But how tightly are the ropes bound, and by whom? Do we sometimes allow ourselves to play the victim in our own minds?"');
+        // } else {
+        //   this.portraitID = '../../assets/Final Picks/Tarot Cards/Cups07.jpg';
+        //   this.dialogue.unshift(npcTag + '"The Seven of Cups. A symbol of the endless possibilities of our imaginations. A card of wonder and awe, but also illusion. Will your head be caught in the clouds.?"');
+        // }
+        this.portraitID = '../../assets/Final Picks/Tarot Cards/Pents06.jpg';
+        this.dialogue.unshift(npcTag + '"The Six of Pentacles. A sign of charity and support for the struggling. A chance to give to the less fortunate. But also be mindful of the scales. Is there balance in what you give and receive?"');
         this.options = [
           { id: 24, text: '"Uh . . . wut?"' },
           { id: 24, text: '"Hmmm, yes I see." You say stroking your chin thoughfully.' },
@@ -314,11 +318,11 @@ export class FortuneTellersRoomComponent implements OnInit {
         this.options = [{ id: 26, text: 'Venture forth into the forest!' }];
         break;
       case 26:
-        if (this.encounters[0] === 'OF1') {
-          this.router.navigate(['/frog']);
-        } else {
-          this.router.navigate(['/seductress']);
-        }
+        // if (this.encounters[0] === 'OF1') {
+           this.router.navigate(['/frog']);
+        // } else {
+        //   this.router.navigate(['/seductress']);
+        // }
         break;
       default:
         break;

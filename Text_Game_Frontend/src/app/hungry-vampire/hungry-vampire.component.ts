@@ -21,6 +21,7 @@ export class HungryVampireComponent implements OnInit {
   public hasChecked = false;
   public badSense = false;
   public gaveFaeBlood = false;
+  public hasAcknowledgedPoop = false;
 
   constructor(private sharedService: SharedService, private router: Router) { }
 
@@ -56,7 +57,7 @@ export class HungryVampireComponent implements OnInit {
         this.resetPC = JSON.parse(JSON.stringify(this.PC));
       })
     }
-    this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is increasingly blocked out by the canopy, the woods become darker and more ominous."
+    this.narration = "You continue deeper into the forest, still shaken from your last encounter. The woods continue to shift and change in front of you. Though the trees are all now devoid of leaves, dry and dying, and the moon shines brightly through their branches, you can\'t help but feel that it\'s darker than ever before."
     this.options = [{ id: 0, text: 'Continue >' }];
   }
 
@@ -64,13 +65,14 @@ export class HungryVampireComponent implements OnInit {
     this.PC = JSON.parse(JSON.stringify(this.resetPC));
     this.sharedService.PC = this.PC;
     this.dialogue = [];
-    this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is increasingly blocked out by the canopy, the woods become darker and more ominous."
+    this.narration = "You continue deeper into the forest, still shaken from your last encounter. The woods continue to shift and change in front of you. Though the trees are all now devoid of leaves, dry and dying, and the moon shines brightly through their branches, you can\'t help but feel that it\'s darker than ever before."
     this.options = [{ id: 0, text: 'Continue >' }];
     this.backpackOpen = false;
     this.npcTag = 'Quiet Lady: ';
     this.hasChecked = false;
     this.badSense = false;
     this.gaveFaeBlood = false;
+    this.hasAcknowledgedPoop = false;
   }
 
   addPCDialogue(text: string) {
@@ -93,7 +95,7 @@ export class HungryVampireComponent implements OnInit {
         this.options = [{ id: 1, text: 'Continue >' }];
         break;
       case 1:
-        this.narration = 'A lone figure stands in the middle of the path. As you move closer, you see what appears to be a young woman in a red cloak. She lacks any of the vibrant pressence of your last encounter. Rather, she appears cold and afraid, paper thin and sickly pale.';
+        this.narration = 'A lone figure stands in the middle of the path. As you move closer, you see what appears to be a young woman in a red cloak. She lacks any of the vibrant pressence of your previous encounters. Rather, she appears cold and afraid, paper thin and sickly pale.';
         this.options = [{ id: 2, text: 'Continue >' }];
         break;
       case 2:
@@ -121,12 +123,40 @@ export class HungryVampireComponent implements OnInit {
         break;
       case 5:
         this.addPCDialogue(event.text);
-        this.npcDialogue('"I\'m lost. It\'s so very cold and dark in these woods." She pulls her cloak tightly around herself as she shivers.')
+        if (this.PC.hasShitPants && !this.hasAcknowledgedPoop) {
+          this.hasAcknowledgedPoop = true;
+          this.npcDialogue('"I . . . I\'m sorry, do you smell that?" She scrunches her nose up painfully as she speaks.');
+          this.options = [
+            { id: 46, text: '"Yeah  . . . I may have shit my pants a bit. Sorry about that," you say ashamedly.' },
+            { id: 47, text: '"What? No. I don\'t smell anything. Maybe it\'s you?" (Charisma Decpetion Check)' },
+            { id: 46, text: '"I POOPED MY PANTS, OK!?!? GET OVER IT!"' }
+          ];
+        } else {
+          this.npcDialogue('"I\'m lost. It\'s so very cold and dark in these woods." She pulls her cloak tightly around herself as she shivers.')
+          this.options = [
+            { id: 6, text: '"You poor thing. What\'s your name?"' },
+            { id: 7, text: '"I see . . . and what were you doing out here all alone in the woods at night then?"' }
+          ];
+        }
+        break;
+      case 46:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Oh . . . ew. Are you like, sick or something? Do you have a disease?"');
         this.options = [
-          { id: 6, text: '"You poor thing. What\'s your name?"' },
-          { id: 7, text: '"I see . . . and what were you doing out here all alone in the woods at night then?"' }
+          { id: 5, text: '"I\'m sorry, did you *want* something?"' },
+          { id: 5, text: '"I DON\'T HAVE A DISEASE! I JUST POOPED MY PANTS A BIT! IT HAPPENS! What did you want anyways?"' }
         ];
         break;
+        case 47:
+          this.addPCDialogue(event.text);
+          if(this.sharedService.skillCheck('charisma', 12, 'disadvantage')){
+            this.npcDialogue('(Success!) Oh. I see. Maybe an animal has defecated nearby. Judging by the smell, perhaps something monstrous, like a Wendigo, or maybe a particularly sick moose.');
+            this.options = [
+              {id: 5, text: '"Uhhh, yeah. Probably that. Definitely. Can I help you with something?"'},
+              {id: 5, text: '"It\'s not that bad! I literally don\'t even know what you\'re talking about. What did you want anways?"'}
+            ]
+          }
+          break;
       case 6:
         this.addPCDialogue(event.text);
         this.npcTag = 'Maribelle Lee: ';
@@ -208,7 +238,7 @@ export class HungryVampireComponent implements OnInit {
         break;
       case 14:
         this.addPCDialogue(event.text);
-        this.npcDialogue('"Oh wow, really?" She catches the vial and looks at it with wild hunger in her eyes. "Oh . . ." she says, her facing dropping as she looks at it. "It\'s fae blood . . ."');
+        this.npcDialogue('"Oh wow, really?" She catches the vial and looks at it with wild hunger in her eyes. "Oh . . ." she says, her face dropping as she looks at it. "It\'s fae blood . . ."');
         this.options = [
           { id: 19, text: '"Yes. Is that a problem?"' },
           { id: 19, text: '"Oh I\'m sorry. Is that not good enough for you?"' }
@@ -420,11 +450,12 @@ export class HungryVampireComponent implements OnInit {
         }
         break;
       case 31:
-        if (this.sharedService.encounters[2] === 'DF1') {
-          this.router.navigate(['/traveller']);
-        } else {
-          this.router.navigate(['/illusionist']);
-        }
+        // if (this.sharedService.encounters[2] === 'DF1') {
+        //   this.router.navigate(['/traveller']);
+        // } else {
+        //   this.router.navigate(['/illusionist']);
+        // }
+        this.router.navigate(['/riddle']);
         break;
       case 33:
         this.npcDialogue('"Thanks for your help, friend," she mumbles abashedly before dissapearing into the night.');

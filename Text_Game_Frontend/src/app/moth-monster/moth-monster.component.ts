@@ -48,7 +48,7 @@ export class MothMonsterComponent implements OnInit {
         this.resetPC = JSON.parse(JSON.stringify(this.PC));
       })
     }
-    this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is incresingly blocked out by the canopy, the woods become darker and more ominous."
+    this.narration = "You press onward, still determined despite your setbacks. The trees grow thicker, an eery mist sets in, though rare mushrooms let off a pale glow on either side of the path."
     this.options = [{ id: 0, text: 'Continue >' }];
     let strings = new Audio();
     this.surprise = strings;
@@ -70,7 +70,7 @@ export class MothMonsterComponent implements OnInit {
     this.PC = JSON.parse(JSON.stringify(this.resetPC));
     this.sharedService.PC = this.PC;
     this.dialogue = [];
-    this.narration = "You continue deeper into the forest, still shaken from your last encounter. As you progress, the trees grow denser and taller. And as the light of the moon is incresingly blocked out by the canopy, the woods become darker and more ominous."
+    this.narration = "You press onward, still determined despite your setbacks. The trees grow thicker, an eery mist sets in, though rare mushrooms let off a pale glow on either side of the path."
     this.options = [{ id: 0, text: 'Continue >' }];
     this.backpackOpen = false;
     this.setting = 1;
@@ -100,7 +100,7 @@ export class MothMonsterComponent implements OnInit {
         this.options = [{ id: 2, text: 'Try to contain your fear (Constitution Saving Throw)' }];
         break;
       case 2:
-        if (this.sharedService.skillCheck('constitution', 15, this.PC.pcid === 2 ? 'disadvantage' : 'none')) {
+        if ((this.sharedService.skillCheck('constitution', 15, this.PC.pcid === 2 ? 'disadvantage' : 'none')) && this.PC.pcid !== 2) {
           this.narration = '(Success!) You fall to the ground in fear, but manage to hold yourself together.';
           this.options = [{ id: 3, text: 'Continue >' }];
         } else {
@@ -134,12 +134,12 @@ export class MothMonsterComponent implements OnInit {
         this.options = [{ id: 6, text: '"Well shit . . ." you mutter. You dust yourself off and continue on your journey, your resolve slightly shaken, your trousers thoroughly soiled.' }];
         break;
       case 6:
-        if (this.sharedService.encounters[2] === 'DF1') {
-          this.router.navigate(['/traveller']);
-        } else {
-          this.router.navigate(['/illusionist']);
-        }
-        console.log(this.PC);
+        // if (this.sharedService.encounters[2] === 'DF1') {
+        //   this.router.navigate(['/traveller']);
+        // } else {
+        //   this.router.navigate(['/illusionist']);
+        // }
+        this.router.navigate(['/vamp']);
         break;
       case 7:
         if (this.sharedService.skillCheck('dexterity', 10, 'none')) {

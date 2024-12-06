@@ -365,11 +365,12 @@ export class FrogMerchantEncounterComponent implements OnInit {
         this.sharedService.takeDamage(10);
         break;
       case 28:
-        if (this.sharedService.encounters[1] === 'MF1') {
-          this.router.navigate(['/moth']);
-        } else {
-          this.router.navigate(['/vamp']);
-        }
+        // if (this.sharedService.encounters[1] === 'MF1') {
+        //   this.router.navigate(['/moth']);
+        // } else {
+        //   this.router.navigate(['/vamp']);
+        // }
+        this.router.navigate(['seductress']);
         break;
       case 29:
         this.addPCDialogue(event.text);
@@ -398,7 +399,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
         } else {
           this.dialogue.unshift('(Failure!) The fruit misses the opening to your bag and thunks to the ground between your feet.');
           this.sharedService.removeItem(17);
-          this.dialogue.unshift(this.npcTag + '"Uh . . . it looks like you dropped it there."');
+          this.dialogue.unshift(this.npcTag + '(Failure!) "Uh . . . it looks like you dropped it there."');
           this.options = [
             { id: 52, text: 'Run for it! (Strength Athletics Check)' }
           ];

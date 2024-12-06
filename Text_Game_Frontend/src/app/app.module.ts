@@ -19,6 +19,7 @@ import { MothMonsterComponent } from './moth-monster/moth-monster.component';
 import { HungryVampireComponent } from './hungry-vampire/hungry-vampire.component';
 import { IllusionistComponent } from './illusionist/illusionist.component';
 import { TravellerComponent } from './traveller/traveller.component';
+import { RiddleTellerComponent } from './riddle-teller/riddle-teller.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TravellerComponent } from './traveller/traveller.component';
     HungryVampireComponent,
     IllusionistComponent,
     TravellerComponent,
+    RiddleTellerComponent,
   ],
   imports: [
     BrowserModule,

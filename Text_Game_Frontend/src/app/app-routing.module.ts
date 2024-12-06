@@ -10,6 +10,7 @@ import { MothMonsterComponent } from './moth-monster/moth-monster.component';
 import { HungryVampireComponent } from './hungry-vampire/hungry-vampire.component';
 import { TravellerComponent } from './traveller/traveller.component';
 import { IllusionistComponent } from './illusionist/illusionist.component';
+import { RiddleTellerComponent } from './riddle-teller/riddle-teller.component';
 
 const routes: Routes = [
   { path: '', component: TitleScreenComponent },
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'moth', component: MothMonsterComponent },
   { path: 'vamp', component: HungryVampireComponent },
   { path: 'traveller', component: TravellerComponent},
-  { path: 'illusionist', component: IllusionistComponent}
+  { path: 'illusionist', component: IllusionistComponent},
+  { path: 'riddle', component: RiddleTellerComponent}
 ];
 
 @NgModule({
