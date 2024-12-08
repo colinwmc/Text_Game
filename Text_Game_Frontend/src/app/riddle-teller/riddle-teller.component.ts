@@ -23,10 +23,21 @@ export class RiddleTellerComponent implements OnInit {
     { question: '"What gets wetter the more it dries?"', options: [{ id: 20, text: 'b---d' }, { id: 22, text: 't---l' }, { id: 20, text: 'c----t' }, { id: 20, text: 'h--r' }] },
     { question: '"What tree do we all carry in our hands?"', options: [{ id: 20, text: 'c---r' }, { id: 20, text: 'o-k' }, { id: 20, text: 'e--------s' }, { id: 23, text: 'p--m' }] },
     { question: '"I can\'t be seen, but I can be heard. I won\'t answer until spoken to. What am I?"', options: [{ id: 20, text: 'd---m' }, { id: 20, text: 'c------n' }, { id: 24, text: 'e--o' }, { id: 20, text: 'v---e' }] },
+    { question: '"Cut me and I won\'t cry, but you will. What am I?"', options: [{ id: 20, text: 's--g' }, { id: 20, text: 's-------t' }, { id: 20, text: 'k---e' }, { id: 25, text: 'o---n' }] },
+    { question: '"If you have it, you want to share it. If you share it, you don\'t have it anymore. What is it?"', options: [{ id: 20, text: 'l--e' }, { id: 20, text: 't----t' }, { id: 26, text: 's-----t' }, { id: 20, text: 'h-------s' }] },
+    { question: '"I have a neck and wear a cap, but I don\'t have a head. What am I?"', options: [{ id: 20, text: 'g---t' }, { id: 27, text: 'b----e' }, { id: 20, text: 's---e' }, { id: 20, text: 'c--m' }] },
+    { question: '"Pick me up and scratch my head. I\'ll turn red and then black. What am I?"', options: [{ id: 28, text: 'm---h' }, { id: 20, text: 'c----e' }, { id: 20, text: 'c---------r' }, { id: 20, text: 'a---l' }] },
+    { question: '"What is as light as a feather but can\'t be held by anyone for very long?"', options: [{ id: 20, text: 't----e p---r' }, { id: 20, text: 'a b--y' }, { id: 20, text: 'y--r w--d' }, { id: 29, text: 'y--r b----h' }] },
+    { question: '"I will crack if you drop me. If you smile at me, I\'ll smile back. What am I?"', options: [{ id: 20, text: 'e-g' }, { id: 30, text: 'm----r' }, { id: 20, text: 'v--e' }, { id: 20, text: 'p----t' }] },
+    { question: '"The more you take, the more you leave behind. What are they?"', options: [{ id: 31, text: 'f-------s' }, { id: 20, text: 'm------s' }, { id: 20, text: 'c---s' }, { id: 20, text: 'p------s' }] },
+    { question: '"What goes up but never comes down?"', options: [{ id: 20, text: 'b---s' }, { id: 32, text: 'a-e' }, { id: 20, text: 'b-----n' }, { id: 20, text: 'd----s' }] },
+    { question: '"What is full of holes but still holds water?"', options: [{ id: 20, text: 'b----t' }, { id: 20, text: 'p-----r' }, { id: 20, text: 'h--e' }, { id: 33, text: 's----e' }] },
   ];
   public riddleIndex = 0;
   public rightAnswers = 0;
   public wrongAnswers = 0;
+  public right: any;
+  public wrong: any;
 
   constructor(private sharedService: SharedService, private router: Router) { }
 
@@ -47,6 +58,15 @@ export class RiddleTellerComponent implements OnInit {
     }
     this.narration = "After what felt like hours of travel, and numerous daring escapes from deadly foes, you reach a clearing in the woods. A temple stands before you, the pale stone glowing in the moonlight. Surely this is the destination the Madame spoke of."
     this.options = [{ id: 0, text: 'Continue >' }];
+    let right = new Audio();
+    this.right = right;
+    right.src = "../assets/Sound Effects/correct.mp3";
+    right.load();
+
+    let wrong = new Audio();
+    this.wrong = wrong;
+    wrong.src = "../assets/Sound Effects/wrong.mp3";
+    wrong.load();
   }
 
   resetEncounter() {
@@ -208,6 +228,7 @@ export class RiddleTellerComponent implements OnInit {
       case 20:
         this.riddleIndex++;
         this.wrongAnswers++;
+        this.wrong.play();
         if (this.wrongAnswers === 1) {
           this.npcDialogue('"Oh dear, that\'s incorrect. One strike, but not to worry. On to the next."');
           this.options = [{ id: 19, text: 'Continue >' }];
@@ -221,6 +242,38 @@ export class RiddleTellerComponent implements OnInit {
         break;
       case 21:
         this.sharedService.takeDamage(this.PC.hp);
+        break;
+      case 22:
+      case 23:
+      case 24:
+      case 25:
+      case 26:
+      case 27:
+      case 28:
+      case 29:
+      case 30:
+      case 31:
+      case 32:
+      case 33:
+        this.riddleIndex++;
+        this.rightAnswers++;
+        this.right.play();
+        let beginning = '"';
+        let end = this.rightAnswers === 1 ? 'That\'s your first right answer, let\'s see if you can get anymore."' : this.rightAnswers === 2 ? 'You\'ve got two right. Only one more and you\'re through the door."' : 'That\'s it, you\'ve done it. Three correct. I must admit I didn\'t think you had it in you."'
+        this.npcDialogue(beginning + end);
+        let id = this.rightAnswers === 3 ? 34 : 19;
+        this.options = [{ id: id, text: 'Continue >' }];
+        break;
+      case 34:
+        this.npcDialogue('"Well my strange acquaintance, your task here is complete. I bid thee farewell."');
+        this.options = [
+          { id: 35, text: '"A great victory from an impeccable mind."' },
+          { id: 35, text: '"Thank the gods that bullshit\'s over."' },
+          { id: 35, text: '"Smell ya later."' }
+        ]
+        break;
+      case 35:
+        this.router.navigate(['/temple'])
         break;
     }
   }

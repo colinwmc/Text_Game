@@ -1,0 +1,3 @@
+<img class="background" src="../../assets/Final Picks/Locations/temple_interior.jpeg.png" alt="">
+<audio *ngIf="PC.currentHealth > 0" src="../../assets/Music/finale.mp3" autoplay loop></audio>
+<app-ui-overlay [PC]="PC" [currentNarration]="narration" [currentDialogue]="dialogue" [currentOptions]="options" [portraitID]="portraitID" [backpackOpen]="backpackOpen" (newSelection)="optionSelection($event)" (reset)="resetEncounter()"></app-ui-overlay>

@@ -20,6 +20,7 @@ import { HungryVampireComponent } from './hungry-vampire/hungry-vampire.componen
 import { IllusionistComponent } from './illusionist/illusionist.component';
 import { TravellerComponent } from './traveller/traveller.component';
 import { RiddleTellerComponent } from './riddle-teller/riddle-teller.component';
+import { TempleComponent } from './temple/temple.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { RiddleTellerComponent } from './riddle-teller/riddle-teller.component';
     IllusionistComponent,
     TravellerComponent,
     RiddleTellerComponent,
+    TempleComponent,
   ],
   imports: [
     BrowserModule,
