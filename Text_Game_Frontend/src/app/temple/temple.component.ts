@@ -37,7 +37,8 @@ export class TempleComponent implements OnInit {
         this.PC.hasShitPants = true;
         this.sharedService.PC = this.PC;
         this.resetPC = JSON.parse(JSON.stringify(this.PC));
-      })
+      });
+      this.sharedService.identifiedEmblem = true;
     }
     this.narration = "You walk through the entrance to the temple. The interior is as strange and lifeless as the courtyard. Not a soul stirs from within, though small motes of light swirl about the ceiling, making it look as if the night sky itself was seeping in through the large open window at the back of the room."
     this.options = [{ id: 0, text: 'Continue >' }];
@@ -136,7 +137,7 @@ export class TempleComponent implements OnInit {
           { id: 10, text: '"You mother is this box???" You say pointing at it confusedly.' }
         ];
         if (this.sharedService.identifiedEmblem) {
-          this.options.unshift({ id: 14, text: 'You look again at the emblem on the box and see a matching one upon the throne. "This artifact, it isn\'t a belonging of the Fae Queen, it contains her."' });
+          this.options.unshift({ id: 10, text: 'You look again at the emblem on the box and see a matching one upon the throne. "This artifact, it isn\'t a belonging of the Fae Queen, it contains her."' });
         }
         break;
       case 8:
@@ -154,15 +155,63 @@ export class TempleComponent implements OnInit {
         this.options = [
           { id: 11, text: '"Your highness . . ." You bow respectfully.' },
           { id: 12, text: '"I suppose you\'d like me to be impressed by that, then?" You state defiently.' },
-          { id: 13, text: '"And what does the Fae Princess want with me?"' }
+          { id: 7, text: '"And what does the Fae Princess want with me?"' }
         ];
         break;
       case 10:
         this.addPCDialogue(event.text);
         this.npcDialogue('"You have no actual idea what you\'re doing here, do you?" The fae\'s voice isn\'t sharp or condescending. Her tone is flat, but tinged with sorrow.');
-        this.options = [];
+        this.options = [
+          {id: 13, text: '"I\'m on a quest," you say to her proudly. "I\'ve been tasked with the retrieval of this artifact, and that\'s what I intend to do."'},
+          {id: 14, text: '"I know better than to listen to the fae," you state defiantly.'},
+          {id: 15, text: '"Well . . . no, not really," you utter, honestly.'}
+        ];
         break;
-
+        case 11:
+          this.addPCDialogue(event.text);
+          this.npcDialogue('The being eyes you uncertainly, not sure what to make of this show of apparent deference. "Very well," she finally speaks, "now kindly put my mother down and be on your way."');
+          this.callsBoxMother = true;
+          this.options = [
+            { id: 10, text: '"Uhhhh .... what?" You look down at the box in your hands perplexedly.' },
+            { id: 10, text: '"You mother is this box???" You say pointing at it confusedly.' }
+          ];
+          if (this.sharedService.identifiedEmblem) {
+            this.options.unshift({ id: 10, text: 'You look again at the emblem on the box and see a matching one upon the throne. "This artifact, it isn\'t a belonging of the Fae Queen, it contains her."' });
+          }
+          break;
+          case 12:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"I don\'t want you to do anything, other than put my mother down and leave."');
+        this.callsBoxMother = true;
+        this.options = [
+          { id: 10, text: '"Uhhhh .... what?" You look down at the box in your hands perplexedly.' },
+          { id: 10, text: '"You mother is this box???" You say pointing at it confusedly.' }
+        ];
+        if (this.sharedService.identifiedEmblem) {
+          this.options.unshift({ id: 10, text: 'You look again at the emblem on the box and see a matching one upon the throne. "This artifact, it isn\'t a belonging of the Fae Queen, it contains her."' });
+        }
+        break;
+        case 13:
+          this.addPCDialogue(event.text);
+          this.npcDialogue('"You work for the LeSoules? I suppose that\'s hardly surprising. And what did the Madame tell you about that box, I wonder."');
+          this.options = [
+            {id: 14, text: '"She said it was a family heirloom. That it was stolen from her and she wanted it back."'},
+            {id: 15, text: '"I dunno, I wasn\'t really listening to be honest," you say with a shrug.'},
+            {id: 16, text: '"Why would I tell you?"'}
+          ];
+          break;
+          case 14:
+            this.addPCDialogue(event.text);
+            this.npcDialogue('"I see. Not a single word untruthful, yet not a single truth told. And what does that remind you of, traveller?"');
+            this.options = [
+              {id: 17, text: '"And I suppose you would tell me the truth?"'},
+              {id: 18, text: '"I see. And I\'m guessing I\'m about to be bombarded with more half truths then?"'},
+              {id: 19, text: '"What are you implying?" you inquire cautiously.'}
+            ];
+            break;
+            case 15:
+              this.addPCDialogue(event.text);
+            this.npcDialogue('"Do you take pride in this? Being a part of something you don\'t understand? Killing and stealing"')
     }
   }
 
