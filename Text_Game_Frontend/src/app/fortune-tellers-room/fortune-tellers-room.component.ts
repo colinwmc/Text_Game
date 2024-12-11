@@ -163,6 +163,7 @@ export class FortuneTellersRoomComponent implements OnInit {
         if (this.sharedService.skillCheck('intelligence', 14, this.PC.pcid === 2 ? 'advantage' : 'none')) {
           this.dialogue.unshift('(Success!) You\'ve seen this before. Something about the court of the Fae Queen.');
           this.hasIdentifiedEmblem = true;
+          this.sharedService.identifiedEmblem = true;
           this.options = [
             { id: 10, text: '"This emblem. It\'s from the court of the Fae Queen."' },
             { id: 11, text: 'Decide not to reveal your knowledge to the fortune teller.' }

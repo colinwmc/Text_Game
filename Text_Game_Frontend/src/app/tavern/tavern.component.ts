@@ -28,6 +28,7 @@ export class TavernComponent implements OnInit {
   public commentedOnTaters = false;
 
 
+
   constructor(private sharedService: SharedService, private router: Router) { }
 
   ngOnInit(): void {
@@ -138,6 +139,7 @@ export class TavernComponent implements OnInit {
       case 'TV3':
         if (this.sharedService.skillCheck('charisma', 0, 'none')) {
           this.smiledDisarmingly = true;
+          this.sharedService.smiledDisarmingly = true;
           this.dialogue.unshift('(Success!) He chuckles uncomfortably. He\'s not sure what to make of you, but appears more confused than afraid. A mild improvement. "Can I . . . help you?"');
           this.options = [
             { ID: 'TV4', text: '"I am a brave adventurer, and I\'m here to . . . um . . . bravely adventure."' },
@@ -146,6 +148,7 @@ export class TavernComponent implements OnInit {
           ];
         } else {
           this.dialogue.unshift('(Failure!) His eyes widen as he takes a step back. He appears to reach for something under the bar.');
+          this.sharedService.wasConfrontatitional = true;
           this.options = [
             { ID: 'TV7', text: 'Raise your hands as if to indicate surrender.' },
             { ID: 'TV7', text: 'Raise your hands as if to curse his mortal soul.' },
@@ -177,6 +180,7 @@ export class TavernComponent implements OnInit {
           { ID: 'TV7', text: 'Raise your hands as if to indicate surrender.' },
           { ID: 'TV7', text: 'Raise your hands as if to curse his mortal soul.' }
         ];
+        this.sharedService.wasConfrontatitional = true;
         break;
       case 'TV7':
         this.dialogue.unshift('"The creature is here to see me!" An unseen voice rings out sharply from the back. "And I\'d appreciate if they arrived in one piece." Everyone in the room shrinks back slightly, returning to their seats. "She\'s back through there." The bartender says, pointing down a small, dark hallway with a wooden door at the end. "Don\'t linger."');
@@ -413,7 +417,7 @@ export class TavernComponent implements OnInit {
         this.addPCDialogue(event.text);
         if (this.sharedService.skillCheck('charisma', 15, 'none')) {
           this.commentedOnTaters ? this.sharedService.buyItem(0, 15) : this.sharedService.buyItem(0, 14);;
-
+          this.sharedService.successfullyCharmed = true;
           this.dialogue.unshift('(Success!) ' + npcTag + '"Well, alright. Since it\'s your first time here and all. Here\'s' + (this.commentedOnTaters ? ' some potatoes ' : ' a pint ') + 'on the house."');
           this.options = [
             { ID: 'TV11', text: 'Pint of Beer: Increases Charisma by 1 for 1 scene. 2 gold.', cost: 2 },
@@ -423,6 +427,7 @@ export class TavernComponent implements OnInit {
           ];
         } else {
           this.dialogue.unshift('(Failure!) ' + npcTag + '"No." He looks at you with what may be disgust.');
+          this.sharedService.failedToCharm = true;
           this.options = [
             { ID: 'TV11', text: 'Pint of Beer: Increases Charisma by 1 for 1 scene. 2 gold.', cost: 2 },
             { ID: 'TV12', text: 'Fried Potatoes: Increases Constitution by 1 for 1 scene. 2 gold.', cost: 2 },

@@ -40,6 +40,12 @@ export class SharedService {
     imageID: ''
   }];
 
+  public successfullyCharmed = false;
+  public failedToCharm = false;
+  public smiledDisarmingly = false;
+  public wasConfrontatitional = false;
+  public identifiedEmblem = false;
+
   getPCList(): Observable<any[]> {
     return this.http.get<any[]>(this.APIUrl + '/PC', this.httpOptions);
   }
