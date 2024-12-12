@@ -707,6 +707,7 @@ export class FrogMerchantEncounterComponent implements OnInit {
 
   frogDies() {
     this.portraitID = this.hasFixedFingers ? "../../assets/Final Picks/Characters/frog_merchant_4_dead.jpg" : "../../assets/Final Picks/Characters/frog_merchant_5_dead.jpg";
+    this.sharedService.hasKilledFae = true;
   }
 
 }

@@ -81,6 +81,7 @@ export class HungryVampireComponent implements OnInit {
 
   npcDialogue(text: string) {
     this.dialogue.unshift(this.npcTag + text);
+    this.sharedService.hasKilledFae = true;
   }
 
   npcDies() {

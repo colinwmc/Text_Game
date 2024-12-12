@@ -79,7 +79,8 @@ export class SeductressEncounterComponent implements OnInit {
   }
 
   npcDies() {
-    this.portraitID = "../../assets/Final Picks/Characters/seductress_dead.jpg"
+    this.portraitID = "../../assets/Final Picks/Characters/seductress_dead.jpg";
+    this.sharedService.hasKilledFae = true;
   }
 
   optionSelection(event: any) {
