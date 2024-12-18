@@ -338,7 +338,186 @@ export class TempleComponent implements OnInit {
           this.options.unshift({ id: 35, text: '"Oh, well now I feel bad about killing them . . . "' });
         }
         break;
-
+      case 33:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"I should certainly say so, though I suppose I\'m heartened to hear a mortal such as you voice sympathy for us. Most treat us as common monsters. Cautionary tales to scare their children."');
+        this.options = [
+          { id: 36, text: '"And how would you be treated?"' },
+          { id: 37, text: '"And you would claim that all their fears are simply imagined?"' }
+        ]
+        break;
+      case 34:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"And who would you have sympathy for? The humans who lock away our queen, destroy our society, and treat us as nothing more than common monsters?"');
+        this.options = [
+          { id: 38, text: '"So you would play the victim and call them monsters instead?"' },
+          { id: 39, text: '"I didn\'t say that."' }
+        ];
+        break;
+      case 35:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"As well you should. Immortal beings meant to be filled with life and joy forever, snuffed out so that you can make some gold. Though I suppose I\'m heartened to hear a mortal such as you voice sympathy for us. Most treat us as common monsters. Cautionary tales to scare their children."');
+        this.options = [
+          { id: 40, text: '"Then I suppose I\'m the monster in your version of the story?"' }
+        ];
+        break;
+      case 36:
+      case 37:
+      case 38:
+      case 39:
+      case 40:
+        this.addPCDialogue(event.text);
+        let first = '';
+        if (event.id === 36) {
+          first = '"Like beings who have a right to their own ways, and be who they are. '
+        } else if (event.id === 37) {
+          first = '"People come into confict. It happens everyday. But to place all the blame on us is unfair. '
+        } else if (event.id === 38) {
+          first = '"Perhaps there is . . . blame to go around. But to place all the blame on us is unfair. '
+        } else if (event.id === 39) {
+          first = '"'
+        } else {
+          first = '"Your role in this tale is still yet to be detirmined. '
+        }
+        this.npcDialogue(first + 'You are not fae, this is true, but neither are you human. And how did the humans treat you when you arrived in their town?"');
+        this.options = [
+          { id: 41, text: '"Well, they didn\'t seem too welcoming to outsiders, to be honest."' },
+        ];
+        if (this.sharedService.successfullyCharmed) {
+          this.options.unshift({ id: 43, text: '"Pretty good, to be honest, they gave me free potatoes."' })
+        } else if (this.sharedService.failedToCharm) {
+          this.options.unshift({ id: 44, text: '"They were kind of rude to be honest. Wouldn\'t even let me have any free potatoes."' })
+        } else if (this.sharedService.smiledDisarmingly) {
+          this.options.unshift({ id: 45, text: '"They were nicer than I expected, honestly. They were still kind of scared though."' })
+        } else if (this.sharedService.wasConfrontatitional) {
+          this.options.unshift({ id: 46, text: '"They . . . treated me like a monster . . ."' })
+        } else {
+          this.options.unshift({ id: 42, text: '"No strong way in particular, I guess." You say with a shrug.' })
+        }
+        break;
+      case 41:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"And isn\'t funny how many people get the title of \'outsider?\' Are these the people you will serve? Those who shun any who aren\'t just like them?"');
+        this.options = [
+          { id: 47, text: '"And what would you have me do?"' }
+        ];
+        break;
+      case 42:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Then perhaps you look enough like them to avoid their disdain, but not enough to earn their respect."');
+        this.options = [
+          { id: 47, text: '"And what would you have me do?"' }
+        ];
+        break;
+      case 43:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Is this the price for which you will damn my people? Potatoes?"');
+        this.options = [
+          { id: 47, text: '"And what would you have me do?"' }
+        ];
+        break;
+      case 44:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"This does not surprise me. Their treatment of \'outsiders\' is wrought with resentment. Are these the people you will serve? Those who treat you as an outsider?"');
+        this.options = [
+          { id: 47, text: '"And what would you have me do?"' }
+        ];
+        break;
+      case 45:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Then perhaps this time you were lucky, but I can see in your eyes that you\'re faced the their scorn and their fear just as we have, and yet you arrive here to do their bidding."');
+        this.options = [
+          { id: 47, text: '"And what would you have me do?"' }
+        ];
+        break;
+      case 46:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"I am sorry little one, but I know the feeling of their fear and scorn better than any. We are not so different, you and I, and yet you arrive here to do their bidding."');
+        this.options = [
+          { id: 47, text: '"And what would you have me do?"' }
+        ];
+        break;
+      case 47:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"It is time for you to make your choice. You can strike me down and return to your masters with our queen. Or you can offer up your blood and bring a new golden age to our people."');
+        if (this.PC.pcid !== 1) {
+          this.options = [
+            { id: 48, text: '"I have accepted a quest. I am bound to complete it. I will do what I must to do so."' },
+            { id: 48, text: '"I know little of these lands and your history, but I will not trust the word of a fae. Of this and only this I can be sure."' },
+            { id: 49, text: '"It seems a great wrong has been done to your people. I will do what I can to make it right."' },
+            { id: 50, text: '"I was offered 500 gold to return this box. What could you offer me?"' }
+          ];
+        } else {
+          this.options = [
+            { id: 48, text: '"I have accepted a quest. I am bound to complete it. I will do what I must to do so."' },
+            { id: 51, text: '"I am sympathetic to your people, but alas I have no mortal blood to offer you," you hang your head as you glance at your skeletal hands.' }
+          ];
+        }
+        break;
+      case 48:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Then do it. Look into my eyes and ends the hopes of my people."');
+        this.options = []
+        if (this.PC.pcid === 1) {
+          this.options.push({ id: 52, text: 'Spell Attack: Hex' });
+        } else if (this.PC.pcid === 2) {
+          this.options.push({ id: 53, text: 'Spell Attack: Ice Blast' });
+        } else {
+          this.options.push({ id: 54, text: 'Melee Attack: Hammer' });
+        }
+        break;
+      case 49:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift('The fae approaches you wordlessly. She retracts a single claw from her hand and drags it across her palm. She looks to you expectantly.');
+        this.options = [{ id: 55, text: 'Offer her your palm.' }];
+        break;
+      case 50:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"If tales of our plight mean nothing to you and you only think in reward, then I assure you that the Fae Queen is a being of great power. Release her, and in turn she will grant you whatever you desire."');
+        this.options = [
+          { id: 48, text: '"Eh, sounds iffy. I\'ll probably just take the gold."' },
+          { id: 49, text: '"Ooh, I like the sound of that. Ok, let\'s do it then."' }
+        ];
+        break;
+      case 51:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"And what about the one in your arms? Could she offer her blood?"');
+        this.options = [
+          { id: 56, text: '"Would that even work? The blood of a raccoon?"' }
+        ];
+        break;
+      case 52:
+        //hex
+        break;
+      case 53:
+        //ice blast
+        break;
+      case 54:
+        //hammer
+        break;
+      case 55:
+        //offer palm
+        break;
+      case 56:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Normally no, but she hasn\'t always been a raccoon, has she?"');
+        this.options = [
+          { id: 57, text: '"No . . . no she hasn\'t" you say hanging your head. "It was an accident. I couldn\'t fix it."' }
+        ];
+        break;
+      case 57:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"I am sorry, child. But will she offer her blood to fix this wrong?"');
+        this.options = [
+          { id: 58, text: 'You look down to see Priscilla stretching one hand forward, palm up, quiet understanding in her dark eyes. "Yes, it looks like she will."' },
+          { id: 48, text: '"No. I\'m sorry, but I won\'t let you hurt her."' }
+        ];
+        break;
+      case 58:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift('The fae approaches you wordlessly. She retracts a single claw from her hand and drags it across her palm. She reaches out to Priscilla and lightly scratches the palm of her hand, a small pool of blood emerging. In unison, they both place their hands side by side on the box.');
+        this.options = [{ id: 59, text: 'Continue >' }];
+        break;
     }
   }
 
