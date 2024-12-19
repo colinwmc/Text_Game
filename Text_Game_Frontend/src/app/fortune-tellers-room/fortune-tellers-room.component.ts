@@ -226,7 +226,7 @@ export class FortuneTellersRoomComponent implements OnInit {
       case 15:
         this.addPCDialogue(event.text);
         this.options = [{ id: 17, text: '"Ok, but like, what if I do though?"' }];
-        this.dialogue.unshift(npcTag + '"Perhaps you missheard me. I didn\'t say that you *may* not open the box. I said that you *can* not open the box"');
+        this.dialogue.unshift(npcTag + '"Perhaps you missheard me. I didn\'t say that you *may* not open the box. I said that you *can* not open the box."');
         if (!this.hasAskedAboutForest) {
           this.options.push({ id: 14, text: 'What can you tell me about this forest?' });
         } else {
