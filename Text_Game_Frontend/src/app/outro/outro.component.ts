@@ -20,7 +20,6 @@ export class OutroComponent implements OnInit {
   public textArray: any = [];
 
   ngOnInit(): void {
-    this.sharedService.ending = 1
     if (this.sharedService.ending === 1) {
       this.textArray = ['You make your way back to the Half Light Inn.',
         'The fortune teller gratiously accepts the artifact from you and presents you your reward.',
