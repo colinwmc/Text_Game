@@ -32,7 +32,7 @@ export class TempleComponent implements OnInit {
 
     } else {
       this.sharedService.getPCList().subscribe(data => {
-        this.PC = data[1];
+        this.PC = data[0];
         this.PC.currentHealth = this.PC.hp;
         this.PC.hasShitPants = true;
         this.sharedService.PC = this.PC;
@@ -63,6 +63,11 @@ export class TempleComponent implements OnInit {
 
   npcDialogue(text: string) {
     this.dialogue.unshift(this.npcTag + text);
+  }
+
+  npcDies() {
+    this.portraitID = "../../assets/Final Picks/Characters/fae_princess_dead.jpg";
+    this.sharedService.hasKilledFae = true;
   }
 
   optionSelection(event: any) {
@@ -487,16 +492,53 @@ export class TempleComponent implements OnInit {
         ];
         break;
       case 52:
-        //hex
+        let hex = new Audio();
+        hex.src = '../assets/Sound Effects/hex.mp3';
+        hex.load();
+        hex.play();
+        this.npcDies();
+        this.dialogue.unshift('You bone a boney finger at her and unleash a hex bolt. Without flincing, she is struck in the chest and begins to melt away, maintaining eye contact with you the whole time.');
+        this.sharedService.ending = 1;
+        this.options = [
+          { id: 60, text: '"I\'m truly sorry . . . " you whisper as you exit the temple.' },
+          { id: 60, text: '"Smell ya later, princess."' }
+        ];
         break;
       case 53:
-        //ice blast
+        let ice = new Audio();
+        ice.src = '../assets/Sound Effects/ice-blast.mp3';
+        ice.load();
+        ice.play();
+        this.npcDies();
+        this.dialogue.unshift('You project a shard of ice from the tips of your fingers which impale the princess through the chest. She doesn\'t cry out. She doesn\'t flinch. She doesn\'t break eye contact with you as she collapses to the floor.');
+        this.sharedService.ending = 1;
+        this.options = [
+          { id: 60, text: '"I\'m truly sorry . . . " you whisper as you exit the temple.' },
+          { id: 60, text: '"Smell ya later, princess."' }
+        ];
         break;
       case 54:
-        //hammer
+        let swing = new Audio();
+        swing.src = '../assets/Sound Effects/hammer-swing.mp3';
+        swing.load();
+        swing.play();
+        let hit = new Audio();
+        hit.src = '../assets/Sound Effects/hammer-hit.mp3';
+        hit.load();
+        hit.play();
+        this.npcDies();
+        this.dialogue.unshift('You grab your hammer and swing it at her head. She doesn\'t cry out. She doesn\'t flinch. She doesn\'t break eye contact with you as she collapses to the floor.');
+        this.sharedService.ending = 1;
+        this.options = [
+          { id: 60, text: '"I\'m truly sorry . . . " you whisper as you exit the temple.' },
+          { id: 60, text: '"Smell ya later, princess."' }
+        ];
         break;
       case 55:
-        //offer palm
+        this.dialogue.unshift('She drags a claw across your palm, just deep enough to draw blood, which pools gently in your hand. She then places her hand on the lid of the box.');
+        this.options = [
+          { id: 59, text: 'Place your hand on the box.' }
+        ]
         break;
       case 56:
         this.addPCDialogue(event.text);
@@ -517,6 +559,150 @@ export class TempleComponent implements OnInit {
         this.addPCDialogue(event.text);
         this.dialogue.unshift('The fae approaches you wordlessly. She retracts a single claw from her hand and drags it across her palm. She reaches out to Priscilla and lightly scratches the palm of her hand, a small pool of blood emerging. In unison, they both place their hands side by side on the box.');
         this.options = [{ id: 59, text: 'Continue >' }];
+        break;
+      case 59:
+        let unlock = new Audio();
+        unlock.src = '../assets/Sound Effects/unlock.mp3';
+        unlock.load();
+        setTimeout(() => {
+          unlock.play();
+        }, 500);
+        let glow = new Audio();
+        glow.src = '../assets/Sound Effects/aura.mp3';
+        glow.load();
+        setTimeout(() => {
+          glow.play();
+        }, 1000);
+        this.dialogue.unshift('The two streams of blood, indigo and crimson, begin to flow through the grooves of the crest of the Fae Queen. Suddenly, you hear a click and a blinding light poors out of the box as it begins to open.');
+        this.options = [{ id: 61, text: 'Continue >' }];
+        break;
+      case 60:
+        this.router.navigate(['/outro']);
+        break;
+      case 61:
+        this.portraitID = "../../assets/Final Picks/Characters/fae_queen.jpg";
+        this.npcTag = 'Fae Queen: ';
+        this.dialogue.unshift('When the blinding light dissapates you see a strange figure coalesce in front of you. Wings, leaves, antlers, hair, tentacles, an amalgamation of a million differnt things. And in your heart you feel an indescribable mixture of emotion. You\'re awed, entranced, terrified, weirdly aroused.');
+        this.options = [
+          { id: 62, text: 'Continue >' }
+        ];
+        break;
+      case 62:
+        this.npcDialogue('"Greeting strange traveller. You have done me, and my people, a grand service by freeing me from my imprisonment. In exchange, I shall pay my debt to you by granting you one wish. What is it that you desire?"');
+        this.options = [
+          { id: 63, text: '"Well, I was kind of promised 500 gold"' },
+          { id: 64, text: '"I need no reward, your highness. It is enough to see your great people united again."' }
+        ];
+        if (this.PC.pcid === 1) {
+          this.options.unshift({ id: 65, text: '"Priscilla and I . . . do you think we could be human again?"' });
+        } else if (this.PC.pcid === 2) {
+          this.options.unshift({ id: 66, text: '"Do you have any secret texts? Knowledge of the fae that you might grant to me?"' });
+        } else if (this.PC.pcid === 3) {
+          this.options.unshift({ id: 67, text: '"Are you familiar with the Ohio Titny Lions? Could you make them win the Dwarfball Championship?"' });
+        }
+        break;
+      case 63:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('The Queen waves her hand and transforms a nearby pillar of stone into a sack of gold. "Here, child. Take your wealth and depart this place." You grab the sack, whose weight implies well in excess of 500 gold pieces.');
+        this.options = [
+          { id: 60, text: '"Pleasure doing business with you your highness," you say as you make for the door.' },
+          { id: 60, text: '"Welp, smell ya later." You give a wave to the two fae as you turn and leave.' }
+        ];
+        this.sharedService.ending = 2;
+        break;
+      case 64:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Unacceptable," she states in a booming voice. "The Fae Queen shall be indebted to no mortal. If you shall not choose a boon, one shall be granted for you." She waves a hand and magical sparkles surround you.');
+        this.options = [{ id: 68, text: '"Uuuuhhhhh what did you do?" you ask looking at your hands.' }]
+        break;
+      case 65:
+        this.addPCDialogue(event.text);
+        this.dialogue.unshift('The Queen raises a hand and magical sparkles pour out from it, surrounding you. You look down at your hands to see flesh begin to cover your spindly fingers, and, for the first time in as long as you can remember, you feel the warmth of blood coursing through your veins.');
+        this.PC.image_URL = '../../assets/Final Picks/Characters/pollen_human.png';
+        this.options = [{ id: 69, text: 'Turn to look at Priscilla.' }]
+        break;
+      case 66:
+        this.addPCDialogue(event.text);
+        this.npcDialogue(' She waves a hand and a large, leatherbound tome appears in your hands. "Here. Our most secret and sacred text." You flip through the pages. Its text will require some translation, but the illustrations suggest that it is *deeply* erotic.');
+        this.options = [
+          { id: 72, text: '"Jackpot . . . " you whisper under your breath, like the weird little perv that you are. It was better than you had even dared to hope.' }
+        ];
+        break;
+      case 67:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"I  . . . don\'t follow. This is a sports thing?"');
+        this.options = [{ id: 73, text: '"Yeah. There\'s this sports team, and they\'re from Ohio, and they\'re called the Titny Lions, and I want them to win the big tournament this year."' }]
+        break;
+      case 68:
+        this.addPCDialogue(event.text);
+        if (this.PC.pcid === 1) {
+          this.npcDialogue('"You have my blessing, skellington. You may stay and live among us if you wish. You know, since you\'re all sad and lonely normally."')
+          this.sharedService.ending = 3;
+        } else {
+          if (this.PC.hasShitPants) {
+            this.PC.hasShitPants = false;
+            this.npcDialogue('"I have unshit your pants. Go in peace, child."');
+            this.options = [
+              { id: 60, text: '"Uhh, yeah, great, thanks," you mumble awkwardly as you turn to leave.' }
+            ]
+          } else {
+            this.npcDialogue('"You now have a really big weiner."');
+            this.options = [{ id: 60, text: '"Aw hell yeah," you exclaim, turning to take your leave from the court.' }]
+          }
+          this.sharedService.ending = 2;
+
+        }
+        break;
+      case 69:
+        this.portraitID = "../../assets/Final Picks/Characters/Priscilla.jpg";
+        this.dialogue.unshift('You see a young woman standing before you. She looks up into your eyes and smiles softly.');
+        this.options = [{
+          id: 70, text: '"Priscilla . . . I\'m so sorry. It was an accident. I tried to fix it."'
+        }]
+        break;
+      case 70:
+        this.npcTag = 'Priscilla: ';
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"It\'s ok, Pollen. Thanks for taking care of me all these years."');
+        this.options = [{ id: 71, text: '"Let\'s go home."' }];
+        break;
+      case 71:
+        this.npcTag = 'Fae Queen: ';
+        this.portraitID = "../../assets/Final Picks/Characters/fae_queen.jpg";
+        this.PC.image_URL = '../../assets/Final Picks/Characters/pollen_and_priscilla.png';
+        this.npcDialogue('"Go in peace my children."');
+        this.options = [
+          { id: 60, text: '"Thank you, your highness. We shall never forget you," you say as you turn to leave.' }
+        ]
+        this.sharedService.ending = 4;
+        break;
+      case 72:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Go in peace, my child."');
+        this.options = [
+          { id: 60, text: '"Pleasure doing business with you your highness," you say as you make for the door.' },
+          { id: 60, text: '"Welp, smell ya later." You give a wave to the two fae as you turn and leave.' }
+        ];
+        this.sharedService.ending = 2;
+        break;
+      case 73:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"So your greatest desire, in all the world, is to have a group of people you\'ve never met win a sporting event that will have no bearing on your life?"');
+        this.options = [{ id: 74, text: '"Duh."' }]
+        break;
+      case 74:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Uh, sure." She waves a hand which sparkles magically.');
+        this.options = [{ id: 75, text: '"Ooh baby! Gonna put a fat bet on that! That\'s 500 gold and a Titny Lions victory," you say, quite smugly.' }];
+        break;
+      case 75:
+        this.addPCDialogue(event.text);
+        this.npcDialogue('"Yes, wonderful. Now please take your leave of this place."');
+        this.options = [
+          { id: 60, text: '"Pleasure doing business with you your highness," you say as you make for the door.' },
+          { id: 60, text: '"Welp, smell ya later." You give a wave to the two fae as you turn and leave.' }
+        ];
+        this.sharedService.ending = 2;
         break;
     }
   }

@@ -1,0 +1,59 @@
+.black-background, .picture-background {
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+}
+
+.text-display {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 4rem;
+    font-family: corsiva;
+}
+
+.intro-text {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
+}
+
+.continue-button {
+    background-color: black;
+    color: white;
+    
+    /* border-bottom: 2px solid white; */
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.continue-button:hover {
+    color: gold;
+    /* border-bottom: 2px solid gold; */
+}
+
+.button-version {
+    border: 2px solid white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 11.25rem;
+}
+
+.button-version:hover {
+    color: gold;
+}
+
+.the-end {
+font-size: 15rem;
+color: gold;
+font-family: vivaldi;
+}

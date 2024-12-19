@@ -21,6 +21,7 @@ import { IllusionistComponent } from './illusionist/illusionist.component';
 import { TravellerComponent } from './traveller/traveller.component';
 import { RiddleTellerComponent } from './riddle-teller/riddle-teller.component';
 import { TempleComponent } from './temple/temple.component';
+import { OutroComponent } from './outro/outro.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TempleComponent } from './temple/temple.component';
     TravellerComponent,
     RiddleTellerComponent,
     TempleComponent,
+    OutroComponent,
   ],
   imports: [
     BrowserModule,

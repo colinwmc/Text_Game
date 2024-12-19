@@ -47,6 +47,8 @@ export class SharedService {
   public identifiedEmblem = false;
   public hasKilledFae = false;
 
+  public ending = 0;
+
   getPCList(): Observable<any[]> {
     return this.http.get<any[]>(this.APIUrl + '/PC', this.httpOptions);
   }

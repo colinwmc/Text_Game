@@ -1,0 +1,12 @@
+<div class="intro-wrapper">
+    <audio src="../../assets/Sound Effects/ambience-night-field-cricket-01-7015.mp3" autoplay></audio>
+    <audio src="../../assets/Sound Effects/footsteps-on-gravel-61337.mp3" autoplay></audio>
+
+   <div class="intro-background">
+       <div class="black-background"></div>
+   <div class="text-display">
+    <div *ngIf="index < textArray.length" class="intro-text">{{textArray[index]}}</div>
+    <div *ngIf = "index == textArray.length" class="the-end">The End</div>
+   <div class="continue-button" (click)="advance()">Continue ></div>
+</div>
+</div>
